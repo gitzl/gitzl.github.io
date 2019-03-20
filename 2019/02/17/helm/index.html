@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="helm是什么？引用helm官方的英文介绍:  The package manager for Kubernetes Helm is the best way to find, share, and use software built for Kubernetes.  意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用. 为什么要拥">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kunbernetes利器-helm">
+<meta property="og:url" content="http://yoursite.com/2019/02/17/helm/index.html">
+<meta property="og:site_name" content="MC.KJ">
+<meta property="og:description" content="helm是什么？引用helm官方的英文介绍:  The package manager for Kubernetes Helm is the best way to find, share, and use software built for Kubernetes.  意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用. 为什么要拥">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-17T08:20:34.929Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kunbernetes利器-helm">
+<meta name="twitter:description" content="helm是什么？引用helm官方的英文介绍:  The package manager for Kubernetes Helm is the best way to find, share, and use software built for Kubernetes.  意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用. 为什么要拥">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/17/helm/">
+
+
+
+
+
+  <title>Kunbernetes利器-helm | MC.KJ</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MC.KJ</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/helm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kunbernetes利器-helm</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h6 id="helm是什么？"><a href="#helm是什么？" class="headerlink" title="helm是什么？"></a>helm是什么？</h6><p>引用helm官方的英文介绍:</p>
+<ul>
+<li>The package manager for Kubernetes</li>
+<li>Helm is the best way to find, share, and use software built for Kubernetes.</li>
+</ul>
+<p>意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用.</p>
+<h6 id="为什么要拥抱helm"><a href="#为什么要拥抱helm" class="headerlink" title="为什么要拥抱helm?"></a>为什么要拥抱helm?</h6><p>在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment、svc等，步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂，helm通过打包的方式，支持发布的版本管理和控制，很大程度上简化了Kubernetes应用的部署和管理.</p>
+<h6 id="本文包含的主要内容"><a href="#本文包含的主要内容" class="headerlink" title="本文包含的主要内容"></a>本文包含的主要内容</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 安装helm</span><br><span class="line">- helm常用命令</span><br><span class="line">- 自定义Chart</span><br><span class="line">- Chart模板</span><br><span class="line">- 参考文档</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h6 id="安装helm"><a href="#安装helm" class="headerlink" title="安装helm"></a>安装helm</h6><blockquote>
+<p>helm客户端</p>
+</blockquote>
+<p>下载helm：<a href="https://github.com/helm/helm/releases，其中有Mac、Linux、Windows版本，本文以Linux为例" target="_blank" rel="noopener">https://github.com/helm/helm/releases，其中有Mac、Linux、Windows版本，本文以Linux为例</a>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf  helm-v2.9.1-linux-amd64.tar.gz</span><br><span class="line">mv linux-amd64/helm /usr/local/bin/helm</span><br><span class="line">helm help #确认是否安装成功</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>helm服务端</p>
+</blockquote>
+<p>直接安装:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm init --upgrade</span><br><span class="line">#docker pull gcr.io/kubernetes-helm/tiller</span><br></pre></td></tr></table></figure>
+<p>tips：安装服务端会拉取：gcr.io/kubernetes-helm/tiller ，遗憾的是国内无法直接访问”gcr.io”等.</p>
+<p>使用阿里云镜像：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/kube_containers/tiller</span><br><span class="line">docker tag registry.cn-hangzhou.aliyuncs.com/kube_containers/tiller  gcr.io/kubernetes-helm/tiller:v2.9.1</span><br><span class="line">helm init</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>确认服务端（tiller）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -o wide -n kube-system |grep tiller</span><br><span class="line">#Running tiller安装成功</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>确认客户端和服务端连接成功</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">helm version</span><br><span class="line"></span><br><span class="line">Client: &amp;version.Version&#123;SemVer:&quot;v2.9.1&quot;, GitCommit:&quot;20adb27c7c5868466912eebdf6664e7390ebe710&quot;, GitTreeState:&quot;clean&quot;&#125;</span><br><span class="line">Server: &amp;version.Version&#123;SemVer:&quot;v2.9.1&quot;, GitCommit:&quot;20adb27c7c5868466912eebdf6664e7390ebe710&quot;, GitTreeState:&quot;clean&quot;&#125;</span><br><span class="line">#显示client和Server表示客户端和服务连接成功</span><br></pre></td></tr></table></figure>
+<h6 id="helm-search"><a href="#helm-search" class="headerlink" title="helm search"></a>helm search</h6><p>通过helm  search 可查找helm仓库中可用chart</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">helm search mysql  #查找mysql</span><br><span class="line"></span><br><span class="line">NAME                              CHART VERSION APP VERSION DESCRIPTION                                       </span><br><span class="line">stable/mysql                      0.8.2         5.7.14      Fast, reliable, scalable, and easy to use open-...</span><br><span class="line">stable/prometheus-mysql-exporter  0.1.0         v0.10.0     A Helm chart for prometheus mysql exporter with...</span><br><span class="line">stable/percona                    0.3.2         5.7.17      free, fully compatible, enhanced, open source d...</span><br><span class="line">stable/percona-xtradb-cluster     0.1.5         5.7.19      free, fully compatible, enhanced, open source d...</span><br><span class="line">stable/phpmyadmin                 0.1.7         4.8.2       phpMyAdmin is an mysql administration frontend    </span><br><span class="line">stable/gcloud-sqlproxy            0.3.6         1.11        Google Cloud SQL Proxy                            </span><br><span class="line">stable/mariadb                    4.2.7         10.1.34     Fast, reliable, scalable, and easy to use open-...</span><br><span class="line"></span><br><span class="line">helm install stable/mysql  #安装mysql</span><br></pre></td></tr></table></figure>
+<h6 id="helm的一些常用命令如下"><a href="#helm的一些常用命令如下" class="headerlink" title="helm的一些常用命令如下"></a>helm的一些常用命令如下</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">helm search 查找可用的Charts</span><br><span class="line">helm inspect 查看指定Chart的基本信息</span><br><span class="line">helm install 根据指定的Chart 部署一个Release到K8s</span><br><span class="line">helm create 创建自己的Chart</span><br><span class="line">helm package 打包Chart，一般是一个压缩包文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">release:</span><br><span class="line">helm list 列出已经部署的Release</span><br><span class="line">helm delete [RELEASE] 删除一个Release. 并没有物理删除， 出于审计需要，历史可查。</span><br><span class="line">helm status [RELEASE] 查看指定的Release信息，即使使用helm delete命令删除的Release.</span><br><span class="line">helm upgrade 升级某个Release</span><br><span class="line">helm rollback [RELEASE] [REVISION] 回滚Release到指定发布序列</span><br><span class="line">helm get values [RELEASE] 查看Release的配置文件值</span><br><span class="line">repo:</span><br><span class="line">helm repo list</span><br><span class="line">helm repo add [RepoName] [RepoUrl]</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
+<h6 id="自定义Chart"><a href="#自定义Chart" class="headerlink" title="自定义Chart"></a>自定义Chart</h6><p>以jptStore为例自定义Chart</p>
+<blockquote>
+<p>Chart基本结构</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">helm-Chart-demo-jptstore</span><br><span class="line"> -templates</span><br><span class="line">    -deployment.yaml</span><br><span class="line">    -service.yaml</span><br><span class="line"> -Chart.yaml</span><br><span class="line"> -values.yaml</span><br><span class="line"> -REAME.md</span><br></pre></td></tr></table></figure>
+<p>Chart.yaml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name: hello-Chart</span><br><span class="line">version: 1.0.0</span><br><span class="line"></span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<p>deployment.yaml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: jpt-test</span><br><span class="line">  namespace: ns-team-1-env-2</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: jpt-test</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: jpt-test</span><br><span class="line">          image: registry.cn-hangzhou.aliyuncs.com/mckj/jptstrore</span><br><span class="line">          imagePullPolicy: Always</span><br><span class="line">          ports:</span><br><span class="line">            - containerPort: 8080</span><br><span class="line">              hostPort: 8083</span><br><span class="line">              protocol: TCP</span><br></pre></td></tr></table></figure></p>
+<p>镜像：registry.cn-hangzhou.aliyuncs.com/mckj/jptstrore，部署在ns-team-1-env-2命名空间下，映射主机端口为8083以便于部署后访问测试。名为jtp-test的deployment.<br>service.yaml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: jpt-test</span><br><span class="line">  namespace: ns-team-1-env-2</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - name: http-p-8080</span><br><span class="line">    port: 8080</span><br><span class="line">    protocol: TCP</span><br><span class="line">    targetPort: 8080</span><br><span class="line">  selector:</span><br><span class="line">    app: jpt-test</span><br></pre></td></tr></table></figure>
+<p>在ns-team-1-env-2下部署一个名为jpt-test的service</p>
+<blockquote>
+<p>install Chart<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd helm-Chart-demo-jptstore #切到templates目录级</span><br><span class="line">helm install .</span><br><span class="line"></span><br><span class="line">#确认是否部署成功</span><br><span class="line">kubectl get deploy,svc,pod -n ns-team-1-env-2 |grep jpt-test</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h6 id="Helm-Chart模板"><a href="#Helm-Chart模板" class="headerlink" title="Helm Chart模板"></a>Helm Chart模板</h6><p>基于上面的Chart我们将镜像等参数提取到values.yaml文件中，在deployment.yaml通过模板访问</p>
+<blockquote>
+<p>配置文件  values.yaml</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">image:</span><br><span class="line">  repository: registry.cn-hangzhou.aliyuncs.com/mckj/jptstrore</span><br><span class="line">  tag: latest</span><br><span class="line">  pullPolicy: Always</span><br><span class="line">#注意 key和value之间有给空格，不然后面渲染模板语法通不过</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>deployment.yaml中引用values.yaml中的数据</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: &#123;&#123;.Chart.Name&#125;&#125;   #访问Chart.yaml中的数据</span><br><span class="line">  namespace: ns-team-1-env-2</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: jpt-test</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: jpt-test</span><br><span class="line">          image: &quot;&#123;&#123; .Values.image.repository &#125;&#125;:&#123;&#123; .Values.image.tag &#125;&#125;&quot;</span><br><span class="line">          imagePullPolicy: &#123;&#123; .Values.image.pullPolicy &#125;&#125;</span><br><span class="line">          ports:</span><br><span class="line">            - containerPort: 8080</span><br><span class="line">              hostPort: 8083</span><br><span class="line">              protocol: TCP</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>执行带有模板的Chart</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">cd helm</span><br><span class="line">helm install .</span><br><span class="line"></span><br><span class="line">#模板语法通过会出现下面的输出数据</span><br><span class="line">RESOURCES:</span><br><span class="line">==&gt; v1/Service</span><br><span class="line">NAME      TYPE       CLUSTER-IP     EXTERNAL-IP  PORT(S)   AGE</span><br><span class="line">jpt-test  ClusterIP  10.111.17.249  &lt;none&gt;       8080/TCP  0s</span><br><span class="line"></span><br><span class="line">==&gt; v1beta1/Deployment</span><br><span class="line">NAME      DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE</span><br><span class="line">jpt-test  1        1        1           0          0s</span><br><span class="line"></span><br><span class="line">==&gt; v1/Pod(related)</span><br><span class="line">NAME                       READY  STATUS       RESTARTS  AGE</span><br><span class="line">jpt-test-5bd49d546b-45dz8  0/1    Terminating  0         8d</span><br><span class="line">jpt-test-5bd49d546b-75764  0/1    Pending      0         0s</span><br></pre></td></tr></table></figure>
+<p>下载本文例子访问 : <a href="https://github.com/gitzl/helm-Chart-demo-jptstore" target="_blank" rel="noopener">https://github.com/gitzl/helm-Chart-demo-jptstore</a></p>
+<h6 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h6><ul>
+<li>官方文档  <a href="https://docs.helm.sh/" target="_blank" rel="noopener">https://docs.helm.sh/</a></li>
+<li>中文文档  <a href="https://whmzsu.github.io/helm-doc-zh-cn/" target="_blank" rel="noopener">https://whmzsu.github.io/helm-doc-zh-cn/</a></li>
+<li>参考Demo  <a href="https://github.com/gitzl/helm/tree/master/docs/examples/nginx" target="_blank" rel="noopener">https://github.com/gitzl/helm/tree/master/docs/examples/nginx</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/17/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/17/go/" rel="prev" title="golang">
+                golang <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MC.KJ</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#helm是什么？"><span class="nav-number">1.</span> <span class="nav-text">helm是什么？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#为什么要拥抱helm"><span class="nav-number">2.</span> <span class="nav-text">为什么要拥抱helm?</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#本文包含的主要内容"><span class="nav-number">3.</span> <span class="nav-text">本文包含的主要内容</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#安装helm"><span class="nav-number">4.</span> <span class="nav-text">安装helm</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#helm-search"><span class="nav-number">5.</span> <span class="nav-text">helm search</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#helm的一些常用命令如下"><span class="nav-number">6.</span> <span class="nav-text">helm的一些常用命令如下</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#自定义Chart"><span class="nav-number">7.</span> <span class="nav-text">自定义Chart</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Helm-Chart模板"><span class="nav-number">8.</span> <span class="nav-text">Helm Chart模板</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#参考文档"><span class="nav-number">9.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MC.KJ</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

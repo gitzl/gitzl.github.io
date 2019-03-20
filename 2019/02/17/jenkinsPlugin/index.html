@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍. 主要内容包括1234- 创建jenkins插件项目- 项目源码分析- jelly界面开发- 插件运">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从0到1开启jenkins插件开发之路">
+<meta property="og:url" content="http://yoursite.com/2019/02/17/jenkinsPlugin/index.html">
+<meta property="og:site_name" content="MC.KJ">
+<meta property="og:description" content="前言项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍. 主要内容包括1234- 创建jenkins插件项目- 项目源码分析- jelly界面开发- 插件运">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/02/17/jenkinsPlugin/img/jenkins/jp1.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/17/jenkinsPlugin/img/jenkins/jp2.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/17/jenkinsPlugin/img/jenkins/jp3.png">
+<meta property="og:updated_time" content="2019-02-17T08:20:34.929Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从0到1开启jenkins插件开发之路">
+<meta name="twitter:description" content="前言项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍. 主要内容包括1234- 创建jenkins插件项目- 项目源码分析- jelly界面开发- 插件运">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/17/jenkinsPlugin/img/jenkins/jp1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/17/jenkinsPlugin/">
+
+
+
+
+
+  <title>从0到1开启jenkins插件开发之路 | MC.KJ</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MC.KJ</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/jenkinsPlugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从0到1开启jenkins插件开发之路</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍.</p>
+<h5 id="主要内容包括"><a href="#主要内容包括" class="headerlink" title="主要内容包括"></a>主要内容包括</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 创建jenkins插件项目</span><br><span class="line">- 项目源码分析</span><br><span class="line">- jelly界面开发</span><br><span class="line">- 插件运行、打包、离线安装</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h5 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- JDK8               //安装jdk8</span><br><span class="line">- mave3             //安装maven3以上的版本</span><br><span class="line">- javac -version   //确认jdk版本</span><br><span class="line">- mvn   -version  //确认maven版本</span><br></pre></td></tr></table></figure>
+<h5 id="create-a-jenkins-Plugin"><a href="#create-a-jenkins-Plugin" class="headerlink" title="create a  jenkins Plugin"></a>create a  jenkins Plugin</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -U archetype:generate -Dfilter=io.jenkins.archetypes:</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ mvn -U archetype:generate -Dfilter=io.jenkins.archetypes:</span><br><span class="line">…</span><br><span class="line">Choose archetype:</span><br><span class="line">1: remote -&gt; io.jenkins.archetypes:empty-plugin (Skeleton of a Jenkins plugin with a POM and an empty source tree.)</span><br><span class="line">2: remote -&gt; io.jenkins.archetypes:global-configuration-plugin (Skeleton of a Jenkins plugin with a POM and an example piece of global configuration.)</span><br><span class="line">3: remote -&gt; io.jenkins.archetypes:hello-world-plugin (Skeleton of a Jenkins plugin with a POM and an example build step.)</span><br><span class="line">Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : 3  #选择hello-world-plugin</span><br><span class="line">Choose io.jenkins.archetypes:hello-world-plugin version:</span><br><span class="line">1: 1.1</span><br><span class="line">2: 1.2</span><br><span class="line">3: 1.3</span><br><span class="line">Choose a number: 3: 3  #选择最新version 1.3 </span><br><span class="line">[INFO] Using property: groupId = unused</span><br><span class="line">Define value for property artifactId: demo # 取一个项目名</span><br><span class="line">Define value for property version 1.0-SNAPSHOT: : #版本</span><br><span class="line">[INFO] Using property: package = io.jenkins.plugins.sample</span><br><span class="line">Confirm properties configuration:</span><br><span class="line">groupId: unused</span><br><span class="line">artifactId: demo</span><br><span class="line">version: 1.0-SNAPSHOT</span><br><span class="line">package: io.jenkins.plugins.sample</span><br><span class="line"> Y: : y #确定创建plugin</span><br></pre></td></tr></table></figure>
+<h5 id="make-sure-we-can-build-plugin"><a href="#make-sure-we-can-build-plugin" class="headerlink" title="make sure we can build plugin"></a>make sure we can build plugin</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ mv demo demo-plugin  #重命名为：demo-plugin </span><br><span class="line">$ cd demo-plugin</span><br><span class="line">$ mvn verify           # 验证是否能正常编译</span><br><span class="line"></span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 06:11 min</span><br><span class="line"># SUCCESS 说明创建的Plugin能正常的编译</span><br></pre></td></tr></table></figure>
+<p>关于hpi插件可参考: <a href="https://jenkinsci.github.io/maven-hpi-plugin/" target="_blank" rel="noopener">https://jenkinsci.github.io/maven-hpi-plugin/</a></p>
+<h5 id="use-maven-hpi-Plugin"><a href="#use-maven-hpi-Plugin" class="headerlink" title="use maven hpi Plugin"></a>use maven hpi Plugin</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mvn hpi:run</span><br><span class="line"># INFO: Jenkins is fully up and running 项目已正常启动</span><br><span class="line"># http://localhost:8080/jenkins/ 访问项目</span><br></pre></td></tr></table></figure>
+<h5 id="Demo项目源码分析"><a href="#Demo项目源码分析" class="headerlink" title="Demo项目源码分析"></a>Demo项目源码分析</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#Demo项目源码主要内容结构如下，下面将分析java以及resources包下的内容</span><br><span class="line"></span><br><span class="line">Demo</span><br><span class="line">  -java</span><br><span class="line">    -io.jenkins.plugins.sample</span><br><span class="line">       -HelloWorldBuilder.java</span><br><span class="line">  -resources</span><br><span class="line">    -io.jenkins.plugins.sample</span><br><span class="line">      -HelloWorldBuilder</span><br><span class="line">        -config.jelly</span><br><span class="line">        -index.jelly</span><br><span class="line">        -help-name.html</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>HelloWorldBuilder.java源码分析</p>
+</blockquote>
+<h6 id="扩展构建阶段"><a href="#扩展构建阶段" class="headerlink" title="扩展构建阶段"></a>扩展构建阶段</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class HelloWorldBuilder extends Builder implements SimpleBuildStep &#123;</span><br><span class="line">    private final String name;</span><br><span class="line">&#125;</span><br><span class="line">#继承Builder扩展构建阶段</span><br></pre></td></tr></table></figure>
+<h6 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- DataBoundConstructor</span><br><span class="line"></span><br><span class="line">    @DataBoundConstructor</span><br><span class="line">    public HelloWorldBuilder(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"># 构造函数初始化值，加上DataBoundConstructor注解进行数据绑定，对应jelly页面数据结构</span><br></pre></td></tr></table></figure>
+<h6 id="perform方法"><a href="#perform方法" class="headerlink" title="perform方法"></a>perform方法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void perform(Run&lt;?, ?&gt; run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException &#123;</span><br><span class="line">            listener.getLogger().println(&quot;Hello, &quot; + name + &quot;!&quot;);</span><br><span class="line">            //逻辑处理</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">#重写perform函数，运行时会执行perform方法，因此在perform方法中实现插件逻辑处理</span><br><span class="line">#这里的逻辑是将界面传过来的name值写入到jenkins的log中，方便在运行日志中进行调试</span><br></pre></td></tr></table></figure>
+<h6 id="check-and-displayName"><a href="#check-and-displayName" class="headerlink" title="check and displayName"></a>check and displayName</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@Symbol(&quot;greet&quot;)</span><br><span class="line">@Extension</span><br><span class="line">public static final class DescriptorImpl extends BuildStepDescriptor&lt;Builder&gt; &#123;</span><br><span class="line">    </span><br><span class="line">    //检测界面填写的字段是否合法</span><br><span class="line">    </span><br><span class="line">    public FormValidation doCheckName(@QueryParameter String name)</span><br><span class="line">            throws IOException, ServletException &#123;</span><br><span class="line">        </span><br><span class="line">        if (name.length() == 0)</span><br><span class="line">            return FormValidation.error(&quot;名称不能为空&quot;);</span><br><span class="line">       </span><br><span class="line">        return FormValidation.ok();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean isApplicable(Class&lt;? extends AbstractProject&gt; aClass) &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //重写DisplayName方法，该名称会在界面的构建阶段下拉框中显示</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getDisplayName() &#123;</span><br><span class="line">        return &quot;Demo&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>resources内容分析</p>
+</blockquote>
+<h6 id="创建HelloWorldBuilder文件夹"><a href="#创建HelloWorldBuilder文件夹" class="headerlink" title="创建HelloWorldBuilder文件夹"></a>创建HelloWorldBuilder文件夹</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在/resource/io.jenkins.plugins.sample包创建HelloWorldBuilder文件夹，与HelloWorldBuilder.java的类名对应，界面的数据字段才能通过HelloWorldBuilder.java构造函数进行绑定</span><br></pre></td></tr></table></figure>
+<h6 id="jelly界面开发"><a href="#jelly界面开发" class="headerlink" title="jelly界面开发"></a>jelly界面开发</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#界面开发主要包括以下模块</span><br><span class="line"></span><br><span class="line">1. config.jelly             #插件主页面</span><br><span class="line">2. help-name.html           #jenkins界面点击问号出现的提示内容，命名规则:help-字段名.html</span><br><span class="line">3. index.jelly              #整体布局，扩展构建阶段不涉及index.jelly</span><br></pre></td></tr></table></figure>
+<h6 id="config-jelly"><a href="#config-jelly" class="headerlink" title="config.jelly"></a>config.jelly</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?jelly escape-by-default=&apos;true&apos;?&gt;</span><br><span class="line">&lt;j:jelly xmlns:j=&quot;jelly:core&quot; xmlns:st=&quot;jelly:stapler&quot; xmlns:d=&quot;jelly:define&quot; xmlns:l=&quot;/lib/layout&quot; xmlns:t=&quot;/lib/hudson&quot; xmlns:f=&quot;/lib/form&quot;&gt;</span><br><span class="line">    &lt;f:entry title=&quot;名称&quot; field=&quot;name&quot;&gt;</span><br><span class="line">        &lt;f:textbox /&gt;</span><br><span class="line">    &lt;/f:entry&gt;</span><br><span class="line">&lt;/j:jelly&gt;</span><br><span class="line"></span><br><span class="line">#这里是一个文本输入框，字段为name，name和HelloBuild.java构造函数传入的name对应，在HelloBuilder.java中即可获取到界面传过来的值</span><br></pre></td></tr></table></figure>
+<p>jelly语法参考：<a href="http://commons.apache.org/proper/commons-jelly/tutorial.html" target="_blank" rel="noopener">http://commons.apache.org/proper/commons-jelly/tutorial.html</a></p>
+<h5 id="打包-amp-离线部署"><a href="#打包-amp-离线部署" class="headerlink" title="打包 &amp; 离线部署"></a>打包 &amp; 离线部署</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 运行  mvn hpi:run </span><br><span class="line">- 打包  mvn package or mvn clean package -Dmaven.test.skip=true #生成插件的路径在target/demo.hpi</span><br><span class="line">- 部署  jenkins-系统管理-插件管理-高级  上传demo.hpi插件，重启jenkins</span><br></pre></td></tr></table></figure>
+<h5 id="Demo效果展示"><a href="#Demo效果展示" class="headerlink" title="Demo效果展示"></a>Demo效果展示</h5><p>构建下拉框增加Demo选项</p>
+<p><img src="./img/jenkins/jp1.png" alt="image"></p>
+<p>设置名称为：demo</p>
+<p><img src="./img/jenkins/jp2.png" alt="image"></p>
+<p>执行日志</p>
+<p><img src="./img/jenkins/jp3.png" alt="image"></p>
+<h5 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h5><ul>
+<li>jenkins插件入门：<a href="https://jenkins.io/doc/developer/tutorial/" target="_blank" rel="noopener">https://jenkins.io/doc/developer/tutorial/</a></li>
+<li>jenkins开发文档：<a href="https://jenkins.io/doc/developer/book/" target="_blank" rel="noopener">https://jenkins.io/doc/developer/book/</a></li>
+<li>jenkins扩展点：<a href="https://jenkins.io/doc/developer/extensions/" target="_blank" rel="noopener">https://jenkins.io/doc/developer/extensions/</a></li>
+<li>maven hpi插件：<a href="https://jenkinsci.github.io/maven-hpi-plugin/" target="_blank" rel="noopener">https://jenkinsci.github.io/maven-hpi-plugin/</a></li>
+<li>jelly：<a href="http://commons.apache.org/proper/commons-jelly/tutorial.html" target="_blank" rel="noopener">http://commons.apache.org/proper/commons-jelly/tutorial.html</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/17/linux/" rel="next" title="Linux">
+                <i class="fa fa-chevron-left"></i> Linux
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/17/hexo/" rel="prev" title="hexo+github搭建博客以及主题更换">
+                hexo+github搭建博客以及主题更换 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MC.KJ</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#主要内容包括"><span class="nav-number">2.</span> <span class="nav-text">主要内容包括</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#环境准备"><span class="nav-number">3.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#create-a-jenkins-Plugin"><span class="nav-number">4.</span> <span class="nav-text">create a  jenkins Plugin</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#make-sure-we-can-build-plugin"><span class="nav-number">5.</span> <span class="nav-text">make sure we can build plugin</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#use-maven-hpi-Plugin"><span class="nav-number">6.</span> <span class="nav-text">use maven hpi Plugin</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Demo项目源码分析"><span class="nav-number">7.</span> <span class="nav-text">Demo项目源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#扩展构建阶段"><span class="nav-number">7.1.</span> <span class="nav-text">扩展构建阶段</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#数据绑定"><span class="nav-number">7.2.</span> <span class="nav-text">数据绑定</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#perform方法"><span class="nav-number">7.3.</span> <span class="nav-text">perform方法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#check-and-displayName"><span class="nav-number">7.4.</span> <span class="nav-text">check and displayName</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建HelloWorldBuilder文件夹"><span class="nav-number">7.5.</span> <span class="nav-text">创建HelloWorldBuilder文件夹</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#jelly界面开发"><span class="nav-number">7.6.</span> <span class="nav-text">jelly界面开发</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#config-jelly"><span class="nav-number">7.7.</span> <span class="nav-text">config.jelly</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#打包-amp-离线部署"><span class="nav-number">8.</span> <span class="nav-text">打包 &amp; 离线部署</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Demo效果展示"><span class="nav-number">9.</span> <span class="nav-text">Demo效果展示</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考文档"><span class="nav-number">10.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MC.KJ</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

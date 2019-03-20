@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="What is Zuul?官方介绍: 1234567Zuul is the front door for all requests from devices and web sites to the backend of the Netflix streaming application.As an edge service application, Zuul is built to enable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高并发下-Zuul参数调优">
+<meta property="og:url" content="http://yoursite.com/2019/02/18/zuul/index.html">
+<meta property="og:site_name" content="MC.KJ">
+<meta property="og:description" content="What is Zuul?官方介绍: 1234567Zuul is the front door for all requests from devices and web sites to the backend of the Netflix streaming application.As an edge service application, Zuul is built to enable">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/zuul/img/zuul/z1.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/zuul/img/zuul/z2.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/zuul/img/zuul/z3.png">
+<meta property="og:updated_time" content="2019-02-18T14:51:45.979Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高并发下-Zuul参数调优">
+<meta name="twitter:description" content="What is Zuul?官方介绍: 1234567Zuul is the front door for all requests from devices and web sites to the backend of the Netflix streaming application.As an edge service application, Zuul is built to enable">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/18/zuul/img/zuul/z1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/18/zuul/">
+
+
+
+
+
+  <title>高并发下-Zuul参数调优 | MC.KJ</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MC.KJ</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/18/zuul/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">高并发下-Zuul参数调优</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T22:51:45+08:00">
+                2019-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="What-is-Zuul"><a href="#What-is-Zuul" class="headerlink" title="What is Zuul?"></a>What is Zuul?</h5><p>官方介绍:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Zuul is the front door for all requests from devices and web sites to the backend of the Netflix streaming application.</span><br><span class="line">As an edge service application, Zuul is built to enable dynamic routing, monitoring, resiliency and security. </span><br><span class="line">It also has the ability to route requests to multiple Amazon Auto Scaling Groups as appropriate.</span><br><span class="line"></span><br><span class="line">#Zuul相当于是设备和网站到Netflix流应用程序后端的所有请求的前门</span><br><span class="line">#Zuul旨在实现动态路由，监控，弹性和安全性等</span><br><span class="line">在微服务架构中常基于Zuul实现服务网关(API Gateway)服务器</span><br></pre></td></tr></table></figure>
+<p>在项目实践中，使用jemeter多线程并发访问微服务中的接口时候，在Zuul层出现异常、超时等，从而导致整个请求失败。经过实践，通过调整Zuul的参数、设计高可用架构等可提升TPS、QPS。</p>
+<h5 id="Zuul参数剖析"><a href="#Zuul参数剖析" class="headerlink" title="Zuul参数剖析"></a>Zuul参数剖析</h5><blockquote>
+<p>routes</p>
+</blockquote>
+<p>zuul下的routes节点可配置路由转发规则<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">zuul：</span><br><span class="line">   routes：</span><br><span class="line">     echo：</span><br><span class="line">       path：/ myusers / **</span><br><span class="line">       serviceId：myusers-service</span><br><span class="line">       stripPrefix：true</span><br><span class="line"></span><br><span class="line">myusers-service：</span><br><span class="line">   ribbon：#负载</span><br><span class="line">     NIWSServerListClassName：com.netflix.loadbalancer.ConfigurationBasedServerList</span><br><span class="line">     listOfServers：http：//example1.com,http：//example2.com</span><br><span class="line">     ConnectTimeout：1000 </span><br><span class="line">    ReadTimeout：3000 </span><br><span class="line">    MaxTotalHttpConnections：500 </span><br><span class="line">    MaxConnectionsPerHost：100</span><br></pre></td></tr></table></figure></p>
+<p>如上面的配置，HTTP请求中满足 /myusers/** 规则转发到myuser-service服务。结合ribbon，可支持myusers-service多实例的动态负载。实际项目中可集成eureka或者consul等自动获取listOfServers(多实例服务hosts列表)。</p>
+<blockquote>
+<p>semaphore</p>
+</blockquote>
+<p>在spring cloud Zuul中有2种对路由的隔离机制，其默认的是信号量（semaphore）对路由做隔离，默认值是100，当一个路由请求的信号量高于100就返回500。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">zuul:</span><br><span class="line">  semaphore:</span><br><span class="line">    max-semaphores: 5000 #设置全部路由最大信号量</span><br><span class="line">  routes:</span><br><span class="line">    orchestration:</span><br><span class="line">      service-id: orchestration</span><br><span class="line">    resource-manager:</span><br><span class="line">      service-id: resource-manager</span><br><span class="line">      semaphore:</span><br><span class="line">        max-semaphores: 5000 #针对单个服务的路由设置最大信号量</span><br></pre></td></tr></table></figure>
+<p>设置信号量，可在Zuul节点下对所有路由统一设置信号量（semaphore）大小，在实际项目中推荐为每个服务设置不同的信号量（semaphore）。</p>
+<blockquote>
+<p>ribbon</p>
+</blockquote>
+<p>SpringCloud中ribbon提供负载均衡能力，实际项目中后端不同服务都是多实例，因此从Zuul路由到某个服务也需要支持负载均衡。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">zuul:</span><br><span class="line">ribbon:</span><br><span class="line">  OkToRetryOnAllOperations:true     #全部请求开启重试机制</span><br><span class="line">  ReadTimeout: 6000                 #请求处理超时时间</span><br><span class="line">  ConnectTimeout: 6000              #请求连接超时时间</span><br><span class="line">  MaxTotalHttpConnections: 1000     #最大http连接数</span><br><span class="line">  MaxConnectionsPerHost: 100        #每个host最大连接数</span><br><span class="line">  MaxAutoRetries: 10                #最大重试次数</span><br><span class="line">  MaxAutoRetriesNextServer: 10      #切换实例的重试次数</span><br><span class="line">  eureka:</span><br><span class="line">    enabled: true</span><br></pre></td></tr></table></figure>
+<p>在高并发或者后端服务由于网络等原因，导致请求某一瞬间发生故障，也许后端服务只是暂时不可达或者响应比较慢。通过调整响应时间以及重试次数提高请求成功率。</p>
+<blockquote>
+<p>hystrix</p>
+</blockquote>
+<p>hystrix(熔断)，当通过服务网关（基于Zuul实现）调用后端服务时候，难免会出现网络、响应超时等情况。通过hystrix可断掉与后端服务的连接，防止拖垮网关服务器。也可以通过hystrix实现服务降级，当发生异常时候，通过fallback处理熔断（比如：返回一些用户能看懂的错误提示等）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#关于hystrix的参数很多，这里列举一些常用的参数</span><br><span class="line">#更多参数，阅读：https://github.com/Netflix/Hystrix/wiki/Configuration</span><br><span class="line"></span><br><span class="line">hystrix:</span><br><span class="line">  threadpool:</span><br><span class="line">    default:</span><br><span class="line">      coreSize: 1000   #线程池数量</span><br><span class="line">  command:</span><br><span class="line">    default:</span><br><span class="line">      execution:</span><br><span class="line">        isolation:</span><br><span class="line">          thread:</span><br><span class="line">            timeoutInMilliseconds: 60000  #发生熔断的超时时间</span><br><span class="line">          strategy: SEMAPHORE   #隔离策略</span><br><span class="line">          semaphore:</span><br><span class="line">            max-semaphores: 2000 #信号量大小</span><br></pre></td></tr></table></figure>
+<h5 id="高并发下常见Zuul异常"><a href="#高并发下常见Zuul异常" class="headerlink" title="高并发下常见Zuul异常"></a>高并发下常见Zuul异常</h5><p>在高并发下，针对不同的系统架构、业务场景。需要自己调整Zuul各组件参数来满足性能需求。我们在使用jemeter进行并发测试，发现Zuul（服务网关）层出现了一些异常信息，解决了这些异常信息，QPS,TPS都提高了不少。</p>
+<blockquote>
+<p>无法获取信号量(semaphore异常)</p>
+</blockquote>
+<p>异常信息-1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spring cloud zuul : could not acquire a semaphore for execution and no fallback available.</span><br><span class="line">#无法获取信号量，系统默认每个路由的信号量为100，当后端一个实例且并发大于100就会经常出现这个异常信息</span><br></pre></td></tr></table></figure>
+<p>调优配置-1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zuul:</span><br><span class="line">  semaphore:</span><br><span class="line">    max-semaphores: 5000</span><br><span class="line">#可根据系统需要支持的并发数适当增加信号量的大小</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>超时</p>
+</blockquote>
+<p>异常信息-2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">connect time out...</span><br><span class="line">#当并发访问时，有些服务所在主机响应可能会比较慢，或者某些业务本身比较耗时（比如上传一个大文件的接口）。如果在Zuul层设置的超时时间小于足业务的耗时，会导致正常的业务请求失败。</span><br></pre></td></tr></table></figure></p>
+<p>调优配置-2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ribbon:</span><br><span class="line">  ReadTimeout: 6000                 #请求处理超时时间</span><br><span class="line">  ConnectTimeout: 6000              #请求连接时间</span><br><span class="line">   </span><br><span class="line"># 根据业务可适当调大超时时间</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>熔断</p>
+</blockquote>
+<p>异常信息-3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">short-circuited and no fallback available</span><br><span class="line">#并发访问时，后端某些服务发生熔断</span><br></pre></td></tr></table></figure>
+<p>调优配置-3：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">hystrix:</span><br><span class="line">  command:</span><br><span class="line">    default:</span><br><span class="line">      execution:</span><br><span class="line">        isolation:</span><br><span class="line">          thread:</span><br><span class="line">            timeoutInMilliseconds: 60000  #发生熔断的超时时间</span><br><span class="line"></span><br><span class="line"># 调整熔断超时时间，熔断时间太短，些耗时的业务部不能work</span><br><span class="line"># 熔断时太长，Zuul服务器可能会被拖垮。所以根据具体业务找到一个合适值。</span><br><span class="line"></span><br><span class="line">ribbon:</span><br><span class="line">  OkToRetryOnAllOperations:true     #全部请求开启重试机制</span><br><span class="line">  ReadTimeout: 6000                 #请求处理超时时间</span><br><span class="line">  ConnectTimeout: 6000              #请求连接超时时间</span><br><span class="line">  MaxAutoRetries: 10                #最大重试次数</span><br><span class="line">#调整重试次数，实际项目中由于网络或者资源不够，偶尔会出现后端服务不能访问，一次访问失败不能代表后端服务就挂了。</span><br><span class="line">#因此开启重试机制，调整重试次数。在一定时间内，重试几次都失败，我们才认为后端服务挂了。</span><br></pre></td></tr></table></figure></p>
+<h5 id="Zuul高可用"><a href="#Zuul高可用" class="headerlink" title="Zuul高可用"></a>Zuul高可用</h5><p>我们知道无论在Linux或者windows下，一个进程支持的并发数是有限制的，在实际项目中，服务网关作为微服务架构的入口至关重要。Zuul结合服务发现、负载均衡等启动多个实例做到高可用。如下图:</p>
+<p><img src="./img/zuul/z1.png" alt></p>
+<p>如上图，启动多个Zuul实例，在Zuul前加一层负载（常用nginx做负载），每个实例承担一些请求，整体支持高并发能力也会提高很多。</p>
+<h5 id="Zuul版本-1-x-vs-2-x"><a href="#Zuul版本-1-x-vs-2-x" class="headerlink" title="Zuul版本 - 1.x vs 2.x"></a>Zuul版本 - 1.x vs 2.x</h5><p>截止目前Zuul发布了2个版本，在架构和实现方式以及支持并发的情况都有所不同。</p>
+<blockquote>
+<p>Zuul-1.x</p>
+</blockquote>
+<p><img src="./img/zuul/z2.png" alt><br>Filter是Zuul的核心，用来实现对外服务的控制。Filter的生命周期有4个，分别是“PRE”、“ROUTING”、“POST”、“ERROR“</p>
+<ul>
+<li>PRE：过滤器在请求经过路由前被调用。利用这种过滤器可实现身份验证。</li>
+<li>ROUTING：过滤器将请求路由到微服务。这种过滤器用于构建发送给后端微服务的请求，使用Apache HttpClient或Netfilx Ribbon请求微服务。</li>
+<li>POST：过滤器在路由到微服务以后执行。这种过滤器可为响应添加标准的HTTP Header、收集统计信息和指标、将响应发送给客户端。</li>
+<li>ERROR：在其他阶段发生错误时执行该过滤器</li>
+</ul>
+<blockquote>
+<p>Zuul-2.x</p>
+</blockquote>
+<p><img src="./img/zuul/z3.png" alt><br>2.x的Zuul基于netty处理请求，netty（高性能、异步事件驱动的NIO框架，提供了对TCP、UDP和文件传输的支持，Netty的所有IO操作都是异步非阻塞的）。相对于1.x版本，很明显把同步改成了异步，把阻塞改成了非阻塞。据官方进行的并发测试，2.x相比1.x性能还是提升了不少。不过2.x相对1.x要复杂一些，如果需要支持很高的QPS、TPS，可以尝试下2.x。</p>
+<p>总结：</p>
+<ul>
+<li>1.x 同步阻塞，编程模型简单，社区成熟，通过调整参数能满足生产性能需求</li>
+<li>2.x 异步非阻塞，相对编程模型复杂，刚出来也许还有些坑(bug)，追求更好性能可以尝试</li>
+</ul>
+<h5 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h5><p>当高并发情况下，服务网关服务器(Zuul)可通过以下方法提高支持并发的能力。</p>
+<ul>
+<li>调整Zuul组件参数</li>
+<li>支持Zuul高可用，多实例</li>
+<li>选择异步、非阻塞版本</li>
+</ul>
+<h5 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h5><p>Zuul-github ：<a href="https://github.com/Netflix/zuul" target="_blank" rel="noopener">https://github.com/Netflix/zuul</a><br>Zuul-wiki：<a href="https://github.com/Netflix/zuul/wiki" target="_blank" rel="noopener">https://github.com/Netflix/zuul/wiki</a><br>blog：<a href="https://www.cnblogs.com/lonelyJay/p/10076441.html" target="_blank" rel="noopener">https://www.cnblogs.com/lonelyJay/p/10076441.html</a><br>blog: <a href="http://blog.didispace.com/api-gateway-Zuul-1-zuul-2-how-to-choose" target="_blank" rel="noopener">http://blog.didispace.com/api-gateway-Zuul-1-zuul-2-how-to-choose</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/17/podSchedule/" rel="next" title="Kubernetes-项目中pod调度使用法则">
+                <i class="fa fa-chevron-left"></i> Kubernetes-项目中pod调度使用法则
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MC.KJ</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#What-is-Zuul"><span class="nav-number">1.</span> <span class="nav-text">What is Zuul?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Zuul参数剖析"><span class="nav-number">2.</span> <span class="nav-text">Zuul参数剖析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#高并发下常见Zuul异常"><span class="nav-number">3.</span> <span class="nav-text">高并发下常见Zuul异常</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Zuul高可用"><span class="nav-number">4.</span> <span class="nav-text">Zuul高可用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Zuul版本-1-x-vs-2-x"><span class="nav-number">5.</span> <span class="nav-text">Zuul版本 - 1.x vs 2.x</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考文档"><span class="nav-number">7.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MC.KJ</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
