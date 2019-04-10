@@ -680,186 +680,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/prometheus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/prometheus/" itemprop="url">prometheus+grafana+alertmanger - 监控方案</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="监控方案涉及的关键问题"><a href="#监控方案涉及的关键问题" class="headerlink" title="监控方案涉及的关键问题"></a>监控方案涉及的关键问题</h5><ul>
-<li>采集数据</li>
-<li>存储数据</li>
-<li>告警、展示数据</li>
-</ul>
-<p>那么基于prometheus的监控方案是用什么技术实现？本文基于docker进行部署，目的以简单的demo快速了解prometheus监控方案的涉及的知识点以及流程。</p>
-<h5 id="本文介绍的内容"><a href="#本文介绍的内容" class="headerlink" title="本文介绍的内容"></a>本文介绍的内容</h5><ul>
-<li>prometheus整体架构介绍</li>
-<li>安装prometheus</li>
-<li>安装grafana</li>
-<li>安装alertmanager</li>
-<li>grafana关联prometheus</li>
-<li>prometheus关联alertmanager</li>
-<li>prometheus定义告警规则</li>
-<li>alertmanager触发告警</li>
-</ul>
-<h5 id="prometheus整体架构"><a href="#prometheus整体架构" class="headerlink" title="prometheus整体架构"></a>prometheus整体架构</h5><p><img src="./img/prom/p1.png" alt><br>从prometheus官方给的架构图分析出，基于prometheus的监控方案常用组件：</p>
-<ul>
-<li>Exporters ：暴露metrics,收集监控指标，并以一种规定的数据格式提供给Prometheus-采集监控对象数据</li>
-<li>Prometheus Server ：收集数据和存储数据到时间序列数据库中，收集的数据由Exporters提供-采集/存储数据</li>
-<li>Alertmanager ：告警管理，接收Prometheus的告警，去重/分组/发出告警（邮件、webhook等）- 告警</li>
-<li>Grafana：监控Dashbord，UI展示，设置Prometheus Server地址即可自定义监控Dashbord- UI展示</li>
-<li>Push Gateway： 用于短期的jobs，jobs直接向Prometheus server端推送它们的 metrics.用于服务层面的 metrics</li>
-</ul>
-<h5 id="部署组件"><a href="#部署组件" class="headerlink" title="部署组件"></a>部署组件</h5><p>本文以docker方式部署：prometheus、grafana、alertmanager</p>
-<h6 id="install-prometheus"><a href="#install-prometheus" class="headerlink" title="install prometheus"></a>install prometheus</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --name prometheus -d -p 9090:9090  quay.io/prometheus/prometheus</span><br><span class="line"># 暴露端口：9090</span><br><span class="line">docker run --name prometheus -d -p 9090:9090 -v  /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml quay.io/prometheus/prometheus</span><br><span class="line"># 挂载prometheus.yml文件，便于在主机上直接修改</span><br><span class="line">docker run --name prometheus -d -p 9090:9090 --link=alertmanger:alertmanger -v  /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml -v /etc/prometheus/rules:/etc/prometheus/rules  quay.io/prometheus/prometheus</span><br><span class="line"># 挂载挂载prometheus.yml文件，创建了rules目录，rules存放告警规则yaml文件，后续会提到</span><br></pre></td></tr></table></figure>
-<h6 id="install-grafana"><a href="#install-grafana" class="headerlink" title="install grafana"></a>install grafana</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 3000:3000 --name=grafana grafana/grafana</span><br></pre></td></tr></table></figure>
-<h6 id="install-alertmanger"><a href="#install-alertmanger" class="headerlink" title="install alertmanger"></a>install alertmanger</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --name alertmanger -d  -p 9093:9093  -v /etc/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml quay.io/prometheus/alertmanager</span><br><span class="line">#挂载告警文件：alertmanager.yml，便于在主机上直接修改文件</span><br></pre></td></tr></table></figure>
-<h5 id="grafana关联prometheus"><a href="#grafana关联prometheus" class="headerlink" title="grafana关联prometheus"></a>grafana关联prometheus</h5><p><img src="./img/prom/p2.png" alt><br>Prometheus界面，采集promhttp_metric_handler_requests_total为demo进行演示，这个metrics是prometheus自己监控自己的http请求数量<br><img src="./img/prom/p3.png" alt></p>
-<ul>
-<li>访问grafana，默认用户名和密码都是：admin</li>
-<li>设置-type选择Prometheus-填写Prometheus访问地址，点击Save&amp;Test 测试关联prometheus是否成功<br><img src="./img/prom/p4.png" alt></li>
-<li>新建dashboard，设置Metrics，即可展示数据</li>
-</ul>
-<h5 id="prometheus关联alertmanager"><a href="#prometheus关联alertmanager" class="headerlink" title="prometheus关联alertmanager"></a>prometheus关联alertmanager</h5><p>prometheus配置文件路径：/etc/prometheus/prometheus.yaml，在如下配置设置告警地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  scrape_interval:     15s </span><br><span class="line">  evaluation_interval: 15s </span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets: [&apos;alertmanger:9093&apos;]</span><br><span class="line"># 关联告警服务器alertmanger    </span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: &apos;prometheus&apos;</span><br><span class="line">    # metrics_path defaults to &apos;/metrics&apos;</span><br><span class="line">    # scheme defaults to &apos;http&apos;.</span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [&apos;localhost:9090&apos;]</span><br><span class="line"># prometheus 服务监听的端口</span><br></pre></td></tr></table></figure>
-<p>  查看prometheus-Status-configuration，检测配置是否生效<br><img src="./img/prom/p5.png" alt></p>
-<h5 id="prometheus定义告警规则-prom-rules-yml"><a href="#prometheus定义告警规则-prom-rules-yml" class="headerlink" title="prometheus定义告警规则-prom_rules.yml"></a>prometheus定义告警规则-prom_rules.yml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">groups:</span><br><span class="line">- name: test-rule</span><br><span class="line">  rules:</span><br><span class="line">  - alert: promReqCounts</span><br><span class="line">    expr: promhttp_metric_handler_requests_total &gt; 10</span><br><span class="line">    for: 0s</span><br><span class="line">    labels:</span><br><span class="line">      prom: http</span><br><span class="line">    annotations:</span><br><span class="line">      summary: High prometheus request total is above 1000</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>定义request请求总数大于10就发生告警，标签为：prom：http</p>
-</li>
-<li><p>定义rules考官网例子：<a href="https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/</a></p>
-</li>
-</ul>
-<p>在prometheus中关联rule文件 - prom_rules.yml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  scrape_interval:     15s </span><br><span class="line">  evaluation_interval: 15s </span><br><span class="line"></span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets: [&apos;alertmanger:9093&apos;]</span><br><span class="line"># 关联告警服务器alertmanger    </span><br><span class="line">rule_files:</span><br><span class="line">    - &quot;rules/prom_rules.yml&quot;</span><br><span class="line"># 定义告警规则：prom_rules.yml</span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: &apos;prometheus&apos;</span><br><span class="line">    # metrics_path defaults to &apos;/metrics&apos;</span><br><span class="line">    # scheme defaults to &apos;http&apos;.</span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [&apos;localhost:9090&apos;]</span><br><span class="line"># prometheus 服务监听的端口</span><br></pre></td></tr></table></figure>
-<h5 id="alertmanager触发告警"><a href="#alertmanager触发告警" class="headerlink" title="alertmanager触发告警"></a>alertmanager触发告警</h5><p>配置alertmanager.yml文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  resolve_timeout: 5m</span><br><span class="line"></span><br><span class="line">route:</span><br><span class="line">  group_by: [&apos;alertname&apos;]</span><br><span class="line">  group_wait: 10s</span><br><span class="line">  group_interval: 10s</span><br><span class="line">  repeat_interval: 1h</span><br><span class="line">  receiver: &apos;web.test&apos;</span><br><span class="line">  routes:</span><br><span class="line">  - receiver: &apos;web.hook&apos;</span><br><span class="line">    match:</span><br><span class="line">      prom: http</span><br><span class="line">receivers:</span><br><span class="line">- name: &apos;web.hook&apos;</span><br><span class="line">  webhook_configs:</span><br><span class="line">  - url: &apos;http://127.0.0.1:8888&apos;</span><br><span class="line">- name: &apos;web.test&apos;</span><br><span class="line">  webhook_configs:</span><br><span class="line">  - url: &apos;http://127.0.0.1:88888&apos;</span><br><span class="line">inhibit_rules:</span><br><span class="line">  - source_match:</span><br><span class="line">      severity: &apos;critical&apos;</span><br><span class="line">    target_match:</span><br><span class="line">      severity: &apos;warning&apos;</span><br><span class="line">    equal: [&apos;alertname&apos;, &apos;dev&apos;, &apos;instance&apos;]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>当alertmanger接收到标签为：prom:http的告警就触发 web.hook，当然也可以发邮件等操作</li>
-<li>更多告警参考官网例子：<a href="https://prometheus.io/docs/alerting/configuration/" target="_blank" rel="noopener">https://prometheus.io/docs/alerting/configuration/</a></li>
-</ul>
-<p>如果发生了告警，alertmaneger界面会有记录</p>
-<p><img src="./img/prom/p6.png" alt></p>
-<h5 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h5><ul>
-<li>prometheus : <a href="https://prometheus.io/docs/prometheus/latest/installation/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/installation/</a></li>
-<li>exporter : <a href="https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations" target="_blank" rel="noopener">https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations</a></li>
-<li>alertmanger: <a href="https://prometheus.io/docs/alerting/alertmanager/" target="_blank" rel="noopener">https://prometheus.io/docs/alerting/alertmanager/</a></li>
-<li>prometheus rules : <a href="https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/</a></li>
-<li>grafana：<a href="http://docs.grafana.org/" target="_blank" rel="noopener">http://docs.grafana.org/</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/project/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1155,7 +975,7 @@ docker run -d --name sonarqube \
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/java/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/prometheus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -1174,7 +994,7 @@ docker run -d --name sonarqube \
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/java/" itemprop="url">java</a></h1>
+                <a class="post-title-link" href="/2019/02/17/prometheus/" itemprop="url">prometheus+grafana+alertmanger - 监控方案</a></h1>
         
 
         <div class="post-meta">
@@ -1226,13 +1046,66 @@ docker run -d --name sonarqube \
       
         
           
-            <blockquote>
-<p>递归<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class TestDemo &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">            System.out.println(sum(100));  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public static int sum(int num)&#123;  </span><br><span class="line">        <span class="keyword">if</span>(num == 1)&#123;  </span><br><span class="line">            <span class="built_in">return</span> 1;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="built_in">return</span> num + sum(num-1);  </span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
+            <h5 id="监控方案涉及的关键问题"><a href="#监控方案涉及的关键问题" class="headerlink" title="监控方案涉及的关键问题"></a>监控方案涉及的关键问题</h5><ul>
+<li>采集数据</li>
+<li>存储数据</li>
+<li>告警、展示数据</li>
+</ul>
+<p>那么基于prometheus的监控方案是用什么技术实现？本文基于docker进行部署，目的以简单的demo快速了解prometheus监控方案的涉及的知识点以及流程。</p>
+<h5 id="本文介绍的内容"><a href="#本文介绍的内容" class="headerlink" title="本文介绍的内容"></a>本文介绍的内容</h5><ul>
+<li>prometheus整体架构介绍</li>
+<li>安装prometheus</li>
+<li>安装grafana</li>
+<li>安装alertmanager</li>
+<li>grafana关联prometheus</li>
+<li>prometheus关联alertmanager</li>
+<li>prometheus定义告警规则</li>
+<li>alertmanager触发告警</li>
+</ul>
+<h5 id="prometheus整体架构"><a href="#prometheus整体架构" class="headerlink" title="prometheus整体架构"></a>prometheus整体架构</h5><p><img src="./img/prom/p1.png" alt><br>从prometheus官方给的架构图分析出，基于prometheus的监控方案常用组件：</p>
 <ul>
-<li>终止条件</li>
-<li>递归一下次参数</li>
-<li>返回递归函数</li>
+<li>Exporters ：暴露metrics,收集监控指标，并以一种规定的数据格式提供给Prometheus-采集监控对象数据</li>
+<li>Prometheus Server ：收集数据和存储数据到时间序列数据库中，收集的数据由Exporters提供-采集/存储数据</li>
+<li>Alertmanager ：告警管理，接收Prometheus的告警，去重/分组/发出告警（邮件、webhook等）- 告警</li>
+<li>Grafana：监控Dashbord，UI展示，设置Prometheus Server地址即可自定义监控Dashbord- UI展示</li>
+<li>Push Gateway： 用于短期的jobs，jobs直接向Prometheus server端推送它们的 metrics.用于服务层面的 metrics</li>
+</ul>
+<h5 id="部署组件"><a href="#部署组件" class="headerlink" title="部署组件"></a>部署组件</h5><p>本文以docker方式部署：prometheus、grafana、alertmanager</p>
+<h6 id="install-prometheus"><a href="#install-prometheus" class="headerlink" title="install prometheus"></a>install prometheus</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --name prometheus -d -p 9090:9090  quay.io/prometheus/prometheus</span><br><span class="line"># 暴露端口：9090</span><br><span class="line">docker run --name prometheus -d -p 9090:9090 -v  /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml quay.io/prometheus/prometheus</span><br><span class="line"># 挂载prometheus.yml文件，便于在主机上直接修改</span><br><span class="line">docker run --name prometheus -d -p 9090:9090 --link=alertmanger:alertmanger -v  /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml -v /etc/prometheus/rules:/etc/prometheus/rules  quay.io/prometheus/prometheus</span><br><span class="line"># 挂载挂载prometheus.yml文件，创建了rules目录，rules存放告警规则yaml文件，后续会提到</span><br></pre></td></tr></table></figure>
+<h6 id="install-grafana"><a href="#install-grafana" class="headerlink" title="install grafana"></a>install grafana</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 3000:3000 --name=grafana grafana/grafana</span><br></pre></td></tr></table></figure>
+<h6 id="install-alertmanger"><a href="#install-alertmanger" class="headerlink" title="install alertmanger"></a>install alertmanger</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --name alertmanger -d  -p 9093:9093  -v /etc/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml quay.io/prometheus/alertmanager</span><br><span class="line">#挂载告警文件：alertmanager.yml，便于在主机上直接修改文件</span><br></pre></td></tr></table></figure>
+<h5 id="grafana关联prometheus"><a href="#grafana关联prometheus" class="headerlink" title="grafana关联prometheus"></a>grafana关联prometheus</h5><p><img src="./img/prom/p2.png" alt><br>Prometheus界面，采集promhttp_metric_handler_requests_total为demo进行演示，这个metrics是prometheus自己监控自己的http请求数量<br><img src="./img/prom/p3.png" alt></p>
+<ul>
+<li>访问grafana，默认用户名和密码都是：admin</li>
+<li>设置-type选择Prometheus-填写Prometheus访问地址，点击Save&amp;Test 测试关联prometheus是否成功<br><img src="./img/prom/p4.png" alt></li>
+<li>新建dashboard，设置Metrics，即可展示数据</li>
+</ul>
+<h5 id="prometheus关联alertmanager"><a href="#prometheus关联alertmanager" class="headerlink" title="prometheus关联alertmanager"></a>prometheus关联alertmanager</h5><p>prometheus配置文件路径：/etc/prometheus/prometheus.yaml，在如下配置设置告警地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  scrape_interval:     15s </span><br><span class="line">  evaluation_interval: 15s </span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets: [&apos;alertmanger:9093&apos;]</span><br><span class="line"># 关联告警服务器alertmanger    </span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: &apos;prometheus&apos;</span><br><span class="line">    # metrics_path defaults to &apos;/metrics&apos;</span><br><span class="line">    # scheme defaults to &apos;http&apos;.</span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [&apos;localhost:9090&apos;]</span><br><span class="line"># prometheus 服务监听的端口</span><br></pre></td></tr></table></figure>
+<p>  查看prometheus-Status-configuration，检测配置是否生效<br><img src="./img/prom/p5.png" alt></p>
+<h5 id="prometheus定义告警规则-prom-rules-yml"><a href="#prometheus定义告警规则-prom-rules-yml" class="headerlink" title="prometheus定义告警规则-prom_rules.yml"></a>prometheus定义告警规则-prom_rules.yml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">groups:</span><br><span class="line">- name: test-rule</span><br><span class="line">  rules:</span><br><span class="line">  - alert: promReqCounts</span><br><span class="line">    expr: promhttp_metric_handler_requests_total &gt; 10</span><br><span class="line">    for: 0s</span><br><span class="line">    labels:</span><br><span class="line">      prom: http</span><br><span class="line">    annotations:</span><br><span class="line">      summary: High prometheus request total is above 1000</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>定义request请求总数大于10就发生告警，标签为：prom：http</p>
+</li>
+<li><p>定义rules考官网例子：<a href="https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/</a></p>
+</li>
+</ul>
+<p>在prometheus中关联rule文件 - prom_rules.yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  scrape_interval:     15s </span><br><span class="line">  evaluation_interval: 15s </span><br><span class="line"></span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets: [&apos;alertmanger:9093&apos;]</span><br><span class="line"># 关联告警服务器alertmanger    </span><br><span class="line">rule_files:</span><br><span class="line">    - &quot;rules/prom_rules.yml&quot;</span><br><span class="line"># 定义告警规则：prom_rules.yml</span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: &apos;prometheus&apos;</span><br><span class="line">    # metrics_path defaults to &apos;/metrics&apos;</span><br><span class="line">    # scheme defaults to &apos;http&apos;.</span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [&apos;localhost:9090&apos;]</span><br><span class="line"># prometheus 服务监听的端口</span><br></pre></td></tr></table></figure>
+<h5 id="alertmanager触发告警"><a href="#alertmanager触发告警" class="headerlink" title="alertmanager触发告警"></a>alertmanager触发告警</h5><p>配置alertmanager.yml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  resolve_timeout: 5m</span><br><span class="line"></span><br><span class="line">route:</span><br><span class="line">  group_by: [&apos;alertname&apos;]</span><br><span class="line">  group_wait: 10s</span><br><span class="line">  group_interval: 10s</span><br><span class="line">  repeat_interval: 1h</span><br><span class="line">  receiver: &apos;web.test&apos;</span><br><span class="line">  routes:</span><br><span class="line">  - receiver: &apos;web.hook&apos;</span><br><span class="line">    match:</span><br><span class="line">      prom: http</span><br><span class="line">receivers:</span><br><span class="line">- name: &apos;web.hook&apos;</span><br><span class="line">  webhook_configs:</span><br><span class="line">  - url: &apos;http://127.0.0.1:8888&apos;</span><br><span class="line">- name: &apos;web.test&apos;</span><br><span class="line">  webhook_configs:</span><br><span class="line">  - url: &apos;http://127.0.0.1:88888&apos;</span><br><span class="line">inhibit_rules:</span><br><span class="line">  - source_match:</span><br><span class="line">      severity: &apos;critical&apos;</span><br><span class="line">    target_match:</span><br><span class="line">      severity: &apos;warning&apos;</span><br><span class="line">    equal: [&apos;alertname&apos;, &apos;dev&apos;, &apos;instance&apos;]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当alertmanger接收到标签为：prom:http的告警就触发 web.hook，当然也可以发邮件等操作</li>
+<li>更多告警参考官网例子：<a href="https://prometheus.io/docs/alerting/configuration/" target="_blank" rel="noopener">https://prometheus.io/docs/alerting/configuration/</a></li>
+</ul>
+<p>如果发生了告警，alertmaneger界面会有记录</p>
+<p><img src="./img/prom/p6.png" alt></p>
+<h5 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h5><ul>
+<li>prometheus : <a href="https://prometheus.io/docs/prometheus/latest/installation/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/installation/</a></li>
+<li>exporter : <a href="https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations" target="_blank" rel="noopener">https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations</a></li>
+<li>alertmanger: <a href="https://prometheus.io/docs/alerting/alertmanager/" target="_blank" rel="noopener">https://prometheus.io/docs/alerting/alertmanager/</a></li>
+<li>prometheus rules : <a href="https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/</a></li>
+<li>grafana：<a href="http://docs.grafana.org/" target="_blank" rel="noopener">http://docs.grafana.org/</a></li>
 </ul>
 
           
@@ -1426,6 +1299,133 @@ docker run -d --name sonarqube \
 <li><a href="http://tool.oschina.net/commons?type=5" target="_blank" rel="noopener">http://tool.oschina.net/commons?type=5</a></li>
 </ul>
 </blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/java/" itemprop="url">java</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>递归<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class TestDemo &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">            System.out.println(sum(100));  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public static int sum(int num)&#123;  </span><br><span class="line">        <span class="keyword">if</span>(num == 1)&#123;  </span><br><span class="line">            <span class="built_in">return</span> 1;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="built_in">return</span> num + sum(num-1);  </span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<ul>
+<li>终止条件</li>
+<li>递归一下次参数</li>
+<li>返回递归函数</li>
+</ul>
 
           
         
