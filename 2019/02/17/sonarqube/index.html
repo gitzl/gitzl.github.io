@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/02/17/sonarqube/img/sonar/4.png">
 <meta property="og:image" content="http://yoursite.com/2019/02/17/sonarqube/img/sonar/6.png">
 <meta property="og:image" content="http://yoursite.com/2019/02/17/sonarqube/img/sonar/7.png">
-<meta property="og:updated_time" content="2019-02-17T08:20:34.930Z">
+<meta property="og:updated_time" content="2019-04-29T03:26:46.942Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sonarQube+jenkins持续审查">
 <meta name="twitter:description" content="SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助 基于Docker部署sonarQube  //安装psql 创建数据库：sonar docker run --name postgresqldb -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres docker exec">
@@ -316,13 +316,14 @@ psql -Uroot -droot
 \l
 create database sonar;
 
-//安装sonarqube 
-docker run -d --name sonarqube \
-    -p 8001:9000 -p 8093:9092 \
+//安装sonarqube
+docker run --name sonarqube \
+    --link postgresqldb \
     -e SONARQUBE_JDBC_USERNAME=root \
     -e SONARQUBE_JDBC_PASSWORD=root \
-    -e SONARQUBE_JDBC_URL=jdbc:postgresql://172.17.0.4:5432/sonar \
-    sonarqube
+    -e SONARQUBE_JDBC_URL=jdbc:postgresql://postgresqldb:5432/sonar \
+    -p 9000:9000 -d sonarqube
+
 
 * IP:8001 访问 默认sonarqube用户和密码：admin
 
@@ -368,8 +369,8 @@ docker run -d --name sonarqube \
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/17/http_status/" rel="next" title="HTTP状态码">
-                <i class="fa fa-chevron-left"></i> HTTP状态码
+              <a href="/2019/02/17/prometheus/" rel="next" title="prometheus+grafana+alertmanger - 监控方案">
+                <i class="fa fa-chevron-left"></i> prometheus+grafana+alertmanger - 监控方案
               </a>
             
           </div>
@@ -378,8 +379,8 @@ docker run -d --name sonarqube \
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/17/prometheus/" rel="prev" title="prometheus+grafana+alertmanger - 监控方案">
-                prometheus+grafana+alertmanger - 监控方案 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/project/" rel="prev" title="项目管理工具">
+                项目管理工具 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

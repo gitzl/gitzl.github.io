@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="备份  12mysqldump  -uroot  -p  --all-databases&amp;gt;backup.sqlmysqldump  -uroot  -p  --databases dbname1 dbname2&amp;gt;backup.sql  恢复  1mysql  -uroot  -p  &amp;lt;backup.sql  排查最大连接数  123show global status like">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-26T08:39:34.553Z">
+<meta property="og:updated_time" content="2019-05-10T07:24:48.999Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql">
 <meta name="twitter:description" content="备份  12mysqldump  -uroot  -p  --all-databases&amp;gt;backup.sqlmysqldump  -uroot  -p  --databases dbname1 dbname2&amp;gt;backup.sql  恢复  1mysql  -uroot  -p  &amp;lt;backup.sql  排查最大连接数  123show global status like">
@@ -315,6 +315,10 @@
 <p>导出mysql结构</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -h localhost -uroot -pwise2c2017 -d builderdb &gt; dump.sql</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mysql-用户授权</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &apos;permission&apos;@&apos;%&apos; IDENTIFIED BY &apos;permission&apos;; </span><br><span class="line">#创建用户 % 允许远程用户访问  用户名：permission 密码：permission</span><br><span class="line"></span><br><span class="line">show grants for permission;</span><br><span class="line">#查看permission用户的权限</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on bldr.* to permission@&apos;%&apos;</span><br><span class="line">#给db中的 bldr数据库实例授权</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on *.* to permission@&apos;%&apos;</span><br><span class="line">#给全部数据库实例授权</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;permission&apos;@&apos;%&apos;</span><br><span class="line">#授予全部db权限</span><br><span class="line"></span><br><span class="line">revoke  select, insert, update, delete  on *.* from permission@&apos;%&apos;;</span><br><span class="line">#撤销权限</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -348,8 +352,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/18/zuul/" rel="prev" title="高并发下-Zuul参数调优">
-                高并发下-Zuul参数调优 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/podSchedule/" rel="prev" title="Kubernetes-项目中pod调度使用法则">
+                Kubernetes-项目中pod调度使用法则 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
