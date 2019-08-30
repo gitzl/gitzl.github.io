@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="备份  12mysqldump  -uroot  -p  --all-databases&amp;gt;backup.sqlmysqldump  -uroot  -p  --databases dbname1 dbname2&amp;gt;backup.sql  恢复  1mysql  -uroot  -p  &amp;lt;backup.sql  排查最大连接数  123show global status like">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-17T07:37:19.663Z">
+<meta property="og:updated_time" content="2019-08-09T03:43:39.424Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql">
 <meta name="twitter:description" content="备份  12mysqldump  -uroot  -p  --all-databases&amp;gt;backup.sqlmysqldump  -uroot  -p  --databases dbname1 dbname2&amp;gt;backup.sql  恢复  1mysql  -uroot  -p  &amp;lt;backup.sql  排查最大连接数  123show global status like">
@@ -324,6 +324,16 @@
 </blockquote>
 <h5 id="执行计划"><a href="#执行计划" class="headerlink" title="执行计划"></a>执行计划</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN select * from test; </span><br><span class="line">#查看sql执行计划</span><br></pre></td></tr></table></figure>
 <h5 id="慢日志"><a href="#慢日志" class="headerlink" title="慢日志"></a>慢日志</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 慢日志参数</span><br><span class="line">slow_query_log                  # 是否开启慢查询日志 1:开启 0 关闭</span><br><span class="line">slow-query-log-file             # 慢日志输出的路径</span><br><span class="line">long_query_time                 # 设置慢查询时间阈值 1 表示1秒</span><br><span class="line">log_queries_not_using_indexes   # 查询为使用索引 被记录</span><br><span class="line">log_output                      # 日志存储的方式 默认：FILE  可以是： FILE,TABLE</span><br><span class="line"></span><br><span class="line"># 命令更新参数</span><br><span class="line">set global slow_query_log = 1   </span><br><span class="line">show variables like &apos;%slow_query%&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="db权限说明"><a href="#db权限说明" class="headerlink" title="db权限说明"></a>db权限说明</h4><blockquote>
+<p>所有库都需要都权限</p>
+<ul>
+<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES on dbname.* to permission@’%’<br>第三方组件 grafana 权限 （需要DROP权限）</li>
+<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES，DROP on dbname.* to permission@’%’<br>autocommit (需要开启)</li>
+<li>set global autocommit = 1 </li>
+</ul>
+</blockquote>
+<h4 id="查看mysql-链接数状态"><a href="#查看mysql-链接数状态" class="headerlink" title="查看mysql 链接数状态"></a>查看mysql 链接数状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show processlist</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -347,8 +357,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/17/sonarqube/" rel="next" title="sonarQube+jenkins持续审查">
-                <i class="fa fa-chevron-left"></i> sonarQube+jenkins持续审查
+              <a href="/2019/02/17/prometheus/" rel="next" title="prometheus+grafana+alertmanger - 监控方案">
+                <i class="fa fa-chevron-left"></i> prometheus+grafana+alertmanger - 监控方案
               </a>
             
           </div>
@@ -357,8 +367,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/18/zuul/" rel="prev" title="高并发下-Zuul参数调优">
-                高并发下-Zuul参数调优 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/sonarqube/" rel="prev" title="sonarQube+jenkins持续审查">
+                sonarQube+jenkins持续审查 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -436,7 +446,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -473,7 +483,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#执行计划"><span class="nav-number">1.</span> <span class="nav-text">执行计划</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#慢日志"><span class="nav-number">2.</span> <span class="nav-text">慢日志</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#执行计划"><span class="nav-number">1.</span> <span class="nav-text">执行计划</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#慢日志"><span class="nav-number">2.</span> <span class="nav-text">慢日志</span></a></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#db权限说明"><span class="nav-number"></span> <span class="nav-text">db权限说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看mysql-链接数状态"><span class="nav-number"></span> <span class="nav-text">查看mysql 链接数状态</span></a></li></div>
             
 
           </div>

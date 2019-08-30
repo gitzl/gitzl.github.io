@@ -229,6 +229,278 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/jenkinsPlugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/jenkinsPlugin/" itemprop="url">从0到1开启jenkins插件开发之路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍.</p>
+<h5 id="主要内容包括"><a href="#主要内容包括" class="headerlink" title="主要内容包括"></a>主要内容包括</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 创建jenkins插件项目</span><br><span class="line">- 项目源码分析</span><br><span class="line">- jelly界面开发</span><br><span class="line">- 插件运行、打包、离线安装</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/17/jenkinsPlugin/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/linux/" itemprop="url">Linux</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>查看操作系统信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br><span class="line">cat /proc/version</span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a</span><br><span class="line"></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"physical id"</span>|sort |uniq|wc -l <span class="comment">#物理cpu个数 （wc -l 计数）</span></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"processor"</span>|wc -l <span class="comment">#逻辑cpu个数</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>centos crontab操作<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat /ect/crontab</span><br><span class="line">crontab -e</span><br><span class="line">* * * * * date &gt;&gt; /home/date1.txt　　测试例子</span><br><span class="line">crontab -l 查看</span><br><span class="line">crontab -r 终止</span><br><span class="line">/sbin/service crond start</span><br><span class="line">/sbin/service crond stop</span><br><span class="line">/sbin/service crond restart</span><br><span class="line">/sbin/service crond reload</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>vi/vim 常用命令</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">x  删除当前光标所在处的字符</span><br><span class="line">u  撤销，恢复到上一次操作</span><br><span class="line">e / enter  下一行</span><br><span class="line">h   一行向前移动</span><br><span class="line">dd 删除当前行</span><br><span class="line">/<span class="built_in">test</span>  查找(<span class="built_in">test</span>), n 继续查找<span class="built_in">test</span> </span><br><span class="line"></span><br><span class="line">yy 复制一行</span><br><span class="line">p  在游标后面粘贴</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>操作文件</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">df -h     查看磁盘使用状态       </span><br><span class="line">df -a -lh 查看全部磁盘使用情况  </span><br><span class="line">ls -lh    查看文件大小             </span><br><span class="line">du -a     列出所有文件              </span><br><span class="line">fdisk -l  列出磁盘信息         </span><br><span class="line">du -sh *  查看目录下全部文件的大小</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>yum 命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum update  xx</span><br><span class="line">yum install xx</span><br><span class="line">yum search  xx</span><br><span class="line">yum remove  xx</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>Linux分屏工具tmux<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl+b 松开  % 面板分屏</span><br><span class="line">ctrl+b  o 切换</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>web开发命令</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -I  http://www.baidu.com      </span><br><span class="line">tar -xf  xxx.tar</span><br><span class="line">tar -xzf xxx.tar.gz  解压          </span><br><span class="line">top 监控        </span><br><span class="line">touch 创建文件              </span><br><span class="line">mkdir 创建目录        </span><br><span class="line">rm -rf 删除        </span><br><span class="line">cp -r xxx/xx/ .      </span><br><span class="line">mv xxx/xx  yyy/yy 移动       </span><br><span class="line">cat xxx.sh 显示       </span><br><span class="line">| wc -l  统计数量</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 查询命令</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sort test.txt  <span class="comment">#排序</span></span><br><span class="line">awk <span class="string">'&#123;print $1, $2&#125;'</span> <span class="comment">#提取</span></span><br><span class="line">grep  <span class="comment">#管道筛选</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/metting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -420,149 +692,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/linux/" itemprop="url">Linux</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>查看操作系统信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br><span class="line">cat /proc/version</span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>centos crontab操作<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat /ect/crontab</span><br><span class="line">crontab -e</span><br><span class="line">* * * * * date &gt;&gt; /home/date1.txt　　测试例子</span><br><span class="line">crontab -l 查看</span><br><span class="line">crontab -r 终止</span><br><span class="line">/sbin/service crond start</span><br><span class="line">/sbin/service crond stop</span><br><span class="line">/sbin/service crond restart</span><br><span class="line">/sbin/service crond reload</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>vi/vim 常用命令</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">x  删除当前光标所在处的字符</span><br><span class="line">u  撤销，恢复到上一次操作</span><br><span class="line">e / enter  下一行</span><br><span class="line">h   一行向前移动</span><br><span class="line">dd 删除当前行</span><br><span class="line">/<span class="built_in">test</span>  查找(<span class="built_in">test</span>), n 继续查找<span class="built_in">test</span> </span><br><span class="line"></span><br><span class="line">yy 复制一行</span><br><span class="line">p  在游标后面粘贴</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>操作文件</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">df -h     查看磁盘使用状态       </span><br><span class="line">df -a -lh 查看全部磁盘使用情况  </span><br><span class="line">ls -lh    查看文件大小             </span><br><span class="line">du -a     列出所有文件              </span><br><span class="line">fdisk -l  列出磁盘信息         </span><br><span class="line">du -sh *  查看目录下全部文件的大小</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>yum 命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum update  xx</span><br><span class="line">yum install xx</span><br><span class="line">yum search  xx</span><br><span class="line">yum remove  xx</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>Linux分屏工具tmux<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl+b 松开  % 面板分屏</span><br><span class="line">ctrl+b  o 切换</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>web开发命令</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -I  http://www.baidu.com      </span><br><span class="line">tar -xf  xxx.tar</span><br><span class="line">tar -xzf xxx.tar.gz  解压          </span><br><span class="line">top 监控        </span><br><span class="line">touch 创建文件              </span><br><span class="line">mkdir 创建目录        </span><br><span class="line">rm -rf 删除        </span><br><span class="line">cp -r xxx/xx/ .      </span><br><span class="line">mv xxx/xx  yyy/yy 移动       </span><br><span class="line">cat xxx.sh 显示       </span><br><span class="line">| wc -l  统计数量</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/front/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -641,130 +770,6 @@
 <li>ES6  <a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">http://es6.ruanyifeng.com/</a></li>
 <li>NPM <a href="https://www.npmjs.com/" target="_blank" rel="noopener">https://www.npmjs.com/</a></li>
 <li><a href="http://runjs.cn/" target="_blank" rel="noopener">http://runjs.cn/</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/go/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/go/" itemprop="url">golang</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>MVC框架-beego <a href="https://beego.me/" target="_blank" rel="noopener">https://beego.me/</a></li>
-<li>路由框架-gorilla <a href="http://www.gorillatoolkit.org/" target="_blank" rel="noopener">http://www.gorillatoolkit.org/</a></li>
-<li>操作数据库-xorm  <a href="https://godoc.org/github.com/go-xorm/xorm" target="_blank" rel="noopener">https://godoc.org/github.com/go-xorm/xorm</a></li>
 </ul>
 
           
@@ -894,6 +899,130 @@
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/go/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/go/" itemprop="url">golang</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>MVC框架-beego <a href="https://beego.me/" target="_blank" rel="noopener">https://beego.me/</a></li>
+<li>路由框架-gorilla <a href="http://www.gorillatoolkit.org/" target="_blank" rel="noopener">http://www.gorillatoolkit.org/</a></li>
+<li>操作数据库-xorm  <a href="https://godoc.org/github.com/go-xorm/xorm" target="_blank" rel="noopener">https://godoc.org/github.com/go-xorm/xorm</a></li>
+</ul>
 
           
         
@@ -1240,261 +1369,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/devcommunity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/devcommunity/" itemprop="url">开发社区</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><a href="https://segmentfault.com/" target="_blank" rel="noopener">https://segmentfault.com/</a></li>
-<li><a href="https://www.oschina.net/" target="_blank" rel="noopener">https://www.oschina.net/</a></li>
-<li><a href="http://www.infoq.com/cn/" target="_blank" rel="noopener">http://www.infoq.com/cn/</a></li>
-<li><a href="http://www.importnew.com/" target="_blank" rel="noopener">http://www.importnew.com/</a></li>
-<li><a href="https://studygolang.com/" target="_blank" rel="noopener">https://studygolang.com/</a></li>
-</ul>
-<blockquote>
-<p>参考文章</p>
-</blockquote>
-<ul>
-<li><a href="http://www.ruanyifeng.com/blog/" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/</a>    阮一峰的网络日志</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/book/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/book/" itemprop="url">程序百科</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>EBook：<a href="https://github.com/EbookFoundation" target="_blank" rel="noopener">https://github.com/EbookFoundation</a></li>
-<li>在线工具：<a href="http://tool.oschina.net/" target="_blank" rel="noopener">http://tool.oschina.net/</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/ansible/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1638,6 +1512,133 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/auto/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/auto/" itemprop="url">自动化工具</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>CI-Jenkins <a href="https://jenkins.io/" target="_blank" rel="noopener">https://jenkins.io/</a></li>
+<li>自动化部署-ansible <a href="http://www.ansible.com.cn/index.html" target="_blank" rel="noopener">http://www.ansible.com.cn/index.html</a></li>
+<li>自动化测试-selenium  <a href="http://www.seleniumhq.org/" target="_blank" rel="noopener">http://www.seleniumhq.org/</a></li>
+</ul>
+<blockquote>
+<p>gitHub Top10 CI工具</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Travis CI</span><br><span class="line">Circle CI</span><br><span class="line">Jenkins</span><br><span class="line">AppVeyor</span><br><span class="line">CodeShip</span><br><span class="line">Drone</span><br><span class="line">Semaphore CI</span><br><span class="line">Buildkite</span><br><span class="line">Wercker</span><br><span class="line">TeamCity</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1688,7 +1689,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
