@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="Selenium GridSelenium Grid 是Selenium 组件之一，基于Selenium Grid可实现多节点分布式自动化测试。如图所示，分布式结构由中心节点和多个node代理节点组成。  123Hub: 中心节点服务，用于管理多个node节点，接受test client分配到测试任务然后分配多给多个node节点执行。node: 真正执行任务的节点服务，支持多种浏览器进行测试，如：">
+<meta name="description" content="本文分享技术的关键词 Selenium Grid  Selenium Grid 容器化 Demo演示（分布式自动化测试） 基础镜像  （python+selenium 依赖容器化）本文分享的内容目的是：将Selenium Grid 分布式测试完全容器化，大大提高部署分布式测试环境效率，减少环境依赖。最终实现：在容器环境中一键部署Selenium Grid，动态伸缩node节点，在基础镜像中执行测试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="selenium容器化-分布式测试">
+<meta property="og:title" content="selenium Grid容器化-分布式测试">
 <meta property="og:url" content="http://yoursite.com/2019/08/30/docker-selenium/index.html">
 <meta property="og:site_name" content="MC.KJ">
-<meta property="og:description" content="Selenium GridSelenium Grid 是Selenium 组件之一，基于Selenium Grid可实现多节点分布式自动化测试。如图所示，分布式结构由中心节点和多个node代理节点组成。  123Hub: 中心节点服务，用于管理多个node节点，接受test client分配到测试任务然后分配多给多个node节点执行。node: 真正执行任务的节点服务，支持多种浏览器进行测试，如：">
+<meta property="og:description" content="本文分享技术的关键词 Selenium Grid  Selenium Grid 容器化 Demo演示（分布式自动化测试） 基础镜像  （python+selenium 依赖容器化）本文分享的内容目的是：将Selenium Grid 分布式测试完全容器化，大大提高部署分布式测试环境效率，减少环境依赖。最终实现：在容器环境中一键部署Selenium Grid，动态伸缩node节点，在基础镜像中执行测试">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/08/30/docker-selenium/img/selenium/s-1.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/08/30/docker-selenium/img/selenium/s-2.jpg">
-<meta property="og:updated_time" content="2019-08-31T08:02:41.556Z">
+<meta property="og:updated_time" content="2019-08-31T09:07:41.472Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="selenium容器化-分布式测试">
-<meta name="twitter:description" content="Selenium GridSelenium Grid 是Selenium 组件之一，基于Selenium Grid可实现多节点分布式自动化测试。如图所示，分布式结构由中心节点和多个node代理节点组成。  123Hub: 中心节点服务，用于管理多个node节点，接受test client分配到测试任务然后分配多给多个node节点执行。node: 真正执行任务的节点服务，支持多种浏览器进行测试，如：">
+<meta name="twitter:title" content="selenium Grid容器化-分布式测试">
+<meta name="twitter:description" content="本文分享技术的关键词 Selenium Grid  Selenium Grid 容器化 Demo演示（分布式自动化测试） 基础镜像  （python+selenium 依赖容器化）本文分享的内容目的是：将Selenium Grid 分布式测试完全容器化，大大提高部署分布式测试环境效率，减少环境依赖。最终实现：在容器环境中一键部署Selenium Grid，动态伸缩node节点，在基础镜像中执行测试">
 <meta name="twitter:image" content="http://yoursite.com/2019/08/30/docker-selenium/img/selenium/s-1.jpg">
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <title>selenium容器化-分布式测试 | MC.KJ</title>
+  <title>selenium Grid容器化-分布式测试 | MC.KJ</title>
   
 
 
@@ -252,7 +252,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">selenium容器化-分布式测试</h1>
+          <h1 class="post-title" itemprop="name headline">selenium Grid容器化-分布式测试</h1>
         
 
         <div class="post-meta">
@@ -302,7 +302,12 @@
       
 
       
-        <h4 id="Selenium-Grid"><a href="#Selenium-Grid" class="headerlink" title="Selenium Grid"></a>Selenium Grid</h4><p>Selenium Grid 是Selenium 组件之一，基于Selenium Grid可实现多节点分布式自动化测试。<br>如图所示，分布式结构由中心节点和多个node代理节点组成。</p>
+        <h4 id="本文分享技术的关键词"><a href="#本文分享技术的关键词" class="headerlink" title="本文分享技术的关键词"></a>本文分享技术的关键词</h4><ul>
+<li>Selenium Grid </li>
+<li>Selenium Grid 容器化</li>
+<li>Demo演示（分布式自动化测试）</li>
+<li>基础镜像  （python+selenium 依赖容器化）<br>本文分享的内容目的是：将Selenium Grid 分布式测试完全容器化，大大提高部署分布式测试环境效率，减少环境依赖。<br>最终实现：在容器环境中一键部署Selenium Grid，动态伸缩node节点，在基础镜像中执行测试脚本。<h4 id="Selenium-Grid"><a href="#Selenium-Grid" class="headerlink" title="Selenium Grid"></a>Selenium Grid</h4> Selenium作为web应用程序自动化测试利器之一，它支持多种客户端脚本（如：Java,Python,JavaScript等），并且可运行在多种浏览器中（如：chrome,firefox, ie等）。<br>Selenium经常被用于测试web应用程序在不同浏览器的兼容性。在企业级自动化测试中，常常使用Selenium的组件Selenium Grid实现多节点分布式自动化测试。Selenium Grid由中心服务Hub和多个node节点组成，node节点必须注册到Hub服务中。传统到部署比较繁琐和费时，本文将介绍使用docker-compose一键部署Selenium Grid分布式测试环境。</li>
+</ul>
 <p><img src="./img/selenium/s-1.jpg" alt="image"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hub: 中心节点服务，用于管理多个node节点，接受test client分配到测试任务然后分配多给多个node节点执行。</span><br><span class="line">node: 真正执行任务的节点服务，支持多种浏览器进行测试，如：chrome firefox, node服务需注册到Hub中心服务，由中心服务统一分发任务。</span><br><span class="line">Test Client: 这里是抽象概念，可理解为执行测试逻辑到客户端（代码），client 客户端需连接到Hub服务，执行测试脚本时由Hub中心服务统一分发给node节点进行执行。</span><br></pre></td></tr></table></figure>
 <h4 id="docker-selenium"><a href="#docker-selenium" class="headerlink" title="docker-selenium"></a>docker-selenium</h4><p>基于docker快速部署Selenium Grid分布式环境。</p>
@@ -323,14 +328,15 @@
 <li>selenium 测试脚本支持：Java Python JavaScript Ruby</li>
 <li>更多请参考：<a href="https://seleniumhq.github.io/docs/site/en/" target="_blank" rel="noopener">https://seleniumhq.github.io/docs/site/en/</a></li>
 </ul>
-<h4 id="基础镜像"><a href="#基础镜像" class="headerlink" title="基础镜像"></a>基础镜像</h4><p>Demo演示需要依赖python以及selenium，才能执行测试脚本。试想如果我们把该测试脚本放到不同环境中，都需要安装一次python和elenium，很是繁琐。我们可以考虑将测试脚本需要都依赖做成一个基础镜像。</p>
+<h4 id="基础镜像"><a href="#基础镜像" class="headerlink" title="基础镜像"></a>基础镜像</h4><p>Demo演示需要依赖python以及selenium，才能执行测试脚本。试想如果我们把该测试脚本放到不同环境中，都需要安装一次python和elenium，很是繁琐。我们可以考虑将测试脚本需要的依赖做成一个基础镜像。</p>
 <p>step-1: 编写Dockerfile</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM python:3</span><br><span class="line">COPY test.py ./</span><br><span class="line">RUN pip install selenium</span><br><span class="line">CMD [ &quot;python3&quot;, &quot;./test.py&quot; ]</span><br></pre></td></tr></table></figure>
 <p>step-2: 制作image</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t  selenium-base:latest .</span><br><span class="line">#在Dockerfile所在目录执行如上命令， 镜像名为：selenium-base</span><br></pre></td></tr></table></figure>
 <p>step-3:使用基础镜像运行测试脚本</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -it  --net=host selenium-base</span><br><span class="line">#执行成功输出：百度一下，你就知道</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><p>docker-selenium-github: <a href="https://github.com/SeleniumHQ/docker-selenium/wiki/Getting-Started-with-Docker-Compose" target="_blank" rel="noopener">https://github.com/SeleniumHQ/docker-selenium/wiki/Getting-Started-with-Docker-Compose</a><br>python-dockerHub:<a href="https://hub.docker.com/_/python" target="_blank" rel="noopener">https://hub.docker.com/_/python</a><br>selenium-grid:<a href="https://seleniumhq.github.io/docs/site/en/grid/components_of_a_grid/" target="_blank" rel="noopener">https://seleniumhq.github.io/docs/site/en/grid/components_of_a_grid/</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文介绍了使用docker-compose一键拉起Selenium Grid分布式测试环境，简单python脚本Demo执行自动化测试，最后将python的依赖统一做成基础镜像，演示了从部署到执行脚本完全容器化到流程。例子很简单，旨在提供一种容器化思路。当部署程序很繁琐且需要重复进行，都可以考虑将其容器化。</p>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><p>docker-selenium-github:<a href="https://github.com/SeleniumHQ/docker-selenium/wiki/Getting-Started-with-Docker-Compose" target="_blank" rel="noopener">https://github.com/SeleniumHQ/docker-selenium/wiki/Getting-Started-with-Docker-Compose</a><br>python-dockerHub:<a href="https://hub.docker.com/_/python" target="_blank" rel="noopener">https://hub.docker.com/_/python</a><br>selenium-grid:<a href="https://seleniumhq.github.io/docs/site/en/grid/components_of_a_grid/" target="_blank" rel="noopener">https://seleniumhq.github.io/docs/site/en/grid/components_of_a_grid/</a></p>
 
       
     </div>
@@ -477,7 +483,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Selenium-Grid"><span class="nav-number">1.</span> <span class="nav-text">Selenium Grid</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-selenium"><span class="nav-number">2.</span> <span class="nav-text">docker-selenium</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Demo演示"><span class="nav-number">3.</span> <span class="nav-text">Demo演示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基础镜像"><span class="nav-number">4.</span> <span class="nav-text">基础镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#本文分享技术的关键词"><span class="nav-number">1.</span> <span class="nav-text">本文分享技术的关键词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Selenium-Grid"><span class="nav-number">2.</span> <span class="nav-text">Selenium Grid</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-selenium"><span class="nav-number">3.</span> <span class="nav-text">docker-selenium</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Demo演示"><span class="nav-number">4.</span> <span class="nav-text">Demo演示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基础镜像"><span class="nav-number">5.</span> <span class="nav-text">基础镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档"><span class="nav-number">7.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
             
 
           </div>
