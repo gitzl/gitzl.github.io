@@ -300,10 +300,10 @@
       
         
           
-            <h6 id="Selenium-Grid"><a href="#Selenium-Grid" class="headerlink" title="Selenium Grid"></a>Selenium Grid</h6><p>Selenium Grid 是Selenium 组件之一，基于Selenium Grid可实现多节点分布式自动化测试。<br>如图所示，分布式结构由中心节点和多个node代理节点组成。</p>
+            <h5 id="Selenium-Grid"><a href="#Selenium-Grid" class="headerlink" title="Selenium Grid"></a>Selenium Grid</h5><p>Selenium Grid 是Selenium 组件之一，基于Selenium Grid可实现多节点分布式自动化测试。<br>如图所示，分布式结构由中心节点和多个node代理节点组成。</p>
 <p><img src="./img/selenium/s-1.jpg" alt="image"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hub: 中心节点服务，用于管理多个node节点，接受test client分配到测试任务然后分配多给多个node节点执行。</span><br><span class="line">node: 真正执行任务的节点服务，支持多种浏览器进行测试，如：chrome firefox, node服务需注册到Hub中心服务，由中心服务统一分发任务。</span><br><span class="line">Test Client: 这里是抽象概念，可理解为执行测试逻辑到客户端（代码），client 客户端需连接到Hub服务，执行测试脚本时由Hub中心服务统一分发给node节点进行执行。</span><br></pre></td></tr></table></figure>
-<h6 id="docker-selenium"><a href="#docker-selenium" class="headerlink" title="docker-selenium"></a>docker-selenium</h6><p>基于docker快速部署Selenium Grid分布式环境。</p>
+<h5 id="docker-selenium"><a href="#docker-selenium" class="headerlink" title="docker-selenium"></a>docker-selenium</h5><p>基于docker快速部署Selenium Grid分布式环境。</p>
 <p>step-1: 环境准备</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker  --version         #确认已安装docker</span><br><span class="line">docker-compose  --version #确认已安装docker-compose</span><br><span class="line"></span><br><span class="line">如未安装请参考：</span><br><span class="line">https://docs.docker.com/install/         #先安装docker</span><br><span class="line">https://docs.docker.com/compose/install/ #安装docker-compose</span><br></pre></td></tr></table></figure>
 <p>step-2: docker-compose一键拉起Hub和node</p>
@@ -314,14 +314,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker-compose scale chrome=3    #指定支持chrome节点的实例数量</span><br><span class="line">docker-compose scale firefox=3   #指定支持firefox节点的实例数量</span><br></pre></td></tr></table></figure>
 <p>step-5: 访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:4444/grid/console #访问Hub，能看到node节点都已注册上。</span><br></pre></td></tr></table></figure></p>
 <p><img src="./img/selenium/s-2.jpg" alt="image"></p>
-<h6 id="Demo演示"><a href="#Demo演示" class="headerlink" title="Demo演示"></a>Demo演示</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver.common.desired_capabilities import DesiredCapabilities</span><br><span class="line"></span><br><span class="line">chrome = webdriver.Remote(</span><br><span class="line">          command_executor=&apos;http://localhost:4444/wd/hub&apos;,</span><br><span class="line">          desired_capabilities=DesiredCapabilities.CHROME)</span><br><span class="line">firefox = webdriver.Remote(</span><br><span class="line">          command_executor=&apos;http://localhost:4444/wd/hub&apos;,</span><br><span class="line">          desired_capabilities=DesiredCapabilities.FIREFOX)</span><br><span class="line"></span><br><span class="line">chrome.get(&apos;https://www.baidu.com&apos;)</span><br><span class="line">print(chrome.title)</span><br><span class="line"></span><br><span class="line">firefox.get(&apos;https://www.baidu.com&apos;)</span><br><span class="line">print(firefox.title)</span><br></pre></td></tr></table></figure>
+<h5 id="Demo演示"><a href="#Demo演示" class="headerlink" title="Demo演示"></a>Demo演示</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver.common.desired_capabilities import DesiredCapabilities</span><br><span class="line"></span><br><span class="line">chrome = webdriver.Remote(</span><br><span class="line">          command_executor=&apos;http://localhost:4444/wd/hub&apos;,</span><br><span class="line">          desired_capabilities=DesiredCapabilities.CHROME)</span><br><span class="line">firefox = webdriver.Remote(</span><br><span class="line">          command_executor=&apos;http://localhost:4444/wd/hub&apos;,</span><br><span class="line">          desired_capabilities=DesiredCapabilities.FIREFOX)</span><br><span class="line"></span><br><span class="line">chrome.get(&apos;https://www.baidu.com&apos;)</span><br><span class="line">print(chrome.title)</span><br><span class="line"></span><br><span class="line">firefox.get(&apos;https://www.baidu.com&apos;)</span><br><span class="line">print(firefox.title)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>测试客户端代码指向Hub中心服务：<a href="http://localhost:4444/wd/hub&#39;" target="_blank" rel="noopener">http://localhost:4444/wd/hub&#39;</a></li>
 <li>将如上测试脚本另存为：test.py, 执行：python test.py 。执行成功输出：百度一下，你就知道。</li>
 <li>selenium 测试脚本支持：Java Python JavaScript Ruby</li>
 <li>更多请参考：<a href="https://seleniumhq.github.io/docs/site/en/" target="_blank" rel="noopener">https://seleniumhq.github.io/docs/site/en/</a></li>
 </ul>
-<h6 id="基础镜像"><a href="#基础镜像" class="headerlink" title="基础镜像"></a>基础镜像</h6><p>Demo演示需要依赖python以及selenium，才能执行测试脚本。试想如果我们把该测试脚本放到不同环境中，都需要安装一次python和elenium，很是繁琐。我们可以考虑将测试脚本需要都依赖做成一个基础镜像。</p>
+<h5 id="基础镜像"><a href="#基础镜像" class="headerlink" title="基础镜像"></a>基础镜像</h5><p>Demo演示需要依赖python以及selenium，才能执行测试脚本。试想如果我们把该测试脚本放到不同环境中，都需要安装一次python和elenium，很是繁琐。我们可以考虑将测试脚本需要都依赖做成一个基础镜像。</p>
 <p>step-1: 编写Dockerfile</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM python:3</span><br><span class="line">COPY test.py ./</span><br><span class="line">RUN pip install selenium</span><br><span class="line">CMD [ &quot;python3&quot;, &quot;./test.py&quot; ]</span><br></pre></td></tr></table></figure>
 <p>step-2: 制作image</p>
@@ -569,7 +569,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/mysql/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/podSchedule/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -588,7 +588,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/mysql/" itemprop="url">mysql</a></h1>
+                <a class="post-title-link" href="/2019/02/17/podSchedule/" itemprop="url">Kubernetes-项目中pod调度使用法则</a></h1>
         
 
         <div class="post-meta">
@@ -639,43 +639,15 @@
 
       
         
-          
-            <blockquote>
-<p>备份</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqldump  -uroot  -p  --all-databases&gt;backup.sql</span><br><span class="line">mysqldump  -uroot  -p  --databases dbname1 dbname2&gt;backup.sql</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>恢复</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql  -uroot  -p  &lt;backup.sql</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>排查最大连接数</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show global status like &apos;Max_used_connections&apos;; 查询设置的最大连接数</span><br><span class="line">show variables like &apos;%max_connections%&apos;;  查询历史最大连接数</span><br><span class="line">set GLOBAL max_connections=256; 更新最大连接数</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>导出mysql结构</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -h localhost -uroot -pwise2c2017 -d builderdb &gt; dump.sql</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>mysql-用户授权</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &apos;permission&apos;@&apos;%&apos; IDENTIFIED BY &apos;permission&apos;; </span><br><span class="line">#创建用户 % 允许远程用户访问  用户名：permission 密码：permission</span><br><span class="line"></span><br><span class="line">show grants for permission;</span><br><span class="line">#查看permission用户的权限</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on bldr.* to permission@&apos;%&apos;</span><br><span class="line">#给db中的 bldr数据库实例授权</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on *.* to permission@&apos;%&apos;</span><br><span class="line">#给全部数据库实例授权</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;permission&apos;@&apos;%&apos;</span><br><span class="line">#授予全部db权限</span><br><span class="line"></span><br><span class="line">revoke  select, insert, update, delete  on *.* from permission@&apos;%&apos;;</span><br><span class="line">#撤销权限</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>mysql-问题排查</p>
-</blockquote>
-<h5 id="执行计划"><a href="#执行计划" class="headerlink" title="执行计划"></a>执行计划</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN select * from test; </span><br><span class="line">#查看sql执行计划</span><br></pre></td></tr></table></figure>
-<h5 id="慢日志"><a href="#慢日志" class="headerlink" title="慢日志"></a>慢日志</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 慢日志参数</span><br><span class="line">slow_query_log                  # 是否开启慢查询日志 1:开启 0 关闭</span><br><span class="line">slow-query-log-file             # 慢日志输出的路径</span><br><span class="line">long_query_time                 # 设置慢查询时间阈值 1 表示1秒</span><br><span class="line">log_queries_not_using_indexes   # 查询为使用索引 被记录</span><br><span class="line">log_output                      # 日志存储的方式 默认：FILE  可以是： FILE,TABLE</span><br><span class="line"></span><br><span class="line"># 命令更新参数</span><br><span class="line">set global slow_query_log = 1   </span><br><span class="line">show variables like &apos;%slow_query%&apos;</span><br></pre></td></tr></table></figure>
-<h4 id="db权限说明"><a href="#db权限说明" class="headerlink" title="db权限说明"></a>db权限说明</h4><blockquote>
-<p>所有库都需要都权限</p>
-<ul>
-<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES on dbname.* to permission@’%’<br>第三方组件 grafana 权限 （需要DROP权限）</li>
-<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES，DROP on dbname.* to permission@’%’<br>autocommit (需要开启)</li>
-<li>set global autocommit = 1 </li>
-</ul>
-</blockquote>
-<h4 id="查看mysql-链接数状态"><a href="#查看mysql-链接数状态" class="headerlink" title="查看mysql 链接数状态"></a>查看mysql 链接数状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show processlist</span><br></pre></td></tr></table></figure>
-
-          
+          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>kubernetes中部署的pod默认根据资源使用情况自动调度到某个节点。可在实际项目的使用场景中都会有更细粒度的调度需求，比如：某些pod调度到指定主机、某几个相关的服务的pod最好调度到一个节点上、Master节点不允许某些pod调度等。使用kubernetes中的节点调度、节点亲和性、pod亲和性、污点与容忍可以灵活的完成pod调度，从而满足项目中较为复杂的调度需求。下面用一些项目中的使用场景聊聊pod调度使用法则。</p>
+<h5 id="pod调度主要包含以下内容"><a href="#pod调度主要包含以下内容" class="headerlink" title="pod调度主要包含以下内容"></a>pod调度主要包含以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- nodeSelector</span><br><span class="line">- nodeAffinity</span><br><span class="line">- podAffinity</span><br><span class="line">- Taints &amp; tolerations(污点与容忍)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/17/podSchedule/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -880,7 +852,7 @@ docker run --name sonarqube \
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/project/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -899,7 +871,7 @@ docker run --name sonarqube \
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/project/" itemprop="url">项目管理工具</a></h1>
+                <a class="post-title-link" href="/2019/02/17/mysql/" itemprop="url">mysql</a></h1>
         
 
         <div class="post-meta">
@@ -952,151 +924,41 @@ docker run --name sonarqube \
         
           
             <blockquote>
-<p>进度管理</p>
+<p>备份</p>
 </blockquote>
-<ul>
-<li>trello：<a href="https://trello.com/" target="_blank" rel="noopener">https://trello.com/</a> 看板进度管理</li>
-<li>jiara ：<a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener">https://www.atlassian.com/software/jira</a></li>
-</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqldump  -uroot  -p  --all-databases&gt;backup.sql</span><br><span class="line">mysqldump  -uroot  -p  --databases dbname1 dbname2&gt;backup.sql</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>企业wiki</p>
+<p>恢复</p>
 </blockquote>
-<ul>
-<li>confluenec : <a href="https://www.atlassian.com/software/confluence" target="_blank" rel="noopener">https://www.atlassian.com/software/confluence</a></li>
-</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql  -uroot  -p  &lt;backup.sql</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>会议</p>
+<p>排查最大连接数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show global status like &apos;Max_used_connections&apos;; 查询设置的最大连接数</span><br><span class="line">show variables like &apos;%max_connections%&apos;;  查询历史最大连接数</span><br><span class="line">set GLOBAL max_connections=256; 更新最大连接数</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>导出mysql结构</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -h localhost -uroot -pwise2c2017 -d builderdb &gt; dump.sql</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mysql-用户授权</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &apos;permission&apos;@&apos;%&apos; IDENTIFIED BY &apos;permission&apos;; </span><br><span class="line">#创建用户 % 允许远程用户访问  用户名：permission 密码：permission</span><br><span class="line"></span><br><span class="line">show grants for permission;</span><br><span class="line">#查看permission用户的权限</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on bldr.* to permission@&apos;%&apos;</span><br><span class="line">#给db中的 bldr数据库实例授权</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on *.* to permission@&apos;%&apos;</span><br><span class="line">#给全部数据库实例授权</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;permission&apos;@&apos;%&apos;</span><br><span class="line">#授予全部db权限</span><br><span class="line"></span><br><span class="line">revoke  select, insert, update, delete  on *.* from permission@&apos;%&apos;;</span><br><span class="line">#撤销权限</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mysql-问题排查</p>
+</blockquote>
+<h5 id="执行计划"><a href="#执行计划" class="headerlink" title="执行计划"></a>执行计划</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN select * from test; </span><br><span class="line">#查看sql执行计划</span><br></pre></td></tr></table></figure>
+<h5 id="慢日志"><a href="#慢日志" class="headerlink" title="慢日志"></a>慢日志</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 慢日志参数</span><br><span class="line">slow_query_log                  # 是否开启慢查询日志 1:开启 0 关闭</span><br><span class="line">slow-query-log-file             # 慢日志输出的路径</span><br><span class="line">long_query_time                 # 设置慢查询时间阈值 1 表示1秒</span><br><span class="line">log_queries_not_using_indexes   # 查询为使用索引 被记录</span><br><span class="line">log_output                      # 日志存储的方式 默认：FILE  可以是： FILE,TABLE</span><br><span class="line"></span><br><span class="line"># 命令更新参数</span><br><span class="line">set global slow_query_log = 1   </span><br><span class="line">show variables like &apos;%slow_query%&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="db权限说明"><a href="#db权限说明" class="headerlink" title="db权限说明"></a>db权限说明</h4><blockquote>
+<p>所有库都需要都权限</p>
 <ul>
-<li><a href="https://zoom.us/" target="_blank" rel="noopener">https://zoom.us/</a></li>
+<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES on dbname.* to permission@’%’<br>第三方组件 grafana 权限 （需要DROP权限）</li>
+<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES，DROP on dbname.* to permission@’%’<br>autocommit (需要开启)</li>
+<li>set global autocommit = 1 </li>
 </ul>
 </blockquote>
+<h4 id="查看mysql-链接数状态"><a href="#查看mysql-链接数状态" class="headerlink" title="查看mysql 链接数状态"></a>查看mysql 链接数状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show processlist</span><br></pre></td></tr></table></figure>
 
           
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/podSchedule/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/podSchedule/" itemprop="url">Kubernetes-项目中pod调度使用法则</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>kubernetes中部署的pod默认根据资源使用情况自动调度到某个节点。可在实际项目的使用场景中都会有更细粒度的调度需求，比如：某些pod调度到指定主机、某几个相关的服务的pod最好调度到一个节点上、Master节点不允许某些pod调度等。使用kubernetes中的节点调度、节点亲和性、pod亲和性、污点与容忍可以灵活的完成pod调度，从而满足项目中较为复杂的调度需求。下面用一些项目中的使用场景聊聊pod调度使用法则。</p>
-<h5 id="pod调度主要包含以下内容"><a href="#pod调度主要包含以下内容" class="headerlink" title="pod调度主要包含以下内容"></a>pod调度主要包含以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- nodeSelector</span><br><span class="line">- nodeAffinity</span><br><span class="line">- podAffinity</span><br><span class="line">- Taints &amp; tolerations(污点与容忍)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/17/podSchedule/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
         
       
     </div>
@@ -1275,6 +1137,144 @@ docker run --name sonarqube \
 <li>prometheus rules : <a href="https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/</a></li>
 <li>grafana：<a href="http://docs.grafana.org/" target="_blank" rel="noopener">http://docs.grafana.org/</a></li>
 </ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/project/" itemprop="url">项目管理工具</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>进度管理</p>
+</blockquote>
+<ul>
+<li>trello：<a href="https://trello.com/" target="_blank" rel="noopener">https://trello.com/</a> 看板进度管理</li>
+<li>jiara ：<a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener">https://www.atlassian.com/software/jira</a></li>
+</ul>
+<blockquote>
+<p>企业wiki</p>
+</blockquote>
+<ul>
+<li>confluenec : <a href="https://www.atlassian.com/software/confluence" target="_blank" rel="noopener">https://www.atlassian.com/software/confluence</a></li>
+</ul>
+<blockquote>
+<p>会议</p>
+<ul>
+<li><a href="https://zoom.us/" target="_blank" rel="noopener">https://zoom.us/</a></li>
+</ul>
+</blockquote>
 
           
         
@@ -1642,7 +1642,7 @@ docker run --name sonarqube \
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/metting/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/hexo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -1661,7 +1661,7 @@ docker run --name sonarqube \
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/metting/" itemprop="url">敏捷开发-会议</a></h1>
+                <a class="post-title-link" href="/2019/02/17/hexo/" itemprop="url">hexo+github搭建博客以及主题更换</a></h1>
         
 
         <div class="post-meta">
@@ -1713,78 +1713,86 @@ docker run --name sonarqube \
       
         
           
-            <h2 id="敏捷开发-会议"><a href="#敏捷开发-会议" class="headerlink" title="敏捷开发-会议"></a>敏捷开发-会议</h2><p>团队在执行Scrum的时候将举行以下会议，每种会议都有其独特的意义和达到的目的，最终实现及时反馈和收集问题，团队一起督促团队成长，顺利推进项目进度。</p>
-<table>
-<thead>
-<tr>
-<th>会议名</th>
-<th>说明</th>
-<th>用途</th>
-<th>持续时间</th>
-<th>次数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>sprint plan meeting</td>
-<td>迭代计划会议</td>
-<td>梳理迭代任务</td>
-<td>2小时</td>
-<td>2周一次</td>
-</tr>
-<tr>
-<td>daily srcum meeting</td>
-<td>每日站会</td>
-<td>了解团队成员每天研发任务</td>
-<td>15分钟</td>
-<td>每天一次</td>
-</tr>
-<tr>
-<td>spring review meeting</td>
-<td>中期review会议</td>
-<td>中期show case</td>
-<td>1小时</td>
-<td>每2周一次</td>
-</tr>
-<tr>
-<td>spring reto metting</td>
-<td>回顾会议</td>
-<td>总结上个迭代的工作</td>
-<td>2小时</td>
-<td>每2周一次</td>
-</tr>
-</tbody>
-</table>
-<h4 id="一、迭代会议："><a href="#一、迭代会议：" class="headerlink" title="一、迭代会议："></a>一、迭代会议：</h4><ul>
-<li>新一轮迭代开始前的会议</li>
-<li>有PO(产品负责人)梳理product backlog</li>
-<li>团队一起对任务进行评估，得出sprint backlog</li>
-<li>拆分任务并估算时间</li>
-<li>最后指派负责人，领取任务</li>
+            <blockquote>
+<p>step1：安装node.js</p>
+</blockquote>
+<ul>
+<li>下载node ：<a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">https://nodejs.org/zh-cn/</a></li>
+<li>配置path</li>
 </ul>
-<h4 id="二、每日站会："><a href="#二、每日站会：" class="headerlink" title="二、每日站会："></a>二、每日站会：</h4><ul>
-<li>每日上班例会</li>
-<li>每个人阐述昨天做了什么 ？</li>
-<li>每个人阐述今天将要做什么 ？</li>
-<li>有哪些阻碍或者影响我工作的问题 ？</li>
+<blockquote>
+<p>step2: 安装Hexo</p>
+</blockquote>
+<ul>
+<li>创建一个目录为：hexo</li>
+<li>cd ~/hexo 进入 ，执行如下命令</li>
+<li>sudo npm install -g hexo</li>
+<li>hexo init</li>
+<li>hexo generate（hexo g也可以，生成静态页面）</li>
+<li>hexo server (hexo s启动)</li>
+<li><a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 本地可以访问了</li>
 </ul>
-<h4 id="三、迭代中期review会议"><a href="#三、迭代中期review会议" class="headerlink" title="三、迭代中期review会议"></a>三、迭代中期review会议</h4><ul>
-<li>show case 成果展示</li>
-<li>code review</li>
-<li>团队分析完成迭代目标还有那些问题和阻碍，下一步的计划和调整讨论</li>
-<li>收集反馈，了解风险，促进合作</li>
+<blockquote>
+<p>step3: Git配置</p>
+</blockquote>
+<ul>
+<li>初始化Git,提交SSH key到gitHub</li>
+<li>建立GitHub repository ，仓库名[ your_git_name].github.io，后面用这个域名直接访问。</li>
+<li><p>配置_config.yml文件，找到deploy节点，修改如下:</p>
+<pre><code>deploy:
+
+    type: git
+
+    repo: git@github.com:[ your_git_name]/[ your_git_name].github.io.git
+
+    branch: master
+</code></pre></li>
 </ul>
-<h4 id="四、回顾会议："><a href="#四、回顾会议：" class="headerlink" title="四、回顾会议："></a>四、回顾会议：</h4><ul>
-<li>迭代结束组织的会议</li>
-<li>团队审视和检查在本次迭代过程中的工作历程</li>
-<li>每个人总结做的好（well）的部分</li>
-<li>每个人总结做的不好(less well)的部分</li>
-<li>团队一起总结梳理well和less well关键点，并进行阐述和展开讨论</li>
-<li>鼓励well的部分</li>
-<li>针对less well ，团队一起商量出Action（怎么去解决less well部分，采取什么行动来落实）</li>
-<li>列出下一个sprint改善计划</li>
-<li>最终实现团队一起督促团队成长，提供团队效率、质量和满意度。</li>
+<blockquote>
+<p>step3: 发布到GitHub</p>
+</blockquote>
+<ul>
+<li>安装Hexo-delpoyer-git</li>
+<li>npm install hexo-deployer-git –save</li>
+<li>hexo deploy</li>
 </ul>
+<blockquote>
+<p>step4: 访问博客地址</p>
+</blockquote>
+<ul>
+<li>[ your_git_name].github.io</li>
+</ul>
+<blockquote>
+<p>主题更换</p>
+</blockquote>
+<ul>
+<li><p>hexo主题地址：<a href="https://hexo.io/themes，我选择的主题是：hexo-theme-next" target="_blank" rel="noopener">https://hexo.io/themes，我选择的主题是：hexo-theme-next</a></p>
+</li>
+<li><p>install with git </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> hexo</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>update  _config.yml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next 注意:theme和next之间有个空格</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>run </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo clean 清理缓存数据</span><br><span class="line">hexo s --debug </span><br><span class="line">hexo g 编译</span><br><span class="line">hexo d 发布</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>hexo 项目技巧</p>
+</blockquote>
+<ul>
+<li>设置npm 加速</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org</span><br><span class="line">npm get config registry</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>hexo-3.x 手动安装hexo-server</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-server --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mac npm install 权限问题</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install --unsafe-perm=true --allow-root</span><br></pre></td></tr></table></figure>
 
           
         
