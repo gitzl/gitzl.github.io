@@ -819,6 +819,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/git/" itemprop="url">git命令</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>生成SSH</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line"><span class="comment"># 初始化本地git版本库（创建新仓库）</span></span><br><span class="line"></span><br><span class="line">git config --global user.name <span class="string">"xxx"</span></span><br><span class="line"><span class="comment"># 配置用户名</span></span><br><span class="line"></span><br><span class="line">git config --global user.email <span class="string">"xxx@xxx.com"</span></span><br><span class="line"><span class="comment"># 配置邮件</span></span><br><span class="line"></span><br><span class="line">git config --list</span><br><span class="line"><span class="comment">#查看当前配置列表</span></span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">"xxx@xxx.com"</span></span><br><span class="line"><span class="comment">#敲三次回车，在~/.ssh/目录下生产公钥和私钥文件</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> &lt;url&gt;</span><br><span class="line"><span class="comment"># clone远程仓库</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>修改、提交、删除</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">git add index.php</span><br><span class="line"><span class="comment"># 添加index.php文件到缓存区</span></span><br><span class="line">git add .</span><br><span class="line"><span class="comment"># 添加所有改动过的文件到缓存区</span></span><br><span class="line">git add --all</span><br><span class="line"><span class="comment"># 添加所有文件到缓存区</span></span><br><span class="line"></span><br><span class="line">git commit</span><br><span class="line"><span class="comment"># 提交缓存区内的文件(回车后需要键入描述:wq保存退出)</span></span><br><span class="line">git commit -m <span class="string">"描述"</span></span><br><span class="line"><span class="comment"># 提交缓存区内的文件,并提供描述</span></span><br><span class="line"></span><br><span class="line">git commit -am <span class="string">'描述'</span></span><br><span class="line"><span class="comment"># 将add和commit合为一步</span></span><br><span class="line">git commit --amend -m <span class="string">'xxx'</span></span><br><span class="line">git push --force </span><br><span class="line"><span class="comment"># 合并最后一次提交(用于反复修改)</span></span><br><span class="line"></span><br><span class="line">git rm index.php</span><br><span class="line"><span class="comment"># 删除index.php文件</span></span><br><span class="line">git rm --cached index.php</span><br><span class="line"><span class="comment"># 将index.php文件移出缓存区,但不删除( -r * 递归目录)</span></span><br><span class="line">git rm -f 1.html</span><br><span class="line"><span class="comment"># 将缓存区中的1.html文件移出并删除</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>git 回退到指定版本</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard  xxx(历史版本号)</span><br><span class="line">git <span class="built_in">log</span> 查看版本</span><br><span class="line">git push --force  强制推送</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>查看</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line"><span class="comment"># 查看当前版本状态（是否修改）</span></span><br><span class="line"></span><br><span class="line">git diff</span><br><span class="line"><span class="comment"># 查看所有添加到缓存区的变更(工作区与版本库的区别)</span></span><br><span class="line">git diff index.php</span><br><span class="line"><span class="comment"># 查看工作区文件和库文件区别</span></span><br><span class="line">git diff --cached</span><br><span class="line"><span class="comment"># 查看所有已添加到缓存区,但还未commit的变更(缓存区与版本库的区别)</span></span><br><span class="line"></span><br><span class="line">git checkout dev</span><br><span class="line">git diff master </span><br><span class="line"><span class="comment"># show dev branch diff master branch</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment"># 查看提交历史</span></span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line"><span class="comment"># 以简短的方式查看提交日志</span></span><br><span class="line">git <span class="built_in">log</span> -3</span><br><span class="line"><span class="comment"># 查看最近3次的提交日志</span></span><br><span class="line">git reflog</span><br><span class="line"><span class="comment"># 行为日志,显示所有提交,回滚等..</span></span><br><span class="line">git ls-files</span><br><span class="line"><span class="comment"># 显示缓存区的所有文件</span></span><br><span class="line">git <span class="built_in">log</span> --graph</span><br><span class="line"><span class="comment"># 查看日志图形化</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>tag 标签操作</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git checkout <span class="built_in">test</span> </span><br><span class="line">git tag v1.0</span><br><span class="line">git tag <span class="comment"># 查看标签</span></span><br><span class="line">git push origin v1.0 <span class="comment">#推送标签v1.0到远程</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>branch  分支操作</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master</span><br><span class="line"><span class="comment"># 获取远程分支master并merge到当前分支</span></span><br><span class="line"></span><br><span class="line">git branch -vv </span><br><span class="line"><span class="comment"># 查看本地分支和远程分支是否建立连接</span></span><br><span class="line"></span><br><span class="line">git branch</span><br><span class="line"><span class="comment"># 显示本地分支</span></span><br><span class="line">git branch -r  <span class="comment">#查看远程分支</span></span><br><span class="line"></span><br><span class="line">git push orgin &lt;branch-name&gt; <span class="comment">#推送本地分支到远端</span></span><br><span class="line"></span><br><span class="line">git checkout &lt;branch-name&gt; <span class="comment">#切换分支</span></span><br><span class="line"></span><br><span class="line">git branch -a</span><br><span class="line"><span class="comment"># 显示所有分支</span></span><br><span class="line">git checkout 分支名/标签名</span><br><span class="line"><span class="comment"># 切换到指定分支或标签</span></span><br><span class="line"></span><br><span class="line">git branch 分支名</span><br><span class="line"><span class="comment"># 新建分支</span></span><br><span class="line">git branch -d 分支名</span><br><span class="line"><span class="comment"># 删除本地分支 -D 强制删除</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>cherry-pick</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">场景：将master 提交中的ab73c32 提取出到分支：1.6.0-release中</span><br><span class="line"></span><br><span class="line">git checkout 1.6.0-release </span><br><span class="line">git chrry-pick ab73c32 </span><br><span class="line">git push orgin 1.6.0-release</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>merge 合并代码</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">场景：将1.6.0-release代码合并到master中</span><br><span class="line">git checkout master</span><br><span class="line">git merge 1.6.0-release</span><br><span class="line">git status <span class="comment">#检测冲突</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>thires ours 解决冲突</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="built_in">test</span> </span><br><span class="line">git merge master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并master 到test ， 当出现冲突</span></span><br><span class="line">git chekcout  --theirs   README.md  <span class="comment">#以master版本为准合并</span></span><br><span class="line">git chekcout  --ours     README.md  <span class="comment">#以test版本为准合并</span></span><br><span class="line"></span><br><span class="line">git commit -am <span class="string">"merge conflicts"</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>合并commit</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3 </span><br><span class="line">pick xxx</span><br><span class="line">s    yyy</span><br><span class="line">s    yyy</span><br><span class="line"></span><br><span class="line">#如果合并有冲突，解决冲突  </span><br><span class="line">git add .</span><br><span class="line">git rebase continue</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>打包</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git archive --output xxx/yyy.tar.gz(输出的 目录) v1.4.9(版本)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>远程操作</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"><span class="comment"># 添加远程版本库</span></span><br><span class="line">git remote -v</span><br><span class="line"><span class="comment"># 查看远程版本库信息</span></span><br><span class="line">git remote show &lt;remote&gt;</span><br><span class="line"><span class="comment"># 查看指定远程版本库信息</span></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"><span class="comment"># 删除远程remote链接</span></span><br><span class="line">git remote rename &lt;old&gt; &lt;new&gt;</span><br><span class="line"><span class="comment"># 重命名远程链接名</span></span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 下载代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 上传代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git merge origin master</span><br><span class="line"><span class="comment"># 将本地的远端库合并</span></span><br><span class="line"></span><br><span class="line">git fetch origin</span><br><span class="line"><span class="comment"># 将远端库获取本地但不合并</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/go/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1071,173 +1238,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/git/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/git/" itemprop="url">git命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>生成SSH</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line"><span class="comment"># 初始化本地git版本库（创建新仓库）</span></span><br><span class="line"></span><br><span class="line">git config --global user.name <span class="string">"xxx"</span></span><br><span class="line"><span class="comment"># 配置用户名</span></span><br><span class="line"></span><br><span class="line">git config --global user.email <span class="string">"xxx@xxx.com"</span></span><br><span class="line"><span class="comment"># 配置邮件</span></span><br><span class="line"></span><br><span class="line">git config --list</span><br><span class="line"><span class="comment">#查看当前配置列表</span></span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">"xxx@xxx.com"</span></span><br><span class="line"><span class="comment">#敲三次回车，在~/.ssh/目录下生产公钥和私钥文件</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> &lt;url&gt;</span><br><span class="line"><span class="comment"># clone远程仓库</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>修改、提交、删除</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">git add index.php</span><br><span class="line"><span class="comment"># 添加index.php文件到缓存区</span></span><br><span class="line">git add .</span><br><span class="line"><span class="comment"># 添加所有改动过的文件到缓存区</span></span><br><span class="line">git add --all</span><br><span class="line"><span class="comment"># 添加所有文件到缓存区</span></span><br><span class="line"></span><br><span class="line">git commit</span><br><span class="line"><span class="comment"># 提交缓存区内的文件(回车后需要键入描述:wq保存退出)</span></span><br><span class="line">git commit -m <span class="string">"描述"</span></span><br><span class="line"><span class="comment"># 提交缓存区内的文件,并提供描述</span></span><br><span class="line"></span><br><span class="line">git commit -am <span class="string">'描述'</span></span><br><span class="line"><span class="comment"># 将add和commit合为一步</span></span><br><span class="line">git commit --amend -m <span class="string">'xxx'</span></span><br><span class="line">git push --force </span><br><span class="line"><span class="comment"># 合并最后一次提交(用于反复修改)</span></span><br><span class="line"></span><br><span class="line">git rm index.php</span><br><span class="line"><span class="comment"># 删除index.php文件</span></span><br><span class="line">git rm --cached index.php</span><br><span class="line"><span class="comment"># 将index.php文件移出缓存区,但不删除( -r * 递归目录)</span></span><br><span class="line">git rm -f 1.html</span><br><span class="line"><span class="comment"># 将缓存区中的1.html文件移出并删除</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>git 回退到指定版本</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard  xxx(历史版本号)</span><br><span class="line">git <span class="built_in">log</span> 查看版本</span><br><span class="line">git push --force  强制推送</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>查看</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line"><span class="comment"># 查看当前版本状态（是否修改）</span></span><br><span class="line"></span><br><span class="line">git diff</span><br><span class="line"><span class="comment"># 查看所有添加到缓存区的变更(工作区与版本库的区别)</span></span><br><span class="line">git diff index.php</span><br><span class="line"><span class="comment"># 查看工作区文件和库文件区别</span></span><br><span class="line">git diff --cached</span><br><span class="line"><span class="comment"># 查看所有已添加到缓存区,但还未commit的变更(缓存区与版本库的区别)</span></span><br><span class="line"></span><br><span class="line">git checkout dev</span><br><span class="line">git diff master </span><br><span class="line"><span class="comment"># show dev branch diff master branch</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment"># 查看提交历史</span></span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line"><span class="comment"># 以简短的方式查看提交日志</span></span><br><span class="line">git <span class="built_in">log</span> -3</span><br><span class="line"><span class="comment"># 查看最近3次的提交日志</span></span><br><span class="line">git reflog</span><br><span class="line"><span class="comment"># 行为日志,显示所有提交,回滚等..</span></span><br><span class="line">git ls-files</span><br><span class="line"><span class="comment"># 显示缓存区的所有文件</span></span><br><span class="line">git <span class="built_in">log</span> --graph</span><br><span class="line"><span class="comment"># 查看日志图形化</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>tag 标签操作</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git checkout <span class="built_in">test</span> </span><br><span class="line">git tag v1.0</span><br><span class="line">git tag <span class="comment"># 查看标签</span></span><br><span class="line">git push origin v1.0 <span class="comment">#推送标签v1.0到远程</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>branch  分支操作</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master</span><br><span class="line"><span class="comment"># 获取远程分支master并merge到当前分支</span></span><br><span class="line"></span><br><span class="line">git branch -vv </span><br><span class="line"><span class="comment"># 查看本地分支和远程分支是否建立连接</span></span><br><span class="line"></span><br><span class="line">git branch</span><br><span class="line"><span class="comment"># 显示本地分支</span></span><br><span class="line">git branch -r  <span class="comment">#查看远程分支</span></span><br><span class="line"></span><br><span class="line">git push orgin &lt;branch-name&gt; <span class="comment">#推送本地分支到远端</span></span><br><span class="line"></span><br><span class="line">git checkout &lt;branch-name&gt; <span class="comment">#切换分支</span></span><br><span class="line"></span><br><span class="line">git branch -a</span><br><span class="line"><span class="comment"># 显示所有分支</span></span><br><span class="line">git checkout 分支名/标签名</span><br><span class="line"><span class="comment"># 切换到指定分支或标签</span></span><br><span class="line"></span><br><span class="line">git branch 分支名</span><br><span class="line"><span class="comment"># 新建分支</span></span><br><span class="line">git branch -d 分支名</span><br><span class="line"><span class="comment"># 删除本地分支 -D 强制删除</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>cherry-pick</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">场景：将master 提交中的ab73c32 提取出到分支：1.6.0-release中</span><br><span class="line"></span><br><span class="line">git checkout 1.6.0-release </span><br><span class="line">git chrry-pick ab73c32 </span><br><span class="line">git push orgin 1.6.0-release</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>merge 合并代码</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">场景：将1.6.0-release代码合并到master中</span><br><span class="line">git checkout master</span><br><span class="line">git merge 1.6.0-release</span><br><span class="line">git status <span class="comment">#检测冲突</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>thires ours 解决冲突</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="built_in">test</span> </span><br><span class="line">git merge master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并master 到test ， 当出现冲突</span></span><br><span class="line">git chekcout  --theirs   README.md  <span class="comment">#以master版本为准合并</span></span><br><span class="line">git chekcout  --ours     README.md  <span class="comment">#以test版本为准合并</span></span><br><span class="line"></span><br><span class="line">git commit -am <span class="string">"merge conflicts"</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>合并commit</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3 </span><br><span class="line">pick xxx</span><br><span class="line">s    yyy</span><br><span class="line">s    yyy</span><br><span class="line"></span><br><span class="line">#如果合并有冲突，解决冲突  </span><br><span class="line">git add .</span><br><span class="line">git rebase continue</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>打包</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git archive --output xxx/yyy.tar.gz(输出的 目录) v1.4.9(版本)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>远程操作</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"><span class="comment"># 添加远程版本库</span></span><br><span class="line">git remote -v</span><br><span class="line"><span class="comment"># 查看远程版本库信息</span></span><br><span class="line">git remote show &lt;remote&gt;</span><br><span class="line"><span class="comment"># 查看指定远程版本库信息</span></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"><span class="comment"># 删除远程remote链接</span></span><br><span class="line">git remote rename &lt;old&gt; &lt;new&gt;</span><br><span class="line"><span class="comment"># 重命名远程链接名</span></span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 下载代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 上传代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git merge origin master</span><br><span class="line"><span class="comment"># 将本地的远端库合并</span></span><br><span class="line"></span><br><span class="line">git fetch origin</span><br><span class="line"><span class="comment"># 将远端库获取本地但不合并</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/helm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1369,6 +1369,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/ansible/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/ansible/" itemprop="url">与ansible的第一次对话</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>ansible 是个神马东东?</p>
+</blockquote>
+<ol>
+<li>基于python的自动化运维工具</li>
+<li>可以实现批量执行命令、批量系统配置、批量部署等自动化功能</li>
+</ol>
+<blockquote>
+<p>通信协议</p>
+</blockquote>
+<ol>
+<li>ansible默认通过SSH协议实现主机之间的通信，管理主机</li>
+</ol>
+<blockquote>
+<p>敲下第一个命令</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible --version #获取版本,确定安装成功</span><br><span class="line">ansible all -a &quot;/bin/echo hello&quot;</span><br></pre></td></tr></table></figure>
+<p>tips：安装ansible，请参考 <a href="http://www.ansible.com.cn/docs/intro_installation.html" target="_blank" rel="noopener">http://www.ansible.com.cn/docs/intro_installation.html</a></p>
+<blockquote>
+<p>ansible hosts</p>
+</blockquote>
+<p>hosts路径：cat etc/ansible/hosts<br>hosts可注册目标主机的地址，如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#   - You can enter hostnames or ip addresses</span><br><span class="line">#   - A hostname/ip can be a member of multiple groups</span><br><span class="line"></span><br><span class="line"># Ex 1: Ungrouped hosts, specify before any group headers.</span><br><span class="line"></span><br><span class="line">139.159.228.59</span><br><span class="line">192.168.1.188</span><br><span class="line">## green.example.com</span><br><span class="line">## blue.example.com</span><br><span class="line">## 192.168.100.1</span><br><span class="line">## 192.168.100.10</span><br><span class="line"></span><br><span class="line"># Ex 2: A collection of hosts belonging to the &apos;webservers&apos; group</span><br><span class="line"></span><br><span class="line">## [webservers]</span><br><span class="line">## alpha.example.org</span><br><span class="line">## beta.example.org</span><br><span class="line">## 192.168.1.100</span><br><span class="line">## 192.168.1.110</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>SSH认证</p>
+</blockquote>
+<p>ansible基于SSH协议进行通信，因此主机之间通信需要取得SSH认证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br><span class="line">ls -a </span><br><span class="line"># authorized_keys  id_rsa  id_rsa.pub</span><br><span class="line"># authorized_keys  假设当前主机为:A，如果另一台主机B要通过SSH和A通信，将A主机下的公钥添加到B主机下的authorized_keys</span><br><span class="line">#id_rsa.pub 公钥 </span><br><span class="line">#id_rsa 私钥</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>模拟一个场景：A主机下执行playbook 远程给主机B创建一个名为:hello的目录</p>
+</blockquote>
+<p>step1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将A主机下的ssh目录下的公钥(id_rsa.pub)添加到B主机ssh目录下的authorized_keys</span><br></pre></td></tr></table></figure>
+<p>step2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在A主机下的/etc/ansible/hosts里面添加B主机的IP地址</span><br></pre></td></tr></table></figure>
+<p>step3：ansible-playbook helloPlayBook.yml -i hosts #执行第一个playbook</p>
+<h6 id="helloPlayBook-yml："><a href="#helloPlayBook-yml：" class="headerlink" title="helloPlayBook.yml："></a>helloPlayBook.yml：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- hosts: 139.159.228.59</span><br><span class="line">  tasks:</span><br><span class="line">    - name: creat a folder</span><br><span class="line">      command: mkdir hello</span><br><span class="line"># 如果 /etc/ansible/hosts注册了 139.159.228.59 ，执行：ansible-playbook helloPlayBook.yml</span><br><span class="line"># 如果 /etc/ansible/host未注册 139.159.228.59，执行：ansible-playbook helloPlayBook.yml -i 139.159.228.59,</span><br><span class="line"># 多个目标主机地址用逗号分隔</span><br></pre></td></tr></table></figure>
+<h6 id="tips-：更多内容可以参考-http-ansible-com-cn-docs"><a href="#tips-：更多内容可以参考-http-ansible-com-cn-docs" class="headerlink" title="tips ：更多内容可以参考: http://ansible.com.cn/docs/"></a>tips ：更多内容可以参考: <a href="http://ansible.com.cn/docs/" target="_blank" rel="noopener">http://ansible.com.cn/docs/</a></h6>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/auto/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1449,129 +1605,6 @@
 <p>gitHub Top10 CI工具</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Travis CI</span><br><span class="line">Circle CI</span><br><span class="line">Jenkins</span><br><span class="line">AppVeyor</span><br><span class="line">CodeShip</span><br><span class="line">Drone</span><br><span class="line">Semaphore CI</span><br><span class="line">Buildkite</span><br><span class="line">Wercker</span><br><span class="line">TeamCity</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/book/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/book/" itemprop="url">程序百科</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>EBook：<a href="https://github.com/EbookFoundation" target="_blank" rel="noopener">https://github.com/EbookFoundation</a></li>
-<li>在线工具：<a href="http://tool.oschina.net/" target="_blank" rel="noopener">http://tool.oschina.net/</a></li>
-</ul>
-
           
         
       
