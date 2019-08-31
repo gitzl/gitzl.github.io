@@ -88,7 +88,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/08/30/docker-selenium/img/selenium/s-1.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/08/30/docker-selenium/img/selenium/s-2.jpg">
-<meta property="og:updated_time" content="2019-08-31T09:08:26.128Z">
+<meta property="og:updated_time" content="2019-08-31T09:09:10.731Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="selenium Grid容器化-分布式测试">
 <meta name="twitter:description" content="本文分享技术的关键词 Selenium Grid  Selenium Grid 容器化 Demo演示（分布式自动化测试） 基础镜像  （python+selenium 依赖容器化）本文分享的内容目的是：将Selenium Grid 分布式测试完全容器化，大大提高部署分布式测试环境效率，减少环境依赖。最终实现：在容器环境中一键部署Selenium Grid，动态伸缩node节点，在基础镜像中执行测试">
@@ -306,8 +306,9 @@
 <li>Selenium Grid </li>
 <li>Selenium Grid 容器化</li>
 <li>Demo演示（分布式自动化测试）</li>
-<li>基础镜像  （python+selenium 依赖容器化）<br>本文分享的内容目的是：将Selenium Grid 分布式测试完全容器化，大大提高部署分布式测试环境效率，减少环境依赖。<br>最终实现：在容器环境中一键部署Selenium Grid，动态伸缩node节点，在基础镜像中执行测试脚本。<h4 id="Selenium-Grid"><a href="#Selenium-Grid" class="headerlink" title="Selenium Grid"></a>Selenium Grid</h4> Selenium作为web应用程序自动化测试利器之一，它支持多种客户端脚本（如：Java,Python,JavaScript等），并且可运行在多种浏览器中（如：chrome,firefox, ie等）。<br>Selenium经常被用于测试web应用程序在不同浏览器的兼容性。在企业级自动化测试中，常常使用Selenium的组件Selenium Grid实现多节点分布式自动化测试。Selenium Grid由中心服务Hub和多个node节点组成，node节点必须注册到Hub服务中。传统到部署比较繁琐和费时，本文将介绍使用docker-compose一键部署Selenium Grid分布式测试环境。</li>
+<li>基础镜像  （python+selenium 依赖容器化）<br>本文分享的内容目的是：将Selenium Grid 分布式测试完全容器化，大大提高部署分布式测试环境效率，减少环境依赖。<br>最终实现：在容器环境中一键部署Selenium Grid，动态伸缩node节点，在基础镜像中执行测试脚本。</li>
 </ul>
+<h4 id="Selenium-Grid"><a href="#Selenium-Grid" class="headerlink" title="Selenium Grid"></a>Selenium Grid</h4><p>   Selenium作为web应用程序自动化测试利器之一，它支持多种客户端脚本（如：Java,Python,JavaScript等），并且可运行在多种浏览器中（如：chrome,firefox, ie等）。<br>Selenium经常被用于测试web应用程序在不同浏览器的兼容性。在企业级自动化测试中，常常使用Selenium的组件Selenium Grid实现多节点分布式自动化测试。Selenium Grid由中心服务Hub和多个node节点组成，node节点必须注册到Hub服务中。传统到部署比较繁琐和费时，本文将介绍使用docker-compose一键部署Selenium Grid分布式测试环境。</p>
 <p><img src="./img/selenium/s-1.jpg" alt="image"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hub: 中心节点服务，用于管理多个node节点，接受test client分配到测试任务然后分配多给多个node节点执行。</span><br><span class="line">node: 真正执行任务的节点服务，支持多种浏览器进行测试，如：chrome firefox, node服务需注册到Hub中心服务，由中心服务统一分发任务。</span><br><span class="line">Test Client: 这里是抽象概念，可理解为执行测试逻辑到客户端（代码），client 客户端需连接到Hub服务，执行测试脚本时由Hub中心服务统一分发给node节点进行执行。</span><br></pre></td></tr></table></figure>
 <h4 id="docker-selenium"><a href="#docker-selenium" class="headerlink" title="docker-selenium"></a>docker-selenium</h4><p>基于docker快速部署Selenium Grid分布式环境。</p>
