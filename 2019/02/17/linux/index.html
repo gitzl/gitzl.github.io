@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="查看操作系统信息1234567uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数   cent">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-23T08:15:49.759Z">
+<meta property="og:updated_time" content="2019-09-26T08:25:01.351Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux">
 <meta name="twitter:description" content="查看操作系统信息1234567uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数   cent">
@@ -303,22 +303,28 @@
 <p>查看操作系统信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br><span class="line">cat /proc/version</span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a</span><br><span class="line"></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"physical id"</span>|sort |uniq|wc -l <span class="comment">#物理cpu个数 （wc -l 计数）</span></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"processor"</span>|wc -l <span class="comment">#逻辑cpu个数</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <blockquote>
-<p>centos crontab操作<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat /ect/crontab</span><br><span class="line">crontab -e</span><br><span class="line">* * * * * date &gt;&gt; /home/date1.txt　　测试例子</span><br><span class="line">crontab -l 查看</span><br><span class="line">crontab -r 终止</span><br><span class="line">/sbin/service crond start</span><br><span class="line">/sbin/service crond stop</span><br><span class="line">/sbin/service crond restart</span><br><span class="line">/sbin/service crond reload</span><br></pre></td></tr></table></figure></p>
+<p>centos crontab操作</p>
 </blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cat /ect/crontab</span><br><span class="line">crontab -e</span><br><span class="line">* * * * * date &gt;&gt; /home/date1.txt　　测试例子</span><br><span class="line">crontab -l 查看crontab任务列表</span><br><span class="line">crontab -r 终止</span><br><span class="line">tail -f /var/<span class="built_in">log</span>/cron.log 查看执行日志</span><br><span class="line">/sbin/service crond start</span><br><span class="line">/sbin/service crond stop</span><br><span class="line">/sbin/service crond restart</span><br><span class="line">/sbin/service crond reload</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>vi/vim 常用命令</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">x  删除当前光标所在处的字符</span><br><span class="line">u  撤销，恢复到上一次操作</span><br><span class="line">e / enter  下一行</span><br><span class="line">h   一行向前移动</span><br><span class="line">dd 删除当前行</span><br><span class="line">/<span class="built_in">test</span>  查找(<span class="built_in">test</span>), n 继续查找<span class="built_in">test</span> </span><br><span class="line"></span><br><span class="line">yy 复制一行</span><br><span class="line">p  在游标后面粘贴</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>操作文件</p>
+<p>查看磁盘问题</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">df -h     查看磁盘使用状态       </span><br><span class="line">df -a -lh 查看全部磁盘使用情况  </span><br><span class="line">ls -lh    查看文件大小             </span><br><span class="line">du -a     列出所有文件              </span><br><span class="line">fdisk -l  列出磁盘信息         </span><br><span class="line">du -sh *  查看目录下全部文件的大小</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df -h     查看磁盘使用状态       </span><br><span class="line">df -a -lh 查看全部磁盘使用情况  </span><br><span class="line">ls -lh    查看文件大小             </span><br><span class="line">du -a     列出所有文件              </span><br><span class="line">fdisk -l  列出磁盘信息         </span><br><span class="line">du -sh *  查看目录下全部文件的大小  </span><br><span class="line">du -d 1 -h / 查看当前目录文件的大小深度:1</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>yum 命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum update  xx</span><br><span class="line">yum install xx</span><br><span class="line">yum search  xx</span><br><span class="line">yum remove  xx</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <blockquote>
-<p>Linux分屏工具tmux<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl+b 松开  % 面板分屏</span><br><span class="line">ctrl+b  o 切换</span><br></pre></td></tr></table></figure></p>
+<p>Linux分屏工具tmux</p>
 </blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl+b 松开  % 面板分屏</span><br><span class="line">ctrl+b  o 切换</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>查看内存问题</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h 查看内存大小</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>web开发命令</p>
 </blockquote>
@@ -327,7 +333,10 @@
 <p> 查询命令</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sort test.txt  <span class="comment">#排序</span></span><br><span class="line">awk <span class="string">'&#123;print $1, $2&#125;'</span> <span class="comment">#提取</span></span><br><span class="line">grep  <span class="comment">#管道筛选</span></span><br></pre></td></tr></table></figure>
-
+<blockquote>
+<p>etcd 命令</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker ps |grep etcd</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379  get/set key value</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379  --prefix --keys-only=true get /ingress 查询前缀为ingress的keys</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379   member list 查看成员和状态</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -351,8 +360,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/17/metting/" rel="next" title="敏捷开发-会议">
-                <i class="fa fa-chevron-left"></i> 敏捷开发-会议
+              <a href="/2019/02/17/front/" rel="next" title="web前端资源">
+                <i class="fa fa-chevron-left"></i> web前端资源
               </a>
             
           </div>
@@ -361,8 +370,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/17/jenkinsPlugin/" rel="prev" title="从0到1开启jenkins插件开发之路">
-                从0到1开启jenkins插件开发之路 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/metting/" rel="prev" title="敏捷开发-会议">
+                敏捷开发-会议 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
