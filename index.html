@@ -580,6 +580,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/mysql/" itemprop="url">mysql</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>备份</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqldump  -uroot  -p  --all-databases&gt;backup.sql</span><br><span class="line">mysqldump  -uroot  -p  --databases dbname1 dbname2&gt;backup.sql</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>恢复</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql  -uroot  -p  &lt;backup.sql</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>排查最大连接数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show global status like &apos;Max_used_connections&apos;; 查询设置的最大连接数</span><br><span class="line">show variables like &apos;%max_connections%&apos;;  查询历史最大连接数</span><br><span class="line">set GLOBAL max_connections=256; 更新最大连接数</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>导出mysql结构</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -h localhost -uroot -pwise2c2017 -d builderdb &gt; dump.sql</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mysql-用户授权</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &apos;permission&apos;@&apos;%&apos; IDENTIFIED BY &apos;permission&apos;; </span><br><span class="line">#创建用户 % 允许远程用户访问  用户名：permission 密码：permission</span><br><span class="line"></span><br><span class="line">show grants for permission;</span><br><span class="line">#查看permission用户的权限</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on bldr.* to permission@&apos;%&apos;</span><br><span class="line">#给db中的 bldr数据库实例授权</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on *.* to permission@&apos;%&apos;</span><br><span class="line">#给全部数据库实例授权</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;permission&apos;@&apos;%&apos;</span><br><span class="line">#授予全部db权限</span><br><span class="line"></span><br><span class="line">revoke  select, insert, update, delete  on *.* from permission@&apos;%&apos;;</span><br><span class="line">#撤销权限</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mysql-问题排查</p>
+</blockquote>
+<h5 id="执行计划"><a href="#执行计划" class="headerlink" title="执行计划"></a>执行计划</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN select * from test; </span><br><span class="line">#查看sql执行计划</span><br></pre></td></tr></table></figure>
+<h5 id="慢日志"><a href="#慢日志" class="headerlink" title="慢日志"></a>慢日志</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 慢日志参数</span><br><span class="line">slow_query_log                  # 是否开启慢查询日志 1:开启 0 关闭</span><br><span class="line">slow-query-log-file             # 慢日志输出的路径</span><br><span class="line">long_query_time                 # 设置慢查询时间阈值 1 表示1秒</span><br><span class="line">log_queries_not_using_indexes   # 查询为使用索引 被记录</span><br><span class="line">log_output                      # 日志存储的方式 默认：FILE  可以是： FILE,TABLE</span><br><span class="line"></span><br><span class="line"># 命令更新参数</span><br><span class="line">set global slow_query_log = 1   </span><br><span class="line">show variables like &apos;%slow_query%&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="db权限说明"><a href="#db权限说明" class="headerlink" title="db权限说明"></a>db权限说明</h4><blockquote>
+<p>所有库都需要都权限</p>
+<ul>
+<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES on dbname.* to permission@’%’<br>第三方组件 grafana 权限 （需要DROP权限）</li>
+<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES，DROP on dbname.* to permission@’%’<br>autocommit (需要开启)</li>
+<li>set global autocommit = 1 </li>
+</ul>
+</blockquote>
+<h4 id="查看mysql-链接数状态"><a href="#查看mysql-链接数状态" class="headerlink" title="查看mysql 链接数状态"></a>查看mysql 链接数状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show processlist</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/podSchedule/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -795,159 +948,6 @@
 <li><a href="https://zoom.us/" target="_blank" rel="noopener">https://zoom.us/</a></li>
 </ul>
 </blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/mysql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/mysql/" itemprop="url">mysql</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>备份</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqldump  -uroot  -p  --all-databases&gt;backup.sql</span><br><span class="line">mysqldump  -uroot  -p  --databases dbname1 dbname2&gt;backup.sql</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>恢复</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql  -uroot  -p  &lt;backup.sql</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>排查最大连接数</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show global status like &apos;Max_used_connections&apos;; 查询设置的最大连接数</span><br><span class="line">show variables like &apos;%max_connections%&apos;;  查询历史最大连接数</span><br><span class="line">set GLOBAL max_connections=256; 更新最大连接数</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>导出mysql结构</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -h localhost -uroot -pwise2c2017 -d builderdb &gt; dump.sql</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>mysql-用户授权</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &apos;permission&apos;@&apos;%&apos; IDENTIFIED BY &apos;permission&apos;; </span><br><span class="line">#创建用户 % 允许远程用户访问  用户名：permission 密码：permission</span><br><span class="line"></span><br><span class="line">show grants for permission;</span><br><span class="line">#查看permission用户的权限</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on bldr.* to permission@&apos;%&apos;</span><br><span class="line">#给db中的 bldr数据库实例授权</span><br><span class="line"></span><br><span class="line">grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES  on *.* to permission@&apos;%&apos;</span><br><span class="line">#给全部数据库实例授权</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;permission&apos;@&apos;%&apos;</span><br><span class="line">#授予全部db权限</span><br><span class="line"></span><br><span class="line">revoke  select, insert, update, delete  on *.* from permission@&apos;%&apos;;</span><br><span class="line">#撤销权限</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>mysql-问题排查</p>
-</blockquote>
-<h5 id="执行计划"><a href="#执行计划" class="headerlink" title="执行计划"></a>执行计划</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN select * from test; </span><br><span class="line">#查看sql执行计划</span><br></pre></td></tr></table></figure>
-<h5 id="慢日志"><a href="#慢日志" class="headerlink" title="慢日志"></a>慢日志</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 慢日志参数</span><br><span class="line">slow_query_log                  # 是否开启慢查询日志 1:开启 0 关闭</span><br><span class="line">slow-query-log-file             # 慢日志输出的路径</span><br><span class="line">long_query_time                 # 设置慢查询时间阈值 1 表示1秒</span><br><span class="line">log_queries_not_using_indexes   # 查询为使用索引 被记录</span><br><span class="line">log_output                      # 日志存储的方式 默认：FILE  可以是： FILE,TABLE</span><br><span class="line"></span><br><span class="line"># 命令更新参数</span><br><span class="line">set global slow_query_log = 1   </span><br><span class="line">show variables like &apos;%slow_query%&apos;</span><br></pre></td></tr></table></figure>
-<h4 id="db权限说明"><a href="#db权限说明" class="headerlink" title="db权限说明"></a>db权限说明</h4><blockquote>
-<p>所有库都需要都权限</p>
-<ul>
-<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES on dbname.* to permission@’%’<br>第三方组件 grafana 权限 （需要DROP权限）</li>
-<li>grant SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES，DROP on dbname.* to permission@’%’<br>autocommit (需要开启)</li>
-<li>set global autocommit = 1 </li>
-</ul>
-</blockquote>
-<h4 id="查看mysql-链接数状态"><a href="#查看mysql-链接数状态" class="headerlink" title="查看mysql 链接数状态"></a>查看mysql 链接数状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show processlist</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1334,198 +1334,6 @@ docker run --name sonarqube \
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/http_status/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/http_status/" itemprop="url">HTTP状态码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>200   ok</li>
-<li>201   created</li>
-<li>202   Accepted</li>
-<li>203   Non-Authoritative Information</li>
-<li>204   No Content</li>
-<li>205   Reset Content</li>
-<li>206   Partial Content</li>
-<li>207   Multi-Status</li>
-<li><p>208   Already Reported</p>
-</li>
-<li><p>300   Multiple Choices</p>
-</li>
-<li>301   Moved Permanently</li>
-<li>302   Found</li>
-<li>303   See Other</li>
-<li>304   Not Modified</li>
-<li>305   Use Proxy</li>
-<li>307   Temporary Redirect</li>
-<li><p>308   Permanent Redirect</p>
-</li>
-<li><p>400   Bad Request</p>
-</li>
-<li>401   Unauthorized</li>
-<li>402   Payment Required</li>
-<li>403   Forbidden</li>
-<li>404   Not Found</li>
-<li>405   Method Not Allowed</li>
-<li>406   Not Acceptable</li>
-<li>407   Proxy Authentication Required</li>
-<li>408   Request Timeout</li>
-<li>409   Conflict</li>
-<li>410   Gone</li>
-<li>411   Length Required</li>
-<li>412   Precondition Failed</li>
-<li>413   Payload Too Large</li>
-<li>414   URI Too Long</li>
-<li>415   Unsupported Media Type</li>
-<li>416   Requested range not satisfiable</li>
-<li>417   Expectation Failed</li>
-<li>418   I’m a teapot</li>
-<li>419   Insufficient Space On Resource</li>
-<li>420   Method Failure</li>
-<li>421   Destination Locked</li>
-<li>422   Unprocessable Entity</li>
-<li>423   Locked</li>
-<li>424   Failed Dependency</li>
-<li>426   Upgrade Required</li>
-<li>428   Precondition Required</li>
-<li>429   Too Many Requests</li>
-<li>431   Request Header Fields Too Large</li>
-<li>451   Unavailable For Legal Reasons</li>
-</ul>
-<ul>
-<li>500   Internal Server Error</li>
-<li>501   Not Implemented</li>
-<li>502   Bad Gateway</li>
-<li>503   Service Unavailable</li>
-<li>504   Gateway Timeout</li>
-<li>505   HTTP Version not supported</li>
-<li>506   Variant Also Negotiates</li>
-<li>507   Insufficient Storage</li>
-<li>508   Loop Detected</li>
-<li>509   Bandwidth Limit Exceeded</li>
-<li>510   Not Extended</li>
-<li>511   Network Authentication Required</li>
-</ul>
-<blockquote>
-<p>more</p>
-<ul>
-<li><a href="http://tool.oschina.net/commons?type=5" target="_blank" rel="noopener">http://tool.oschina.net/commons?type=5</a></li>
-</ul>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/hexo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1677,6 +1485,198 @@ docker run --name sonarqube \
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install --unsafe-perm=true --allow-root</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/http_status/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/http_status/" itemprop="url">HTTP状态码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>200   ok</li>
+<li>201   created</li>
+<li>202   Accepted</li>
+<li>203   Non-Authoritative Information</li>
+<li>204   No Content</li>
+<li>205   Reset Content</li>
+<li>206   Partial Content</li>
+<li>207   Multi-Status</li>
+<li><p>208   Already Reported</p>
+</li>
+<li><p>300   Multiple Choices</p>
+</li>
+<li>301   Moved Permanently</li>
+<li>302   Found</li>
+<li>303   See Other</li>
+<li>304   Not Modified</li>
+<li>305   Use Proxy</li>
+<li>307   Temporary Redirect</li>
+<li><p>308   Permanent Redirect</p>
+</li>
+<li><p>400   Bad Request</p>
+</li>
+<li>401   Unauthorized</li>
+<li>402   Payment Required</li>
+<li>403   Forbidden</li>
+<li>404   Not Found</li>
+<li>405   Method Not Allowed</li>
+<li>406   Not Acceptable</li>
+<li>407   Proxy Authentication Required</li>
+<li>408   Request Timeout</li>
+<li>409   Conflict</li>
+<li>410   Gone</li>
+<li>411   Length Required</li>
+<li>412   Precondition Failed</li>
+<li>413   Payload Too Large</li>
+<li>414   URI Too Long</li>
+<li>415   Unsupported Media Type</li>
+<li>416   Requested range not satisfiable</li>
+<li>417   Expectation Failed</li>
+<li>418   I’m a teapot</li>
+<li>419   Insufficient Space On Resource</li>
+<li>420   Method Failure</li>
+<li>421   Destination Locked</li>
+<li>422   Unprocessable Entity</li>
+<li>423   Locked</li>
+<li>424   Failed Dependency</li>
+<li>426   Upgrade Required</li>
+<li>428   Precondition Required</li>
+<li>429   Too Many Requests</li>
+<li>431   Request Header Fields Too Large</li>
+<li>451   Unavailable For Legal Reasons</li>
+</ul>
+<ul>
+<li>500   Internal Server Error</li>
+<li>501   Not Implemented</li>
+<li>502   Bad Gateway</li>
+<li>503   Service Unavailable</li>
+<li>504   Gateway Timeout</li>
+<li>505   HTTP Version not supported</li>
+<li>506   Variant Also Negotiates</li>
+<li>507   Insufficient Storage</li>
+<li>508   Loop Detected</li>
+<li>509   Bandwidth Limit Exceeded</li>
+<li>510   Not Extended</li>
+<li>511   Network Authentication Required</li>
+</ul>
+<blockquote>
+<p>more</p>
+<ul>
+<li><a href="http://tool.oschina.net/commons?type=5" target="_blank" rel="noopener">http://tool.oschina.net/commons?type=5</a></li>
+</ul>
+</blockquote>
 
           
         
