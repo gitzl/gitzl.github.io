@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="查看操作系统信息1234567uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数   cent">
+<meta name="description" content="查看操作系统信息12345678uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数sysctl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux">
 <meta property="og:url" content="http://yoursite.com/2019/02/17/linux/index.html">
 <meta property="og:site_name" content="MC.KJ">
-<meta property="og:description" content="查看操作系统信息1234567uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数   cent">
+<meta property="og:description" content="查看操作系统信息12345678uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数sysctl">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-30T07:18:53.769Z">
+<meta property="og:updated_time" content="2019-09-30T08:46:38.062Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux">
-<meta name="twitter:description" content="查看操作系统信息1234567uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数   cent">
+<meta name="twitter:description" content="查看操作系统信息12345678uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数sysctl">
 
 
 
@@ -300,7 +300,7 @@
 
       
         <blockquote>
-<p>查看操作系统信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br><span class="line">cat /proc/version</span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a</span><br><span class="line"></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"physical id"</span>|sort |uniq|wc -l <span class="comment">#物理cpu个数 （wc -l 计数）</span></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"processor"</span>|wc -l <span class="comment">#逻辑cpu个数</span></span><br></pre></td></tr></table></figure></p>
+<p>查看操作系统信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br><span class="line">cat /proc/version</span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a</span><br><span class="line"></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"physical id"</span>|sort |uniq|wc -l <span class="comment">#物理cpu个数 （wc -l 计数）</span></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"processor"</span>|wc -l <span class="comment">#逻辑cpu个数</span></span><br><span class="line">sysctl -a 查询系统参数</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <blockquote>
 <p>centos crontab操作</p>
@@ -328,7 +328,10 @@
 <blockquote>
 <p>web开发命令</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -I  http://www.baidu.com      </span><br><span class="line">tar -xf  xxx.tar</span><br><span class="line">tar -xzf xxx.tar.gz  解压          </span><br><span class="line">top 监控        </span><br><span class="line">touch 创建文件              </span><br><span class="line">mkdir 创建目录        </span><br><span class="line">rm -rf 删除        </span><br><span class="line">cp -r xxx/xx/ .      </span><br><span class="line">mv xxx/xx  yyy/yy 移动       </span><br><span class="line">cat xxx.sh 显示       </span><br><span class="line">wc -l  统计数量</span><br><span class="line">ss -nltu 查询端口</span><br><span class="line">ss -nltu | grep -e <span class="string">'tcp'</span> -e <span class="string">'udp'</span> | awk <span class="string">'&#123;print $5&#125;'</span> | sed <span class="string">'s/.*://'</span> |sort -n |uniq 查询tcp udp 端口</span><br><span class="line">netstat -nltu 查询端口</span><br><span class="line">netstat -nltp |grep TIME_WAIT 查询time_wait的连接</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -I  http://www.baidu.com      </span><br><span class="line">tar -xf  xxx.tar</span><br><span class="line">tar -xzf xxx.tar.gz  解压          </span><br><span class="line">top 监控        </span><br><span class="line">touch 创建文件              </span><br><span class="line">mkdir 创建目录        </span><br><span class="line">rm -rf 删除        </span><br><span class="line">cp -r xxx/xx/ .      </span><br><span class="line">mv xxx/xx  yyy/yy 移动       </span><br><span class="line">cat xxx.sh 显示       </span><br><span class="line">wc -l  统计数量</span><br><span class="line">ss -nltu 查询端口</span><br><span class="line">ss -nltu | grep -e <span class="string">'tcp'</span> -e <span class="string">'udp'</span> | awk <span class="string">'&#123;print $5&#125;'</span> | sed <span class="string">'s/.*://'</span> |sort -n |uniq 查询tcp udp 端口</span><br><span class="line">netstat -nltu 查询端口</span><br><span class="line">netstat -nltp |grep TIME_WAIT 查询time_wait的连接</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理内存的cache</span></span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>解决linux 大量TIME_WAIT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">netstat  -anp | grep TIME_WAIT | wc -l 统计数量</span><br><span class="line"></span><br><span class="line">#解决方案</span><br><span class="line">vi /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line">#加入以下参数</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line"></span><br><span class="line">#执行</span><br><span class="line">/sbin/sysctl -p</span><br></pre></td></tr></table></figure></p>
+</blockquote>
 <blockquote>
 <p> 查询命令</p>
 </blockquote>
@@ -360,8 +363,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/17/metting/" rel="next" title="敏捷开发-会议">
-                <i class="fa fa-chevron-left"></i> 敏捷开发-会议
+              <a href="/2019/02/17/front/" rel="next" title="web前端资源">
+                <i class="fa fa-chevron-left"></i> web前端资源
               </a>
             
           </div>
@@ -370,8 +373,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/17/jenkinsPlugin/" rel="prev" title="从0到1开启jenkins插件开发之路">
-                从0到1开启jenkins插件开发之路 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/metting/" rel="prev" title="敏捷开发-会议">
+                敏捷开发-会议 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -440,7 +443,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
