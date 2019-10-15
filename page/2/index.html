@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/jenkinsPlugin/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/java/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/jenkinsPlugin/" itemprop="url">从0到1开启jenkins插件开发之路</a></h1>
+                <a class="post-title-link" href="/2019/02/17/java/" itemprop="url">java</a></h1>
         
 
         <div class="post-meta">
@@ -299,15 +299,17 @@
 
       
         
-          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍.</p>
-<h5 id="主要内容包括"><a href="#主要内容包括" class="headerlink" title="主要内容包括"></a>主要内容包括</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 创建jenkins插件项目</span><br><span class="line">- 项目源码分析</span><br><span class="line">- jelly界面开发</span><br><span class="line">- 插件运行、打包、离线安装</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/17/jenkinsPlugin/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <blockquote>
+<p>递归<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class TestDemo &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">            System.out.println(sum(100));  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public static int sum(int num)&#123;  </span><br><span class="line">        <span class="keyword">if</span>(num == 1)&#123;  </span><br><span class="line">            <span class="built_in">return</span> 1;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="built_in">return</span> num + sum(num-1);  </span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<ul>
+<li>终止条件</li>
+<li>递归一下次参数</li>
+<li>返回递归函数</li>
+</ul>
+
+          
         
       
     </div>
@@ -513,7 +515,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/hexo/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/jenkinsPlugin/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -532,7 +534,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/hexo/" itemprop="url">hexo+github搭建博客以及主题更换</a></h1>
+                <a class="post-title-link" href="/2019/02/17/jenkinsPlugin/" itemprop="url">从0到1开启jenkins插件开发之路</a></h1>
         
 
         <div class="post-meta">
@@ -583,89 +585,15 @@
 
       
         
-          
-            <blockquote>
-<p>step1：安装node.js</p>
-</blockquote>
-<ul>
-<li>下载node ：<a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">https://nodejs.org/zh-cn/</a></li>
-<li>配置path</li>
-</ul>
-<blockquote>
-<p>step2: 安装Hexo</p>
-</blockquote>
-<ul>
-<li>创建一个目录为：hexo</li>
-<li>cd ~/hexo 进入 ，执行如下命令</li>
-<li>sudo npm install -g hexo</li>
-<li>hexo init</li>
-<li>hexo generate（hexo g也可以，生成静态页面）</li>
-<li>hexo server (hexo s启动)</li>
-<li><a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 本地可以访问了</li>
-</ul>
-<blockquote>
-<p>step3: Git配置</p>
-</blockquote>
-<ul>
-<li>初始化Git,提交SSH key到gitHub</li>
-<li>建立GitHub repository ，仓库名[ your_git_name].github.io，后面用这个域名直接访问。</li>
-<li><p>配置_config.yml文件，找到deploy节点，修改如下:</p>
-<pre><code>deploy:
-
-    type: git
-
-    repo: git@github.com:[ your_git_name]/[ your_git_name].github.io.git
-
-    branch: master
-</code></pre></li>
-</ul>
-<blockquote>
-<p>step3: 发布到GitHub</p>
-</blockquote>
-<ul>
-<li>安装Hexo-delpoyer-git</li>
-<li>npm install hexo-deployer-git –save</li>
-<li>hexo deploy</li>
-</ul>
-<blockquote>
-<p>step4: 访问博客地址</p>
-</blockquote>
-<ul>
-<li>[ your_git_name].github.io</li>
-</ul>
-<blockquote>
-<p>主题更换</p>
-</blockquote>
-<ul>
-<li><p>hexo主题地址：<a href="https://hexo.io/themes，我选择的主题是：hexo-theme-next" target="_blank" rel="noopener">https://hexo.io/themes，我选择的主题是：hexo-theme-next</a></p>
-</li>
-<li><p>install with git </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> hexo</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>update  _config.yml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next 注意:theme和next之间有个空格</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>run </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo clean 清理缓存数据</span><br><span class="line">hexo s --debug </span><br><span class="line">hexo g 编译</span><br><span class="line">hexo d 发布</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>hexo 项目技巧</p>
-</blockquote>
-<ul>
-<li>设置npm 加速</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org</span><br><span class="line">npm get config registry</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>hexo-3.x 手动安装hexo-server</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-server --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>mac npm install 权限问题</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install --unsafe-perm=true --allow-root</span><br></pre></td></tr></table></figure>
-
-          
+          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍.</p>
+<h5 id="主要内容包括"><a href="#主要内容包括" class="headerlink" title="主要内容包括"></a>主要内容包括</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 创建jenkins插件项目</span><br><span class="line">- 项目源码分析</span><br><span class="line">- jelly界面开发</span><br><span class="line">- 插件运行、打包、离线安装</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/17/jenkinsPlugin/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -903,6 +831,130 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/go/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/go/" itemprop="url">golang</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>MVC框架-beego <a href="https://beego.me/" target="_blank" rel="noopener">https://beego.me/</a></li>
+<li>路由框架-gorilla <a href="http://www.gorillatoolkit.org/" target="_blank" rel="noopener">http://www.gorillatoolkit.org/</a></li>
+<li>操作数据库-xorm  <a href="https://godoc.org/github.com/go-xorm/xorm" target="_blank" rel="noopener">https://godoc.org/github.com/go-xorm/xorm</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/front/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -981,130 +1033,6 @@
 <li>ES6  <a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">http://es6.ruanyifeng.com/</a></li>
 <li>NPM <a href="https://www.npmjs.com/" target="_blank" rel="noopener">https://www.npmjs.com/</a></li>
 <li><a href="http://runjs.cn/" target="_blank" rel="noopener">http://runjs.cn/</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/go/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/go/" itemprop="url">golang</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>MVC框架-beego <a href="https://beego.me/" target="_blank" rel="noopener">https://beego.me/</a></li>
-<li>路由框架-gorilla <a href="http://www.gorillatoolkit.org/" target="_blank" rel="noopener">http://www.gorillatoolkit.org/</a></li>
-<li>操作数据库-xorm  <a href="https://godoc.org/github.com/go-xorm/xorm" target="_blank" rel="noopener">https://godoc.org/github.com/go-xorm/xorm</a></li>
 </ul>
 
           
@@ -1282,137 +1210,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/helm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/helm/" itemprop="url">Kunbernetes利器-helm</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h6 id="helm是什么？"><a href="#helm是什么？" class="headerlink" title="helm是什么？"></a>helm是什么？</h6><p>引用helm官方的英文介绍:</p>
-<ul>
-<li>The package manager for Kubernetes</li>
-<li>Helm is the best way to find, share, and use software built for Kubernetes.</li>
-</ul>
-<p>意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用.</p>
-<h6 id="为什么要拥抱helm"><a href="#为什么要拥抱helm" class="headerlink" title="为什么要拥抱helm?"></a>为什么要拥抱helm?</h6><p>在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment、svc等，步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂，helm通过打包的方式，支持发布的版本管理和控制，很大程度上简化了Kubernetes应用的部署和管理.</p>
-<h6 id="本文包含的主要内容"><a href="#本文包含的主要内容" class="headerlink" title="本文包含的主要内容"></a>本文包含的主要内容</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 安装helm</span><br><span class="line">- helm常用命令</span><br><span class="line">- 自定义Chart</span><br><span class="line">- Chart模板</span><br><span class="line">- 参考文档</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/17/helm/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1534,6 +1331,137 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"><span class="comment"># 添加远程版本库</span></span><br><span class="line">git remote -v</span><br><span class="line"><span class="comment"># 查看远程版本库信息</span></span><br><span class="line">git remote show &lt;remote&gt;</span><br><span class="line"><span class="comment"># 查看指定远程版本库信息</span></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"><span class="comment"># 删除远程remote链接</span></span><br><span class="line">git remote rename &lt;old&gt; &lt;new&gt;</span><br><span class="line"><span class="comment"># 重命名远程链接名</span></span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 下载代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 上传代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git merge origin master</span><br><span class="line"><span class="comment"># 将本地的远端库合并</span></span><br><span class="line"></span><br><span class="line">git fetch origin</span><br><span class="line"><span class="comment"># 将远端库获取本地但不合并</span></span><br></pre></td></tr></table></figure>
 
           
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/helm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/helm/" itemprop="url">Kunbernetes利器-helm</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h6 id="helm是什么？"><a href="#helm是什么？" class="headerlink" title="helm是什么？"></a>helm是什么？</h6><p>引用helm官方的英文介绍:</p>
+<ul>
+<li>The package manager for Kubernetes</li>
+<li>Helm is the best way to find, share, and use software built for Kubernetes.</li>
+</ul>
+<p>意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用.</p>
+<h6 id="为什么要拥抱helm"><a href="#为什么要拥抱helm" class="headerlink" title="为什么要拥抱helm?"></a>为什么要拥抱helm?</h6><p>在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment、svc等，步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂，helm通过打包的方式，支持发布的版本管理和控制，很大程度上简化了Kubernetes应用的部署和管理.</p>
+<h6 id="本文包含的主要内容"><a href="#本文包含的主要内容" class="headerlink" title="本文包含的主要内容"></a>本文包含的主要内容</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 安装helm</span><br><span class="line">- helm常用命令</span><br><span class="line">- 自定义Chart</span><br><span class="line">- Chart模板</span><br><span class="line">- 参考文档</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/17/helm/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
