@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="查看操作系统信息12345678uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数sysctl">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-09T02:36:52.173Z">
+<meta property="og:updated_time" content="2019-10-15T06:08:50.461Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux">
 <meta name="twitter:description" content="查看操作系统信息12345678uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数sysctl">
@@ -340,6 +340,10 @@
 <p>etcd 命令</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker ps |grep etcd</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379  get/set key value</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379  --prefix --keys-only=true get /ingress 查询前缀为ingress的keys</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379   member list 查看成员和状态</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>logratote(日志轮转)</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">当产生大量日志，思路就是：</span><br><span class="line">1: 拆分历史日志</span><br><span class="line">2: 设置过期时间清理历史日志</span><br><span class="line">3: 重新写入新日志</span><br><span class="line">在linux 中可通过logratote实现</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -363,8 +367,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/17/jenkinsPlugin/" rel="next" title="从0到1开启jenkins插件开发之路">
-                <i class="fa fa-chevron-left"></i> 从0到1开启jenkins插件开发之路
+              <a href="/2019/02/17/hexo/" rel="next" title="hexo+github搭建博客以及主题更换">
+                <i class="fa fa-chevron-left"></i> hexo+github搭建博客以及主题更换
               </a>
             
           </div>
@@ -373,8 +377,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/17/java/" rel="prev" title="java">
-                java <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/http_status/" rel="prev" title="HTTP状态码">
+                HTTP状态码 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
