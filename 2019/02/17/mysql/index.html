@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="备份  12mysqldump  -uroot  -p  --all-databases&amp;gt;backup.sqlmysqldump  -uroot  -p  --databases dbname1 dbname2&amp;gt;backup.sql  恢复  1mysql  -uroot  -p  &amp;lt;backup.sql  排查最大连接数  123show global status like">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-15T02:52:50.197Z">
+<meta property="og:updated_time" content="2019-10-18T06:54:46.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql">
 <meta name="twitter:description" content="备份  12mysqldump  -uroot  -p  --all-databases&amp;gt;backup.sqlmysqldump  -uroot  -p  --databases dbname1 dbname2&amp;gt;backup.sql  恢复  1mysql  -uroot  -p  &amp;lt;backup.sql  排查最大连接数  123show global status like">
@@ -336,6 +336,10 @@
 <h4 id="清理mysql-binlog"><a href="#清理mysql-binlog" class="headerlink" title="清理mysql-binlog"></a>清理mysql-binlog</h4><p>当mysql集群开启了主从同步，会产生大量当binlog, 耗费大量的磁盘空间</p>
 <p>方法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 关闭主从</span><br><span class="line">- 设置expire_logs_days 超过过期时间自动清理</span><br><span class="line">- 手动清理日志</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mysql 8 小时超时</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">interactive_timeout  默认8小时超时 8小时不连接自动端口， 用户mysql 客户端</span><br><span class="line">wait_timeout   默认8小时超时 8小时不连接自动断开， 用于类似jdbc 连接</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -369,8 +373,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/17/podSchedule/" rel="prev" title="Kubernetes-项目中pod调度使用法则">
-                Kubernetes-项目中pod调度使用法则 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/18/zuul/" rel="prev" title="高并发下-Zuul参数调优">
+                高并发下-Zuul参数调优 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
