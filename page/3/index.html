@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/auto/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/ansible/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/auto/" itemprop="url">自动化工具</a></h1>
+                <a class="post-title-link" href="/2019/02/17/ansible/" itemprop="url">与ansible的第一次对话</a></h1>
         
 
         <div class="post-meta">
@@ -300,15 +300,44 @@
       
         
           
-            <ul>
-<li>CI-Jenkins <a href="https://jenkins.io/" target="_blank" rel="noopener">https://jenkins.io/</a></li>
-<li>自动化部署-ansible <a href="http://www.ansible.com.cn/index.html" target="_blank" rel="noopener">http://www.ansible.com.cn/index.html</a></li>
-<li>自动化测试-selenium  <a href="http://www.seleniumhq.org/" target="_blank" rel="noopener">http://www.seleniumhq.org/</a></li>
-</ul>
-<blockquote>
-<p>gitHub Top10 CI工具</p>
+            <blockquote>
+<p>ansible 是个神马东东?</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Travis CI</span><br><span class="line">Circle CI</span><br><span class="line">Jenkins</span><br><span class="line">AppVeyor</span><br><span class="line">CodeShip</span><br><span class="line">Drone</span><br><span class="line">Semaphore CI</span><br><span class="line">Buildkite</span><br><span class="line">Wercker</span><br><span class="line">TeamCity</span><br></pre></td></tr></table></figure>
+<ol>
+<li>基于python的自动化运维工具</li>
+<li>可以实现批量执行命令、批量系统配置、批量部署等自动化功能</li>
+</ol>
+<blockquote>
+<p>通信协议</p>
+</blockquote>
+<ol>
+<li>ansible默认通过SSH协议实现主机之间的通信，管理主机</li>
+</ol>
+<blockquote>
+<p>敲下第一个命令</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible --version #获取版本,确定安装成功</span><br><span class="line">ansible all -a &quot;/bin/echo hello&quot;</span><br></pre></td></tr></table></figure>
+<p>tips：安装ansible，请参考 <a href="http://www.ansible.com.cn/docs/intro_installation.html" target="_blank" rel="noopener">http://www.ansible.com.cn/docs/intro_installation.html</a></p>
+<blockquote>
+<p>ansible hosts</p>
+</blockquote>
+<p>hosts路径：cat etc/ansible/hosts<br>hosts可注册目标主机的地址，如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#   - You can enter hostnames or ip addresses</span><br><span class="line">#   - A hostname/ip can be a member of multiple groups</span><br><span class="line"></span><br><span class="line"># Ex 1: Ungrouped hosts, specify before any group headers.</span><br><span class="line"></span><br><span class="line">139.159.228.59</span><br><span class="line">192.168.1.188</span><br><span class="line">## green.example.com</span><br><span class="line">## blue.example.com</span><br><span class="line">## 192.168.100.1</span><br><span class="line">## 192.168.100.10</span><br><span class="line"></span><br><span class="line"># Ex 2: A collection of hosts belonging to the &apos;webservers&apos; group</span><br><span class="line"></span><br><span class="line">## [webservers]</span><br><span class="line">## alpha.example.org</span><br><span class="line">## beta.example.org</span><br><span class="line">## 192.168.1.100</span><br><span class="line">## 192.168.1.110</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>SSH认证</p>
+</blockquote>
+<p>ansible基于SSH协议进行通信，因此主机之间通信需要取得SSH认证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br><span class="line">ls -a </span><br><span class="line"># authorized_keys  id_rsa  id_rsa.pub</span><br><span class="line"># authorized_keys  假设当前主机为:A，如果另一台主机B要通过SSH和A通信，将A主机下的公钥添加到B主机下的authorized_keys</span><br><span class="line">#id_rsa.pub 公钥 </span><br><span class="line">#id_rsa 私钥</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>模拟一个场景：A主机下执行playbook 远程给主机B创建一个名为:hello的目录</p>
+</blockquote>
+<p>step1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将A主机下的ssh目录下的公钥(id_rsa.pub)添加到B主机ssh目录下的authorized_keys</span><br></pre></td></tr></table></figure>
+<p>step2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在A主机下的/etc/ansible/hosts里面添加B主机的IP地址</span><br></pre></td></tr></table></figure>
+<p>step3：ansible-playbook helloPlayBook.yml -i hosts #执行第一个playbook</p>
+<h6 id="helloPlayBook-yml："><a href="#helloPlayBook-yml：" class="headerlink" title="helloPlayBook.yml："></a>helloPlayBook.yml：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- hosts: 139.159.228.59</span><br><span class="line">  tasks:</span><br><span class="line">    - name: creat a folder</span><br><span class="line">      command: mkdir hello</span><br><span class="line"># 如果 /etc/ansible/hosts注册了 139.159.228.59 ，执行：ansible-playbook helloPlayBook.yml</span><br><span class="line"># 如果 /etc/ansible/host未注册 139.159.228.59，执行：ansible-playbook helloPlayBook.yml -i 139.159.228.59,</span><br><span class="line"># 多个目标主机地址用逗号分隔</span><br></pre></td></tr></table></figure>
+<h6 id="tips-：更多内容可以参考-http-ansible-com-cn-docs"><a href="#tips-：更多内容可以参考-http-ansible-com-cn-docs" class="headerlink" title="tips ：更多内容可以参考: http://ansible.com.cn/docs/"></a>tips ：更多内容可以参考: <a href="http://ansible.com.cn/docs/" target="_blank" rel="noopener">http://ansible.com.cn/docs/</a></h6>
           
         
       
