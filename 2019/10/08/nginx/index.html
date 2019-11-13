@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="header   1234header 里面的key-value 推荐不要带下滑线：如 RF_RPC: JSON_STUBnginx 默认会去掉下划线， 导致访问404 underscores_in_headers on # 也可以开启支持下划线">
+<meta name="description" content="nginx - header   1234header 里面的key-value 推荐不要带下滑线：如 RF_RPC: JSON_STUBnginx 默认会去掉下划线， 导致访问404 underscores_in_headers on # 也可以开启支持下划线  haproxy  实现会话保持  会话保持基本流程：后端生成session-id 以及存储一些数据，返回给浏览器以cookies方式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx配置">
+<meta property="og:title" content="负载均衡散记">
 <meta property="og:url" content="http://yoursite.com/2019/10/08/nginx/index.html">
 <meta property="og:site_name" content="MC.KJ">
-<meta property="og:description" content="header   1234header 里面的key-value 推荐不要带下滑线：如 RF_RPC: JSON_STUBnginx 默认会去掉下划线， 导致访问404 underscores_in_headers on # 也可以开启支持下划线">
+<meta property="og:description" content="nginx - header   1234header 里面的key-value 推荐不要带下滑线：如 RF_RPC: JSON_STUBnginx 默认会去掉下划线， 导致访问404 underscores_in_headers on # 也可以开启支持下划线  haproxy  实现会话保持  会话保持基本流程：后端生成session-id 以及存储一些数据，返回给浏览器以cookies方式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-09T02:18:17.267Z">
+<meta property="og:updated_time" content="2019-11-13T09:57:08.411Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nginx配置">
-<meta name="twitter:description" content="header   1234header 里面的key-value 推荐不要带下滑线：如 RF_RPC: JSON_STUBnginx 默认会去掉下划线， 导致访问404 underscores_in_headers on # 也可以开启支持下划线">
+<meta name="twitter:title" content="负载均衡散记">
+<meta name="twitter:description" content="nginx - header   1234header 里面的key-value 推荐不要带下滑线：如 RF_RPC: JSON_STUBnginx 默认会去掉下划线， 导致访问404 underscores_in_headers on # 也可以开启支持下划线  haproxy  实现会话保持  会话保持基本流程：后端生成session-id 以及存储一些数据，返回给浏览器以cookies方式">
 
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <title>nginx配置 | MC.KJ</title>
+  <title>负载均衡散记 | MC.KJ</title>
   
 
 
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">nginx配置</h1>
+          <h1 class="post-title" itemprop="name headline">负载均衡散记</h1>
         
 
         <div class="post-meta">
@@ -300,9 +300,29 @@
 
       
         <blockquote>
-<p>header </p>
+<p>nginx - header </p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">header 里面的key-value 推荐不要带下滑线：如 RF_RPC: JSON_STUB</span><br><span class="line">nginx 默认会去掉下划线， 导致访问404 </span><br><span class="line">underscores_in_headers on # 也可以开启支持下划线</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>haproxy  实现会话保持</p>
+</blockquote>
+<p>会话保持基本流程：后端生成session-id 以及存储一些数据，返回给浏览器以cookies方式存储，下次前端请求带上cookies里面到值session-id，后端根据session-id获取到对应客户端到数据。</p>
+<p>三种方式实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 地址hash</span><br><span class="line">- cookies</span><br><span class="line">- stick-table</span><br></pre></td></tr></table></figure>
+<p>基于haproxy-cookies实现会话保持</p>
+<p>场景：后端session-id 对应缓存用户信息在本地内存，后端多实例场景下，需要实现每次请求击中同一服务器实例。</p>
+<p>nginx session stick模块基于cookies实现会话保持</p>
+<p>核心配置如下，原理：后端生成cookie 返回给前端，前端后面的请求http带上cookie值，nginx根据cookie值击中到后端固定服务,实现会话保持.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sticky name=JSESSIONID domain=cmrh.com hash=index;</span><br><span class="line">server 10.244.17.10:9900  weight=1  max_fails=1 fail_timeout=10s;</span><br></pre></td></tr></table></figure>
+<p>haproxy-cookies实现会话保持几种模式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- insert: 在回复中本模块通过Set-Cookie头直接插入相应名称的cookie。</span><br><span class="line"></span><br><span class="line">- prefix: 不会生成新的cookie，但会在响应的cookie值前面加上特定的前缀，当浏览器带着这个有特定标识的cookie再次请求时，模块在传给后端服务前先删除加入的前缀，后端服务拿到的还是原来的cookie值，这些动作对后端透明。如：&quot;Cookie: NAME=SRV~VALUE&quot;。</span><br><span class="line">- rewrite: 使用服务端标识覆盖后端设置的用于session sticky的cookie。如果后端服务在响应头中没有设置该cookie，则认为该请求不需要进行session sticky，使用这种模式，后端服务可以控制哪些请求需要sesstion sticky，哪些请求不需要。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sesssion 共享实现会话保持</p>
+</blockquote>
+<p>现在多采用微服务架构，后端分布式多实例。将session对应到数据缓存到本地存在弊端。</p>
+<p>目前主流session共享实现方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">将session-id 对应到数据存储到远端，任何实例和服务都可根据客户端cookies传过来的session-id获取对应客户端用户的数据。</span><br><span class="line"></span><br><span class="line">- redis </span><br><span class="line">- memercache</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
