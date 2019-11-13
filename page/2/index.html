@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/hexo/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/java/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/hexo/" itemprop="url">hexo+github搭建博客以及主题更换</a></h1>
+                <a class="post-title-link" href="/2019/02/17/java/" itemprop="url">java</a></h1>
         
 
         <div class="post-meta">
@@ -301,441 +301,14 @@
         
           
             <blockquote>
-<p>step1：安装node.js</p>
+<p>递归<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class TestDemo &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">            System.out.println(sum(100));  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public static int sum(int num)&#123;  </span><br><span class="line">        <span class="keyword">if</span>(num == 1)&#123;  </span><br><span class="line">            <span class="built_in">return</span> 1;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="built_in">return</span> num + sum(num-1);  </span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <ul>
-<li>下载node ：<a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">https://nodejs.org/zh-cn/</a></li>
-<li>配置path</li>
+<li>终止条件</li>
+<li>递归一下次参数</li>
+<li>返回递归函数</li>
 </ul>
-<blockquote>
-<p>step2: 安装Hexo</p>
-</blockquote>
-<ul>
-<li>创建一个目录为：hexo</li>
-<li>cd ~/hexo 进入 ，执行如下命令</li>
-<li>sudo npm install -g hexo</li>
-<li>hexo init</li>
-<li>hexo generate（hexo g也可以，生成静态页面）</li>
-<li>hexo server (hexo s启动)</li>
-<li><a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 本地可以访问了</li>
-</ul>
-<blockquote>
-<p>step3: Git配置</p>
-</blockquote>
-<ul>
-<li>初始化Git,提交SSH key到gitHub</li>
-<li>建立GitHub repository ，仓库名[ your_git_name].github.io，后面用这个域名直接访问。</li>
-<li><p>配置_config.yml文件，找到deploy节点，修改如下:</p>
-<pre><code>deploy:
 
-    type: git
-
-    repo: git@github.com:[ your_git_name]/[ your_git_name].github.io.git
-
-    branch: master
-</code></pre></li>
-</ul>
-<blockquote>
-<p>step3: 发布到GitHub</p>
-</blockquote>
-<ul>
-<li>安装Hexo-delpoyer-git</li>
-<li>npm install hexo-deployer-git –save</li>
-<li>hexo deploy</li>
-</ul>
-<blockquote>
-<p>step4: 访问博客地址</p>
-</blockquote>
-<ul>
-<li>[ your_git_name].github.io</li>
-</ul>
-<blockquote>
-<p>主题更换</p>
-</blockquote>
-<ul>
-<li><p>hexo主题地址：<a href="https://hexo.io/themes，我选择的主题是：hexo-theme-next" target="_blank" rel="noopener">https://hexo.io/themes，我选择的主题是：hexo-theme-next</a></p>
-</li>
-<li><p>install with git </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> hexo</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>update  _config.yml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next 注意:theme和next之间有个空格</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>run </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo clean 清理缓存数据</span><br><span class="line">hexo s --debug </span><br><span class="line">hexo g 编译</span><br><span class="line">hexo d 发布</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>hexo 项目技巧</p>
-</blockquote>
-<ul>
-<li>设置npm 加速</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org</span><br><span class="line">npm get config registry</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>hexo-3.x 手动安装hexo-server</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-server --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>mac npm install 权限问题</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install --unsafe-perm=true --allow-root</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/http_status/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/http_status/" itemprop="url">HTTP状态码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>200   ok</li>
-<li>201   created</li>
-<li>202   Accepted</li>
-<li>203   Non-Authoritative Information</li>
-<li>204   No Content</li>
-<li>205   Reset Content</li>
-<li>206   Partial Content</li>
-<li>207   Multi-Status</li>
-<li><p>208   Already Reported</p>
-</li>
-<li><p>300   Multiple Choices</p>
-</li>
-<li>301   Moved Permanently</li>
-<li>302   Found</li>
-<li>303   See Other</li>
-<li>304   Not Modified</li>
-<li>305   Use Proxy</li>
-<li>307   Temporary Redirect</li>
-<li><p>308   Permanent Redirect</p>
-</li>
-<li><p>400   Bad Request</p>
-</li>
-<li>401   Unauthorized</li>
-<li>402   Payment Required</li>
-<li>403   Forbidden</li>
-<li>404   Not Found</li>
-<li>405   Method Not Allowed</li>
-<li>406   Not Acceptable</li>
-<li>407   Proxy Authentication Required</li>
-<li>408   Request Timeout</li>
-<li>409   Conflict</li>
-<li>410   Gone</li>
-<li>411   Length Required</li>
-<li>412   Precondition Failed</li>
-<li>413   Payload Too Large</li>
-<li>414   URI Too Long</li>
-<li>415   Unsupported Media Type</li>
-<li>416   Requested range not satisfiable</li>
-<li>417   Expectation Failed</li>
-<li>418   I’m a teapot</li>
-<li>419   Insufficient Space On Resource</li>
-<li>420   Method Failure</li>
-<li>421   Destination Locked</li>
-<li>422   Unprocessable Entity</li>
-<li>423   Locked</li>
-<li>424   Failed Dependency</li>
-<li>426   Upgrade Required</li>
-<li>428   Precondition Required</li>
-<li>429   Too Many Requests</li>
-<li>431   Request Header Fields Too Large</li>
-<li>451   Unavailable For Legal Reasons</li>
-</ul>
-<ul>
-<li>500   Internal Server Error</li>
-<li>501   Not Implemented</li>
-<li>502   Bad Gateway</li>
-<li>503   Service Unavailable</li>
-<li>504   Gateway Timeout</li>
-<li>505   HTTP Version not supported</li>
-<li>506   Variant Also Negotiates</li>
-<li>507   Insufficient Storage</li>
-<li>508   Loop Detected</li>
-<li>509   Bandwidth Limit Exceeded</li>
-<li>510   Not Extended</li>
-<li>511   Network Authentication Required</li>
-</ul>
-<blockquote>
-<p>more</p>
-<ul>
-<li><a href="http://tool.oschina.net/commons?type=5" target="_blank" rel="noopener">http://tool.oschina.net/commons?type=5</a></li>
-</ul>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/linux/" itemprop="url">Linux</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>查看操作系统信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br><span class="line">cat /proc/version</span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a</span><br><span class="line"></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"physical id"</span>|sort |uniq|wc -l <span class="comment">#物理cpu个数 （wc -l 计数）</span></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"processor"</span>|wc -l <span class="comment">#逻辑cpu个数</span></span><br><span class="line">sysctl -a 查询系统参数</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>centos crontab操作</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cat /ect/crontab</span><br><span class="line">crontab -e</span><br><span class="line">* * * * * date &gt;&gt; /home/date1.txt　　测试例子</span><br><span class="line">crontab -l 查看crontab任务列表</span><br><span class="line">crontab -r 终止</span><br><span class="line">tail -f /var/<span class="built_in">log</span>/cron.log 查看执行日志</span><br><span class="line">/sbin/service crond start</span><br><span class="line">/sbin/service crond stop</span><br><span class="line">/sbin/service crond restart</span><br><span class="line">/sbin/service crond reload</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>vi/vim 常用命令</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">x  删除当前光标所在处的字符</span><br><span class="line">u  撤销，恢复到上一次操作</span><br><span class="line">e / enter  下一行</span><br><span class="line">h   一行向前移动</span><br><span class="line">dd 删除当前行</span><br><span class="line">/<span class="built_in">test</span>  查找(<span class="built_in">test</span>), n 继续查找<span class="built_in">test</span> </span><br><span class="line"></span><br><span class="line">yy 复制一行</span><br><span class="line">p  在游标后面粘贴</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>查看磁盘问题</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df -h     查看磁盘使用状态       </span><br><span class="line">df -a -lh 查看全部磁盘使用情况  </span><br><span class="line">ls -lh    查看文件大小             </span><br><span class="line">du -a     列出所有文件              </span><br><span class="line">fdisk -l  列出磁盘信息         </span><br><span class="line">du -sh *  查看目录下全部文件的大小  </span><br><span class="line">du -d 1 -h / 查看当前目录文件的大小深度:1</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>yum 命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum update  xx</span><br><span class="line">yum install xx</span><br><span class="line">yum search  xx</span><br><span class="line">yum remove  xx</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>Linux分屏工具tmux</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl+b 松开  % 面板分屏</span><br><span class="line">ctrl+b  o 切换</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>查看内存问题</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h 查看内存大小</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>web开发命令</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -I  http://www.baidu.com      </span><br><span class="line">tar -xf  xxx.tar</span><br><span class="line">tar -xzf xxx.tar.gz  解压          </span><br><span class="line">top 监控        </span><br><span class="line">touch 创建文件              </span><br><span class="line">mkdir 创建目录        </span><br><span class="line">rm -rf 删除        </span><br><span class="line">cp -r xxx/xx/ .      </span><br><span class="line">mv xxx/xx  yyy/yy 移动       </span><br><span class="line">cat xxx.sh 显示       </span><br><span class="line">wc -l  统计数量</span><br><span class="line">ss -nltu 查询端口</span><br><span class="line">ss -nltu | grep -e <span class="string">'tcp'</span> -e <span class="string">'udp'</span> | awk <span class="string">'&#123;print $5&#125;'</span> | sed <span class="string">'s/.*://'</span> |sort -n |uniq 查询tcp udp 端口</span><br><span class="line">netstat -nltu 查询端口</span><br><span class="line">netstat -nltp |grep TIME_WAIT 查询time_wait的连接</span><br><span class="line"><span class="built_in">alias</span> name=<span class="string">'command line'</span> <span class="comment">#设置别名</span></span><br><span class="line"><span class="comment"># 清理内存的cache</span></span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>解决linux 大量TIME_WAIT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">netstat  -anp | grep TIME_WAIT | wc -l 统计数量</span><br><span class="line"></span><br><span class="line">#解决方案</span><br><span class="line">vi /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line">#加入以下参数</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line"></span><br><span class="line">#执行</span><br><span class="line">/sbin/sysctl -p</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p> 查询命令</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sort test.txt  <span class="comment">#排序</span></span><br><span class="line">awk <span class="string">'&#123;print $1, $2&#125;'</span> <span class="comment">#提取</span></span><br><span class="line">grep  <span class="comment">#管道筛选</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>etcd 命令</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker ps |grep etcd</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379  get/set key value</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379  --prefix --keys-only=true get /ingress 查询前缀为ingress的keys</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379   member list 查看成员和状态</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>logratote(日志轮转)</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">当产生大量日志，思路就是：</span><br><span class="line">1: 拆分历史日志</span><br><span class="line">2: 设置过期时间清理历史日志</span><br><span class="line">3: 重新写入新日志</span><br><span class="line">在linux 中可通过logratote实现</span><br></pre></td></tr></table></figure>
           
         
       
@@ -974,7 +547,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/front/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/jenkinsPlugin/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -993,7 +566,132 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/front/" itemprop="url">web前端资源</a></h1>
+                <a class="post-title-link" href="/2019/02/17/jenkinsPlugin/" itemprop="url">从0到1开启jenkins插件开发之路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍.</p>
+<h5 id="主要内容包括"><a href="#主要内容包括" class="headerlink" title="主要内容包括"></a>主要内容包括</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 创建jenkins插件项目</span><br><span class="line">- 项目源码分析</span><br><span class="line">- jelly界面开发</span><br><span class="line">- 插件运行、打包、离线安装</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/17/jenkinsPlugin/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/linux/" itemprop="url">Linux</a></h1>
         
 
         <div class="post-meta">
@@ -1045,15 +743,51 @@
       
         
           
-            <ul>
-<li>字体、图标 <a href="http://fontawesome.io/" target="_blank" rel="noopener">http://fontawesome.io/</a></li>
-<li>bootstrap <a href="http://www.bootcss.com/" target="_blank" rel="noopener">http://www.bootcss.com/</a></li>
-<li>vue组件框架 <a href="http://element.eleme.io/" target="_blank" rel="noopener">http://element.eleme.io/</a></li>
-<li>ES6  <a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">http://es6.ruanyifeng.com/</a></li>
-<li>NPM <a href="https://www.npmjs.com/" target="_blank" rel="noopener">https://www.npmjs.com/</a></li>
-<li><a href="http://runjs.cn/" target="_blank" rel="noopener">http://runjs.cn/</a></li>
-</ul>
-
+            <blockquote>
+<p>查看操作系统信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br><span class="line">cat /proc/version</span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a</span><br><span class="line"></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"physical id"</span>|sort |uniq|wc -l <span class="comment">#物理cpu个数 （wc -l 计数）</span></span><br><span class="line">cat /proc/cpuinfo |grep <span class="string">"processor"</span>|wc -l <span class="comment">#逻辑cpu个数</span></span><br><span class="line">sysctl -a 查询系统参数</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>centos crontab操作</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cat /ect/crontab</span><br><span class="line">crontab -e</span><br><span class="line">* * * * * date &gt;&gt; /home/date1.txt　　测试例子</span><br><span class="line">crontab -l 查看crontab任务列表</span><br><span class="line">crontab -r 终止</span><br><span class="line">tail -f /var/<span class="built_in">log</span>/cron.log 查看执行日志</span><br><span class="line">/sbin/service crond start</span><br><span class="line">/sbin/service crond stop</span><br><span class="line">/sbin/service crond restart</span><br><span class="line">/sbin/service crond reload</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>vi/vim 常用命令</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">x  删除当前光标所在处的字符</span><br><span class="line">u  撤销，恢复到上一次操作</span><br><span class="line">e / enter  下一行</span><br><span class="line">h   一行向前移动</span><br><span class="line">dd 删除当前行</span><br><span class="line">/<span class="built_in">test</span>  查找(<span class="built_in">test</span>), n 继续查找<span class="built_in">test</span> </span><br><span class="line"></span><br><span class="line">yy 复制一行</span><br><span class="line">p  在游标后面粘贴</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>查看磁盘问题</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df -h     查看磁盘使用状态       </span><br><span class="line">df -a -lh 查看全部磁盘使用情况  </span><br><span class="line">ls -lh    查看文件大小             </span><br><span class="line">du -a     列出所有文件              </span><br><span class="line">fdisk -l  列出磁盘信息         </span><br><span class="line">du -sh *  查看目录下全部文件的大小  </span><br><span class="line">du -d 1 -h / 查看当前目录文件的大小深度:1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>yum 命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum update  xx</span><br><span class="line">yum install xx</span><br><span class="line">yum search  xx</span><br><span class="line">yum remove  xx</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>Linux分屏工具tmux</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl+b 松开  % 面板分屏</span><br><span class="line">ctrl+b  o 切换</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>查看内存问题</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h 查看内存大小</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>web开发命令</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -I  http://www.baidu.com      </span><br><span class="line">tar -xf  xxx.tar</span><br><span class="line">tar -xzf xxx.tar.gz  解压          </span><br><span class="line">top 监控        </span><br><span class="line">touch 创建文件              </span><br><span class="line">mkdir 创建目录        </span><br><span class="line">rm -rf 删除        </span><br><span class="line">cp -r xxx/xx/ .      </span><br><span class="line">mv xxx/xx  yyy/yy 移动       </span><br><span class="line">cat xxx.sh 显示       </span><br><span class="line">wc -l  统计数量</span><br><span class="line">ss -nltu 查询端口</span><br><span class="line">ss -nltu | grep -e <span class="string">'tcp'</span> -e <span class="string">'udp'</span> | awk <span class="string">'&#123;print $5&#125;'</span> | sed <span class="string">'s/.*://'</span> |sort -n |uniq 查询tcp udp 端口</span><br><span class="line">netstat -nltu 查询端口</span><br><span class="line">netstat -nltp |grep TIME_WAIT 查询time_wait的连接</span><br><span class="line"><span class="built_in">alias</span> name=<span class="string">'command line'</span> <span class="comment">#设置别名</span></span><br><span class="line"><span class="comment"># 清理内存的cache</span></span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>解决linux 大量TIME_WAIT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">netstat  -anp | grep TIME_WAIT | wc -l 统计数量</span><br><span class="line"></span><br><span class="line">#解决方案</span><br><span class="line">vi /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line">#加入以下参数</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line"></span><br><span class="line">#执行</span><br><span class="line">/sbin/sysctl -p</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p> 查询命令</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sort test.txt  <span class="comment">#排序</span></span><br><span class="line">awk <span class="string">'&#123;print $1, $2&#125;'</span> <span class="comment">#提取</span></span><br><span class="line">grep  <span class="comment">#管道筛选</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>etcd 命令</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker ps |grep etcd</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379  get/set key value</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379  --prefix --keys-only=true get /ingress 查询前缀为ingress的keys</span><br><span class="line">etcdctl --endpoints=http://192.168.0.2:2379   member list 查看成员和状态</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>logratote(日志轮转)</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">当产生大量日志，思路就是：</span><br><span class="line">1: 拆分历史日志</span><br><span class="line">2: 设置过期时间清理历史日志</span><br><span class="line">3: 重新写入新日志</span><br><span class="line">在linux 中可通过logratote实现</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1353,6 +1087,264 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/helm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/helm/" itemprop="url">Kunbernetes利器-helm</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h6 id="helm是什么？"><a href="#helm是什么？" class="headerlink" title="helm是什么？"></a>helm是什么？</h6><p>引用helm官方的英文介绍:</p>
+<ul>
+<li>The package manager for Kubernetes</li>
+<li>Helm is the best way to find, share, and use software built for Kubernetes.</li>
+</ul>
+<p>意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用.</p>
+<h6 id="为什么要拥抱helm"><a href="#为什么要拥抱helm" class="headerlink" title="为什么要拥抱helm?"></a>为什么要拥抱helm?</h6><p>在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment、svc等，步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂，helm通过打包的方式，支持发布的版本管理和控制，很大程度上简化了Kubernetes应用的部署和管理.</p>
+<h6 id="本文包含的主要内容"><a href="#本文包含的主要内容" class="headerlink" title="本文包含的主要内容"></a>本文包含的主要内容</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 安装helm</span><br><span class="line">- helm常用命令</span><br><span class="line">- 自定义Chart</span><br><span class="line">- Chart模板</span><br><span class="line">- 参考文档</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/17/helm/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/front/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/front/" itemprop="url">web前端资源</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>字体、图标 <a href="http://fontawesome.io/" target="_blank" rel="noopener">http://fontawesome.io/</a></li>
+<li>bootstrap <a href="http://www.bootcss.com/" target="_blank" rel="noopener">http://www.bootcss.com/</a></li>
+<li>vue组件框架 <a href="http://element.eleme.io/" target="_blank" rel="noopener">http://element.eleme.io/</a></li>
+<li>ES6  <a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">http://es6.ruanyifeng.com/</a></li>
+<li>NPM <a href="https://www.npmjs.com/" target="_blank" rel="noopener">https://www.npmjs.com/</a></li>
+<li><a href="http://runjs.cn/" target="_blank" rel="noopener">http://runjs.cn/</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1478,137 +1470,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"><span class="comment"># 添加远程版本库</span></span><br><span class="line">git remote -v</span><br><span class="line"><span class="comment"># 查看远程版本库信息</span></span><br><span class="line">git remote show &lt;remote&gt;</span><br><span class="line"><span class="comment"># 查看指定远程版本库信息</span></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"><span class="comment"># 删除远程remote链接</span></span><br><span class="line">git remote rename &lt;old&gt; &lt;new&gt;</span><br><span class="line"><span class="comment"># 重命名远程链接名</span></span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 下载代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 上传代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git merge origin master</span><br><span class="line"><span class="comment"># 将本地的远端库合并</span></span><br><span class="line"></span><br><span class="line">git fetch origin</span><br><span class="line"><span class="comment"># 将远端库获取本地但不合并</span></span><br></pre></td></tr></table></figure>
 
           
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/helm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/helm/" itemprop="url">Kunbernetes利器-helm</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h6 id="helm是什么？"><a href="#helm是什么？" class="headerlink" title="helm是什么？"></a>helm是什么？</h6><p>引用helm官方的英文介绍:</p>
-<ul>
-<li>The package manager for Kubernetes</li>
-<li>Helm is the best way to find, share, and use software built for Kubernetes.</li>
-</ul>
-<p>意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用.</p>
-<h6 id="为什么要拥抱helm"><a href="#为什么要拥抱helm" class="headerlink" title="为什么要拥抱helm?"></a>为什么要拥抱helm?</h6><p>在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment、svc等，步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂，helm通过打包的方式，支持发布的版本管理和控制，很大程度上简化了Kubernetes应用的部署和管理.</p>
-<h6 id="本文包含的主要内容"><a href="#本文包含的主要内容" class="headerlink" title="本文包含的主要内容"></a>本文包含的主要内容</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 安装helm</span><br><span class="line">- helm常用命令</span><br><span class="line">- 自定义Chart</span><br><span class="line">- Chart模板</span><br><span class="line">- 参考文档</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/17/helm/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
         
       
     </div>
