@@ -722,6 +722,144 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/project/" itemprop="url">项目管理工具</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>进度管理</p>
+</blockquote>
+<ul>
+<li>trello：<a href="https://trello.com/" target="_blank" rel="noopener">https://trello.com/</a> 看板进度管理</li>
+<li>jiara ：<a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener">https://www.atlassian.com/software/jira</a></li>
+</ul>
+<blockquote>
+<p>企业wiki</p>
+</blockquote>
+<ul>
+<li>confluenec : <a href="https://www.atlassian.com/software/confluence" target="_blank" rel="noopener">https://www.atlassian.com/software/confluence</a></li>
+</ul>
+<blockquote>
+<p>会议</p>
+<ul>
+<li><a href="https://zoom.us/" target="_blank" rel="noopener">https://zoom.us/</a></li>
+</ul>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -881,6 +1019,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/sonarqube/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/sonarqube/" itemprop="url">sonarQube+jenkins持续审查</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助"><a href="#SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助" class="headerlink" title="SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助"></a>SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助</h3><blockquote>
+<p>基于Docker部署sonarQube</p>
+</blockquote>
+<pre><code class="bash">//安装psql 创建数据库：sonar
+docker run --name postgresqldb -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres
+docker <span class="built_in">exec</span> -it <span class="variable">$containerid</span> /bin/sh
+psql -Uroot -droot
+\l
+create database sonar;
+
+//安装sonarqube
+docker run --name sonarqube \
+    --link postgresqldb \
+    -e SONARQUBE_JDBC_USERNAME=root \
+    -e SONARQUBE_JDBC_PASSWORD=root \
+    -e SONARQUBE_JDBC_URL=jdbc:postgresql://postgresqldb:5432/sonar \
+    -p 9000:9000 -d sonarqube
+
+
+* IP:8001 访问 默认sonarqube用户和密码：admin
+
+</code></pre>
+<blockquote>
+<p>汉化sonarqube</p>
+</blockquote>
+<ul>
+<li>下载sonar-l10n-zh-plugin-1.20.jar </li>
+<li>放在 extensions/plugins , 重启sonarqube</li>
+</ul>
+<blockquote>
+<p>jenkins集成sonarQube</p>
+</blockquote>
+<p>1、 安装sonarQubeScaner   系统管理-&gt;管理插件-&gt;可选插件</p>
+<p><img src="./img/sonar/1.png" alt><br>2、 获取sonarQube的token sonarQube-&gt;配置-&gt;用户-&gt;令牌<br><img src="./img/sonar/3.png" alt><br>3、 配置sonarQubeServer   系统管理-&gt;系统设置</p>
+<p><img src="./img/sonar/2.png" alt><br>4、 配置sonarQube scaner  系统管理-&gt;全局工具设置</p>
+<p><img src="./img/sonar/4.png" alt><br>5、 在构建中添加sonarqube，其中src表示源码的目录，build编译代码后的目录</p>
+<p><img src="./img/sonar/6.png" alt><br>6、成功后，可在sonarqube查看扫描代码的结果</p>
+<p><img src="./img/sonar/7.png" alt></p>
+<p>tips：通过分析结果中的bugs、漏洞、坏味道可提高代码规范和质量.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/podSchedule/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -960,144 +1256,6 @@
             </a>
           </div>
           <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/project/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/project/" itemprop="url">项目管理工具</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>进度管理</p>
-</blockquote>
-<ul>
-<li>trello：<a href="https://trello.com/" target="_blank" rel="noopener">https://trello.com/</a> 看板进度管理</li>
-<li>jiara ：<a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener">https://www.atlassian.com/software/jira</a></li>
-</ul>
-<blockquote>
-<p>企业wiki</p>
-</blockquote>
-<ul>
-<li>confluenec : <a href="https://www.atlassian.com/software/confluence" target="_blank" rel="noopener">https://www.atlassian.com/software/confluence</a></li>
-</ul>
-<blockquote>
-<p>会议</p>
-<ul>
-<li><a href="https://zoom.us/" target="_blank" rel="noopener">https://zoom.us/</a></li>
-</ul>
-</blockquote>
-
-          
         
       
     </div>
@@ -1276,164 +1434,6 @@
 <li>prometheus rules : <a href="https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/</a></li>
 <li>grafana：<a href="http://docs.grafana.org/" target="_blank" rel="noopener">http://docs.grafana.org/</a></li>
 </ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/sonarqube/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/sonarqube/" itemprop="url">sonarQube+jenkins持续审查</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助"><a href="#SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助" class="headerlink" title="SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助"></a>SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助</h3><blockquote>
-<p>基于Docker部署sonarQube</p>
-</blockquote>
-<pre><code class="bash">//安装psql 创建数据库：sonar
-docker run --name postgresqldb -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres
-docker <span class="built_in">exec</span> -it <span class="variable">$containerid</span> /bin/sh
-psql -Uroot -droot
-\l
-create database sonar;
-
-//安装sonarqube
-docker run --name sonarqube \
-    --link postgresqldb \
-    -e SONARQUBE_JDBC_USERNAME=root \
-    -e SONARQUBE_JDBC_PASSWORD=root \
-    -e SONARQUBE_JDBC_URL=jdbc:postgresql://postgresqldb:5432/sonar \
-    -p 9000:9000 -d sonarqube
-
-
-* IP:8001 访问 默认sonarqube用户和密码：admin
-
-</code></pre>
-<blockquote>
-<p>汉化sonarqube</p>
-</blockquote>
-<ul>
-<li>下载sonar-l10n-zh-plugin-1.20.jar </li>
-<li>放在 extensions/plugins , 重启sonarqube</li>
-</ul>
-<blockquote>
-<p>jenkins集成sonarQube</p>
-</blockquote>
-<p>1、 安装sonarQubeScaner   系统管理-&gt;管理插件-&gt;可选插件</p>
-<p><img src="./img/sonar/1.png" alt><br>2、 获取sonarQube的token sonarQube-&gt;配置-&gt;用户-&gt;令牌<br><img src="./img/sonar/3.png" alt><br>3、 配置sonarQubeServer   系统管理-&gt;系统设置</p>
-<p><img src="./img/sonar/2.png" alt><br>4、 配置sonarQube scaner  系统管理-&gt;全局工具设置</p>
-<p><img src="./img/sonar/4.png" alt><br>5、 在构建中添加sonarqube，其中src表示源码的目录，build编译代码后的目录</p>
-<p><img src="./img/sonar/6.png" alt><br>6、成功后，可在sonarqube查看扫描代码的结果</p>
-<p><img src="./img/sonar/7.png" alt></p>
-<p>tips：通过分析结果中的bugs、漏洞、坏味道可提高代码规范和质量.</p>
 
           
         
