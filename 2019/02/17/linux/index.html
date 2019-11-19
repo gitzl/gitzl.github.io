@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="查看操作系统信息12345678uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数sysctl">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-14T03:08:34.913Z">
+<meta property="og:updated_time" content="2019-11-14T07:08:12.152Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux">
 <meta name="twitter:description" content="查看操作系统信息12345678uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数sysctl">
@@ -332,7 +332,7 @@
 <blockquote>
 <p>解决linux 大量TIME_WAIT</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">netstat  -anp | grep TIME_WAIT | wc -l 统计数量</span><br><span class="line"></span><br><span class="line">#解决方案</span><br><span class="line">vi /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line">#加入以下参数</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line"></span><br><span class="line">#执行</span><br><span class="line">/sbin/sysctl -p</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">netstat  -anp | grep TIME_WAIT | wc -l 统计数量</span><br><span class="line"></span><br><span class="line">#解决方案</span><br><span class="line">vi /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line">#加入以下参数</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line"></span><br><span class="line">#执行</span><br><span class="line">/sbin/sysctl -p</span><br><span class="line"></span><br><span class="line"># 动态修改linux 内核参数</span><br><span class="line">sysctl net.ipv4.tcp_fin_timeout=30</span><br><span class="line">sysctl -a 查看全部内核参数变量</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p> 查询命令</p>
 </blockquote>
@@ -368,8 +368,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/17/front/" rel="next" title="web前端资源">
-                <i class="fa fa-chevron-left"></i> web前端资源
+              <a href="/2019/02/17/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
               </a>
             
           </div>
@@ -378,8 +378,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/17/metting/" rel="prev" title="敏捷开发-会议">
-                敏捷开发-会议 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/jenkinsPlugin/" rel="prev" title="从0到1开启jenkins插件开发之路">
+                从0到1开启jenkins插件开发之路 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -448,7 +448,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

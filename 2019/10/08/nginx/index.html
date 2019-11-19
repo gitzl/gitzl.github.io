@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="nginx - header   1234header 里面的key-value 推荐不要带下滑线：如 RF_RPC: JSON_STUBnginx 默认会去掉下划线， 导致访问404 underscores_in_headers on # 也可以开启支持下划线  haproxy  实现会话保持  会话保持基本流程：后端生成session-id 以及存储一些数据，返回给浏览器以cookies方式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-13T10:01:26.296Z">
+<meta property="og:updated_time" content="2019-11-14T07:33:42.913Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="负载均衡散记">
 <meta name="twitter:description" content="nginx - header   1234header 里面的key-value 推荐不要带下滑线：如 RF_RPC: JSON_STUBnginx 默认会去掉下划线， 导致访问404 underscores_in_headers on # 也可以开启支持下划线  haproxy  实现会话保持  会话保持基本流程：后端生成session-id 以及存储一些数据，返回给浏览器以cookies方式">
@@ -322,6 +322,10 @@
 <p>现在多采用微服务架构，后端分布式多实例。将session对应到数据缓存到本地存在弊端。</p>
 <p>目前主流session共享实现方式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">将session-id 对应到数据存储到远端，任何实例和服务都可根据客户端cookies传过来的session-id获取对应客户端用户的数据。</span><br><span class="line"></span><br><span class="line">- redis </span><br><span class="line">- memercache</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>nginx 性能优化</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- worker_connections  1024  # 最大链接数量 默认1024</span><br><span class="line">- worker_processes    8     # 进程数 一般设置为cpu内核数</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -355,6 +359,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/19/hAvailability/" rel="prev" title="高可用散记">
+                高可用散记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -422,7 +430,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

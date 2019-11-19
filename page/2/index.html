@@ -229,6 +229,205 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/hexo/" itemprop="url">hexo+github搭建博客以及主题更换</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>step1：安装node.js</p>
+</blockquote>
+<ul>
+<li>下载node ：<a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">https://nodejs.org/zh-cn/</a></li>
+<li>配置path</li>
+</ul>
+<blockquote>
+<p>step2: 安装Hexo</p>
+</blockquote>
+<ul>
+<li>创建一个目录为：hexo</li>
+<li>cd ~/hexo 进入 ，执行如下命令</li>
+<li>sudo npm install -g hexo</li>
+<li>hexo init</li>
+<li>hexo generate（hexo g也可以，生成静态页面）</li>
+<li>hexo server (hexo s启动)</li>
+<li><a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 本地可以访问了</li>
+</ul>
+<blockquote>
+<p>step3: Git配置</p>
+</blockquote>
+<ul>
+<li>初始化Git,提交SSH key到gitHub</li>
+<li>建立GitHub repository ，仓库名[ your_git_name].github.io，后面用这个域名直接访问。</li>
+<li><p>配置_config.yml文件，找到deploy节点，修改如下:</p>
+<pre><code>deploy:
+
+    type: git
+
+    repo: git@github.com:[ your_git_name]/[ your_git_name].github.io.git
+
+    branch: master
+</code></pre></li>
+</ul>
+<blockquote>
+<p>step3: 发布到GitHub</p>
+</blockquote>
+<ul>
+<li>安装Hexo-delpoyer-git</li>
+<li>npm install hexo-deployer-git –save</li>
+<li>hexo deploy</li>
+</ul>
+<blockquote>
+<p>step4: 访问博客地址</p>
+</blockquote>
+<ul>
+<li>[ your_git_name].github.io</li>
+</ul>
+<blockquote>
+<p>主题更换</p>
+</blockquote>
+<ul>
+<li><p>hexo主题地址：<a href="https://hexo.io/themes，我选择的主题是：hexo-theme-next" target="_blank" rel="noopener">https://hexo.io/themes，我选择的主题是：hexo-theme-next</a></p>
+</li>
+<li><p>install with git </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> hexo</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>update  _config.yml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next 注意:theme和next之间有个空格</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>run </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo clean 清理缓存数据</span><br><span class="line">hexo s --debug </span><br><span class="line">hexo g 编译</span><br><span class="line">hexo d 发布</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>hexo 项目技巧</p>
+</blockquote>
+<ul>
+<li>设置npm 加速</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org</span><br><span class="line">npm get config registry</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>hexo-3.x 手动安装hexo-server</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-server --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mac npm install 权限问题</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install --unsafe-perm=true --allow-root</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/java/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -310,131 +509,6 @@
 </ul>
 
           
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/jenkinsPlugin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/jenkinsPlugin/" itemprop="url">从0到1开启jenkins插件开发之路</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍.</p>
-<h5 id="主要内容包括"><a href="#主要内容包括" class="headerlink" title="主要内容包括"></a>主要内容包括</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 创建jenkins插件项目</span><br><span class="line">- 项目源码分析</span><br><span class="line">- jelly界面开发</span><br><span class="line">- 插件运行、打包、离线安装</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/17/jenkinsPlugin/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
         
       
     </div>
@@ -672,6 +746,131 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/jenkinsPlugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/jenkinsPlugin/" itemprop="url">从0到1开启jenkins插件开发之路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍.</p>
+<h5 id="主要内容包括"><a href="#主要内容包括" class="headerlink" title="主要内容包括"></a>主要内容包括</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 创建jenkins插件项目</span><br><span class="line">- 项目源码分析</span><br><span class="line">- jelly界面开发</span><br><span class="line">- 插件运行、打包、离线安装</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/17/jenkinsPlugin/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/linux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -776,7 +975,7 @@
 <blockquote>
 <p>解决linux 大量TIME_WAIT</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">netstat  -anp | grep TIME_WAIT | wc -l 统计数量</span><br><span class="line"></span><br><span class="line">#解决方案</span><br><span class="line">vi /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line">#加入以下参数</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line"></span><br><span class="line">#执行</span><br><span class="line">/sbin/sysctl -p</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">netstat  -anp | grep TIME_WAIT | wc -l 统计数量</span><br><span class="line"></span><br><span class="line">#解决方案</span><br><span class="line">vi /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line">#加入以下参数</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line"></span><br><span class="line">#执行</span><br><span class="line">/sbin/sysctl -p</span><br><span class="line"></span><br><span class="line"># 动态修改linux 内核参数</span><br><span class="line">sysctl net.ipv4.tcp_fin_timeout=30</span><br><span class="line">sysctl -a 查看全部内核参数变量</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p> 查询命令</p>
 </blockquote>
@@ -789,6 +988,134 @@
 <p>logratote(日志轮转)</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">当产生大量日志，思路就是：</span><br><span class="line">1: 拆分历史日志</span><br><span class="line">2: 设置过期时间清理历史日志</span><br><span class="line">3: 重新写入新日志</span><br><span class="line">在linux 中可通过logratote实现</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/hello-world/" itemprop="url">Hello World</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
           
         
       
@@ -1087,265 +1414,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/helm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/helm/" itemprop="url">Kunbernetes利器-helm</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h6 id="helm是什么？"><a href="#helm是什么？" class="headerlink" title="helm是什么？"></a>helm是什么？</h6><p>引用helm官方的英文介绍:</p>
-<ul>
-<li>The package manager for Kubernetes</li>
-<li>Helm is the best way to find, share, and use software built for Kubernetes.</li>
-</ul>
-<p>意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用.</p>
-<h6 id="为什么要拥抱helm"><a href="#为什么要拥抱helm" class="headerlink" title="为什么要拥抱helm?"></a>为什么要拥抱helm?</h6><p>在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment、svc等，步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂，helm通过打包的方式，支持发布的版本管理和控制，很大程度上简化了Kubernetes应用的部署和管理.</p>
-<h6 id="本文包含的主要内容"><a href="#本文包含的主要内容" class="headerlink" title="本文包含的主要内容"></a>本文包含的主要内容</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 安装helm</span><br><span class="line">- helm常用命令</span><br><span class="line">- 自定义Chart</span><br><span class="line">- Chart模板</span><br><span class="line">- 参考文档</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/17/helm/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1517,7 +1585,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/ansible/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/helm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MC.KJ">
@@ -1536,7 +1604,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/17/ansible/" itemprop="url">与ansible的第一次对话</a></h1>
+                <a class="post-title-link" href="/2019/02/17/helm/" itemprop="url">Kunbernetes利器-helm</a></h1>
         
 
         <div class="post-meta">
@@ -1587,46 +1655,21 @@
 
       
         
-          
-            <blockquote>
-<p>ansible 是个神马东东?</p>
-</blockquote>
-<ol>
-<li>基于python的自动化运维工具</li>
-<li>可以实现批量执行命令、批量系统配置、批量部署等自动化功能</li>
-</ol>
-<blockquote>
-<p>通信协议</p>
-</blockquote>
-<ol>
-<li>ansible默认通过SSH协议实现主机之间的通信，管理主机</li>
-</ol>
-<blockquote>
-<p>敲下第一个命令</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible --version #获取版本,确定安装成功</span><br><span class="line">ansible all -a &quot;/bin/echo hello&quot;</span><br></pre></td></tr></table></figure>
-<p>tips：安装ansible，请参考 <a href="http://www.ansible.com.cn/docs/intro_installation.html" target="_blank" rel="noopener">http://www.ansible.com.cn/docs/intro_installation.html</a></p>
-<blockquote>
-<p>ansible hosts</p>
-</blockquote>
-<p>hosts路径：cat etc/ansible/hosts<br>hosts可注册目标主机的地址，如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#   - You can enter hostnames or ip addresses</span><br><span class="line">#   - A hostname/ip can be a member of multiple groups</span><br><span class="line"></span><br><span class="line"># Ex 1: Ungrouped hosts, specify before any group headers.</span><br><span class="line"></span><br><span class="line">139.159.228.59</span><br><span class="line">192.168.1.188</span><br><span class="line">## green.example.com</span><br><span class="line">## blue.example.com</span><br><span class="line">## 192.168.100.1</span><br><span class="line">## 192.168.100.10</span><br><span class="line"></span><br><span class="line"># Ex 2: A collection of hosts belonging to the &apos;webservers&apos; group</span><br><span class="line"></span><br><span class="line">## [webservers]</span><br><span class="line">## alpha.example.org</span><br><span class="line">## beta.example.org</span><br><span class="line">## 192.168.1.100</span><br><span class="line">## 192.168.1.110</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>SSH认证</p>
-</blockquote>
-<p>ansible基于SSH协议进行通信，因此主机之间通信需要取得SSH认证</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br><span class="line">ls -a </span><br><span class="line"># authorized_keys  id_rsa  id_rsa.pub</span><br><span class="line"># authorized_keys  假设当前主机为:A，如果另一台主机B要通过SSH和A通信，将A主机下的公钥添加到B主机下的authorized_keys</span><br><span class="line">#id_rsa.pub 公钥 </span><br><span class="line">#id_rsa 私钥</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>模拟一个场景：A主机下执行playbook 远程给主机B创建一个名为:hello的目录</p>
-</blockquote>
-<p>step1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将A主机下的ssh目录下的公钥(id_rsa.pub)添加到B主机ssh目录下的authorized_keys</span><br></pre></td></tr></table></figure>
-<p>step2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在A主机下的/etc/ansible/hosts里面添加B主机的IP地址</span><br></pre></td></tr></table></figure>
-<p>step3：ansible-playbook helloPlayBook.yml -i hosts #执行第一个playbook</p>
-<h6 id="helloPlayBook-yml："><a href="#helloPlayBook-yml：" class="headerlink" title="helloPlayBook.yml："></a>helloPlayBook.yml：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- hosts: 139.159.228.59</span><br><span class="line">  tasks:</span><br><span class="line">    - name: creat a folder</span><br><span class="line">      command: mkdir hello</span><br><span class="line"># 如果 /etc/ansible/hosts注册了 139.159.228.59 ，执行：ansible-playbook helloPlayBook.yml</span><br><span class="line"># 如果 /etc/ansible/host未注册 139.159.228.59，执行：ansible-playbook helloPlayBook.yml -i 139.159.228.59,</span><br><span class="line"># 多个目标主机地址用逗号分隔</span><br></pre></td></tr></table></figure>
-<h6 id="tips-：更多内容可以参考-http-ansible-com-cn-docs"><a href="#tips-：更多内容可以参考-http-ansible-com-cn-docs" class="headerlink" title="tips ：更多内容可以参考: http://ansible.com.cn/docs/"></a>tips ：更多内容可以参考: <a href="http://ansible.com.cn/docs/" target="_blank" rel="noopener">http://ansible.com.cn/docs/</a></h6>
-          
+          <h6 id="helm是什么？"><a href="#helm是什么？" class="headerlink" title="helm是什么？"></a>helm是什么？</h6><p>引用helm官方的英文介绍:</p>
+<ul>
+<li>The package manager for Kubernetes</li>
+<li>Helm is the best way to find, share, and use software built for Kubernetes.</li>
+</ul>
+<p>意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用.</p>
+<h6 id="为什么要拥抱helm"><a href="#为什么要拥抱helm" class="headerlink" title="为什么要拥抱helm?"></a>为什么要拥抱helm?</h6><p>在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment、svc等，步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂，helm通过打包的方式，支持发布的版本管理和控制，很大程度上简化了Kubernetes应用的部署和管理.</p>
+<h6 id="本文包含的主要内容"><a href="#本文包含的主要内容" class="headerlink" title="本文包含的主要内容"></a>本文包含的主要内容</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 安装helm</span><br><span class="line">- helm常用命令</span><br><span class="line">- 自定义Chart</span><br><span class="line">- Chart模板</span><br><span class="line">- 参考文档</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/17/helm/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1710,7 +1753,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
