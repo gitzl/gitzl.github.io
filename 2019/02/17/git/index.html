@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="生成SSH  1234567891011121314151617git init# 初始化本地git版本库（创建新仓库）git config --global user.name &quot;xxx&quot;# 配置用户名git config --global user.email &quot;xxx@xxx.com&quot;# 配置邮件git config --list#查看当前配置列表ssh-keygen -t rsa -C">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-11T09:18:51.847Z">
+<meta property="og:updated_time" content="2019-12-06T03:41:10.940Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git命令">
 <meta name="twitter:description" content="生成SSH  1234567891011121314151617git init# 初始化本地git版本库（创建新仓库）git config --global user.name &quot;xxx&quot;# 配置用户名git config --global user.email &quot;xxx@xxx.com&quot;# 配置邮件git config --list#查看当前配置列表ssh-keygen -t rsa -C">
@@ -322,7 +322,7 @@
 <blockquote>
 <p>branch  分支操作</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master</span><br><span class="line"><span class="comment"># 获取远程分支master并merge到当前分支</span></span><br><span class="line"></span><br><span class="line">git branch -vv </span><br><span class="line"><span class="comment"># 查看本地分支和远程分支是否建立连接</span></span><br><span class="line"></span><br><span class="line">git branch</span><br><span class="line"><span class="comment"># 显示本地分支</span></span><br><span class="line">git branch -r  <span class="comment">#查看远程分支</span></span><br><span class="line"></span><br><span class="line">git push orgin &lt;branch-name&gt; <span class="comment">#推送本地分支到远端</span></span><br><span class="line"></span><br><span class="line">git checkout &lt;branch-name&gt; <span class="comment">#切换分支</span></span><br><span class="line"></span><br><span class="line">git branch -a</span><br><span class="line"><span class="comment"># 显示所有分支</span></span><br><span class="line">git checkout 分支名/标签名</span><br><span class="line"><span class="comment"># 切换到指定分支或标签</span></span><br><span class="line"></span><br><span class="line">git branch 分支名</span><br><span class="line"><span class="comment"># 新建分支</span></span><br><span class="line">git branch -d 分支名</span><br><span class="line"><span class="comment"># 删除本地分支 -D 强制删除</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master</span><br><span class="line"><span class="comment"># 获取远程分支master并merge到当前分支</span></span><br><span class="line"></span><br><span class="line">git branch -vv </span><br><span class="line"><span class="comment"># 查看本地分支和远程分支是否建立连接</span></span><br><span class="line"></span><br><span class="line">git branch</span><br><span class="line"><span class="comment"># 显示本地分支</span></span><br><span class="line">git branch -r  <span class="comment">#查看远程分支</span></span><br><span class="line"></span><br><span class="line">git push orgin &lt;branch-name&gt; <span class="comment">#推送本地分支到远端</span></span><br><span class="line"></span><br><span class="line">git checkout &lt;branch-name&gt; <span class="comment">#切换分支</span></span><br><span class="line"></span><br><span class="line">git checkout - <span class="comment">#切换到上一个分支</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">git branch -a</span><br><span class="line"><span class="comment"># 显示所有分支</span></span><br><span class="line">git checkout 分支名/标签名</span><br><span class="line"><span class="comment"># 切换到指定分支或标签</span></span><br><span class="line"></span><br><span class="line">git branch 分支名</span><br><span class="line"><span class="comment"># 新建分支</span></span><br><span class="line">git branch -d 分支名</span><br><span class="line"><span class="comment"># 删除本地分支 -D 强制删除</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>cherry-pick</p>
 </blockquote>
@@ -385,8 +385,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/17/go/" rel="prev" title="golang">
-                golang <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -455,7 +455,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
