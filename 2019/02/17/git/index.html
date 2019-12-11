@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="生成SSH  1234567891011121314151617git init# 初始化本地git版本库（创建新仓库）git config --global user.name &quot;xxx&quot;# 配置用户名git config --global user.email &quot;xxx@xxx.com&quot;# 配置邮件git config --list#查看当前配置列表ssh-keygen -t rsa -C">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-06T03:41:10.940Z">
+<meta property="og:updated_time" content="2019-12-06T09:02:04.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git命令">
 <meta name="twitter:description" content="生成SSH  1234567891011121314151617git init# 初始化本地git版本库（创建新仓库）git config --global user.name &quot;xxx&quot;# 配置用户名git config --global user.email &quot;xxx@xxx.com&quot;# 配置邮件git config --list#查看当前配置列表ssh-keygen -t rsa -C">
@@ -338,7 +338,7 @@
 <blockquote>
 <p>thires ours 解决冲突</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="built_in">test</span> </span><br><span class="line">git merge master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并master 到test ， 当出现冲突</span></span><br><span class="line">git chekcout  --theirs   README.md  <span class="comment">#以master版本为准合并</span></span><br><span class="line">git chekcout  --ours     README.md  <span class="comment">#以test版本为准合并</span></span><br><span class="line"></span><br><span class="line">git commit -am <span class="string">"merge conflicts"</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="built_in">test</span> </span><br><span class="line">git merge master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并master 到test ， 当出现冲突</span></span><br><span class="line">git chekcout  --theirs   README.md  <span class="comment">#以master版本为准合并</span></span><br><span class="line">git chekcout  --ours     README.md  <span class="comment">#以test版本为准合并</span></span><br><span class="line"></span><br><span class="line">git commit -am <span class="string">"merge conflicts"</span></span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决合并到目标分支（dev）冲突</span></span><br><span class="line"></span><br><span class="line">git rebase dev <span class="comment"># 基于当前分支 rebase dev 然后解决冲突即可合并</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>合并commit</p>
 </blockquote>
@@ -375,8 +375,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/17/helm/" rel="next" title="Kunbernetes利器-helm">
-                <i class="fa fa-chevron-left"></i> Kunbernetes利器-helm
+              <a href="/2019/02/17/ansible/" rel="next" title="与ansible的第一次对话">
+                <i class="fa fa-chevron-left"></i> 与ansible的第一次对话
               </a>
             
           </div>
@@ -385,8 +385,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/17/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/helm/" rel="prev" title="Kunbernetes利器-helm">
+                Kunbernetes利器-helm <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -455,7 +455,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

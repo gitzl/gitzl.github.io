@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="查看操作系统信息12345678uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数sysctl">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-14T07:08:12.152Z">
+<meta property="og:updated_time" content="2019-12-10T03:31:36.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux">
 <meta name="twitter:description" content="查看操作系统信息12345678uname -acat /proc/versioncat /etc/issuelsb_release -acat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l #物理cpu个数 （wc -l 计数）cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l #逻辑cpu个数sysctl">
@@ -305,7 +305,11 @@
 <blockquote>
 <p>centos crontab操作</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cat /ect/crontab</span><br><span class="line">crontab -e</span><br><span class="line">* * * * * date &gt;&gt; /home/date1.txt　　测试例子</span><br><span class="line">crontab -l 查看crontab任务列表</span><br><span class="line">crontab -r 终止</span><br><span class="line">tail -f /var/<span class="built_in">log</span>/cron.log 查看执行日志</span><br><span class="line">/sbin/service crond start</span><br><span class="line">/sbin/service crond stop</span><br><span class="line">/sbin/service crond restart</span><br><span class="line">/sbin/service crond reload</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cat /ect/crontab</span><br><span class="line">crontab -e</span><br><span class="line">* * * * * date &gt;&gt; /home/date1.txt　　测试例子</span><br><span class="line">crontab -l 查看crontab任务列表</span><br><span class="line">crontab -r 终止</span><br><span class="line">tail -f /var/<span class="built_in">log</span>/cron.log 查看执行日志</span><br><span class="line">/sbin/service crond start</span><br><span class="line">/sbin/service crond stop</span><br><span class="line">/sbin/service crond restart</span><br><span class="line">/sbin/service crond reload</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sed 命令操作</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 替换字符串</span><br><span class="line">sed &apos;s/king/wise2c/g&apos; sed.txt # 将sed.txt文件中的king字眼替换为wise2c</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>vi/vim 常用命令</p>
 </blockquote>
@@ -368,8 +372,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/17/jenkinsPlugin/" rel="next" title="从0到1开启jenkins插件开发之路">
-                <i class="fa fa-chevron-left"></i> 从0到1开启jenkins插件开发之路
+              <a href="/2019/02/17/go/" rel="next" title="golang">
+                <i class="fa fa-chevron-left"></i> golang
               </a>
             
           </div>
@@ -448,7 +452,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
