@@ -302,11 +302,18 @@
           
             <p>记录codeReview实践中关注的知识点</p>
 <p>codeReview  每次review都必须留下评论，指出问题，建议，如果觉得写好不需要修改，也应该留下肯定鼓励的语句</p>
-<ul>
+<h5 id="about-code"><a href="#about-code" class="headerlink" title="about code"></a>about code</h5><ul>
 <li>时间复杂度：双重循环 循环操作DB</li>
 <li>常量：代码随意嵌入： 数字 中文常量</li>
-<li>注释：难于理解或者少有人知道到code 应该加上注释，如果参考github地址 描述等</li>
+<li>恰到好处到注释：注释不应该到处都是，给比较难懂到地方加上注释即可</li>
 <li>方法太长：一个方法最好只做一件事情， 方法太长应该拆分或者提取逻辑为新方法</li>
+<li>性能问题：考虑业务数据量大，潜在性能瓶颈</li>
+<li>单一原则：一个方法只做一件事情</li>
+<li>命名规则：变量 方法命名规则</li>
+</ul>
+<h5 id="about-git"><a href="#about-git" class="headerlink" title="about git"></a>about git</h5><ul>
+<li>commit信息 : 精准的commit信息描述</li>
+<li></li>
 </ul>
 
           
@@ -978,6 +985,131 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/podSchedule/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MC.KJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MC.KJ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/podSchedule/" itemprop="url">Kubernetes-项目中pod调度使用法则</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>kubernetes中部署的pod默认根据资源使用情况自动调度到某个节点。可在实际项目的使用场景中都会有更细粒度的调度需求，比如：某些pod调度到指定主机、某几个相关的服务的pod最好调度到一个节点上、Master节点不允许某些pod调度等。使用kubernetes中的节点调度、节点亲和性、pod亲和性、污点与容忍可以灵活的完成pod调度，从而满足项目中较为复杂的调度需求。下面用一些项目中的使用场景聊聊pod调度使用法则。</p>
+<h5 id="pod调度主要包含以下内容"><a href="#pod调度主要包含以下内容" class="headerlink" title="pod调度主要包含以下内容"></a>pod调度主要包含以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- nodeSelector</span><br><span class="line">- nodeAffinity</span><br><span class="line">- podAffinity</span><br><span class="line">- Taints &amp; tolerations(污点与容忍)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/17/podSchedule/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1091,131 +1223,6 @@
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">interactive_timeout  默认8小时超时 8小时不连接自动端口， 用户mysql 客户端</span><br><span class="line">wait_timeout   默认8小时超时 8小时不连接自动断开， 用于类似jdbc 连接</span><br></pre></td></tr></table></figure>
           
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/podSchedule/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MC.KJ">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MC.KJ">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/17/podSchedule/" itemprop="url">Kubernetes-项目中pod调度使用法则</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-17T16:20:34+08:00">
-                2019-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>kubernetes中部署的pod默认根据资源使用情况自动调度到某个节点。可在实际项目的使用场景中都会有更细粒度的调度需求，比如：某些pod调度到指定主机、某几个相关的服务的pod最好调度到一个节点上、Master节点不允许某些pod调度等。使用kubernetes中的节点调度、节点亲和性、pod亲和性、污点与容忍可以灵活的完成pod调度，从而满足项目中较为复杂的调度需求。下面用一些项目中的使用场景聊聊pod调度使用法则。</p>
-<h5 id="pod调度主要包含以下内容"><a href="#pod调度主要包含以下内容" class="headerlink" title="pod调度主要包含以下内容"></a>pod调度主要包含以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- nodeSelector</span><br><span class="line">- nodeAffinity</span><br><span class="line">- podAffinity</span><br><span class="line">- Taints &amp; tolerations(污点与容忍)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/17/podSchedule/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
         
       
     </div>

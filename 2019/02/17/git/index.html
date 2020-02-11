@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="生成SSH  1234567891011121314151617git init# 初始化本地git版本库（创建新仓库）git config --global user.name &quot;xxx&quot;# 配置用户名git config --global user.email &quot;xxx@xxx.com&quot;# 配置邮件git config --list#查看当前配置列表ssh-keygen -t rsa -C">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-02T07:50:36.487Z">
+<meta property="og:updated_time" content="2020-02-11T05:57:27.270Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git命令">
 <meta name="twitter:description" content="生成SSH  1234567891011121314151617git init# 初始化本地git版本库（创建新仓库）git config --global user.name &quot;xxx&quot;# 配置用户名git config --global user.email &quot;xxx@xxx.com&quot;# 配置邮件git config --list#查看当前配置列表ssh-keygen -t rsa -C">
@@ -351,6 +351,10 @@
 <p>远程操作</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"><span class="comment"># 添加远程版本库</span></span><br><span class="line">git remote -v</span><br><span class="line"><span class="comment"># 查看远程版本库信息</span></span><br><span class="line">git remote show &lt;remote&gt;</span><br><span class="line"><span class="comment"># 查看指定远程版本库信息</span></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"><span class="comment"># 删除远程remote链接</span></span><br><span class="line">git remote rename &lt;old&gt; &lt;new&gt;</span><br><span class="line"><span class="comment"># 重命名远程链接名</span></span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 下载代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"><span class="comment"># 上传代码及快速合并</span></span><br><span class="line"></span><br><span class="line">git merge origin master</span><br><span class="line"><span class="comment"># 将本地的远端库合并</span></span><br><span class="line"></span><br><span class="line">git fetch origin</span><br><span class="line"><span class="comment"># 将远端库获取本地但不合并</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>git commit 信息建议</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">feat: 新功能</span><br><span class="line">fix: 修复问题</span><br><span class="line">docs: 修改文档</span><br><span class="line">style: 修改代码格式, 不影响代码逻辑</span><br><span class="line">refactor: 重构代码, 理论上不影响现有功能</span><br><span class="line">perf: 提升性能</span><br><span class="line">test: 增加修改测试用例</span><br><span class="line">chore: 修改工具相关(包括但不限于文档, 代码生成等)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -375,8 +379,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/17/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2019/02/17/front/" rel="next" title="web前端资源">
+                <i class="fa fa-chevron-left"></i> web前端资源
               </a>
             
           </div>
@@ -385,8 +389,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/17/go/" rel="prev" title="golang">
-                golang <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/17/linux/" rel="prev" title="Linux">
+                Linux <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

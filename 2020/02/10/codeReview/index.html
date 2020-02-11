@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="记录codeReview实践中关注的知识点 codeReview  每次review都必须留下评论，指出问题，建议，如果觉得写好不需要修改，也应该留下肯定鼓励的语句  时间复杂度：双重循环 循环操作DB 常量：代码随意嵌入： 数字 中文常量 注释：难于理解或者少有人知道到code 应该加上注释，如果参考github地址 描述等 方法太长：一个方法最好只做一件事情， 方法太长应该拆分或者提取逻辑为新">
+<meta name="description" content="记录codeReview实践中关注的知识点 codeReview  每次review都必须留下评论，指出问题，建议，如果觉得写好不需要修改，也应该留下肯定鼓励的语句 about code 时间复杂度：双重循环 循环操作DB 常量：代码随意嵌入： 数字 中文常量 恰到好处到注释：注释不应该到处都是，给比较难懂到地方加上注释即可 方法太长：一个方法最好只做一件事情， 方法太长应该拆分或者提取逻辑为新方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="codeReview">
 <meta property="og:url" content="http://yoursite.com/2020/02/10/codeReview/index.html">
 <meta property="og:site_name" content="MC.KJ">
-<meta property="og:description" content="记录codeReview实践中关注的知识点 codeReview  每次review都必须留下评论，指出问题，建议，如果觉得写好不需要修改，也应该留下肯定鼓励的语句  时间复杂度：双重循环 循环操作DB 常量：代码随意嵌入： 数字 中文常量 注释：难于理解或者少有人知道到code 应该加上注释，如果参考github地址 描述等 方法太长：一个方法最好只做一件事情， 方法太长应该拆分或者提取逻辑为新">
+<meta property="og:description" content="记录codeReview实践中关注的知识点 codeReview  每次review都必须留下评论，指出问题，建议，如果觉得写好不需要修改，也应该留下肯定鼓励的语句 about code 时间复杂度：双重循环 循环操作DB 常量：代码随意嵌入： 数字 中文常量 恰到好处到注释：注释不应该到处都是，给比较难懂到地方加上注释即可 方法太长：一个方法最好只做一件事情， 方法太长应该拆分或者提取逻辑为新方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-11T03:09:26.805Z">
+<meta property="og:updated_time" content="2020-02-11T03:31:06.296Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="codeReview">
-<meta name="twitter:description" content="记录codeReview实践中关注的知识点 codeReview  每次review都必须留下评论，指出问题，建议，如果觉得写好不需要修改，也应该留下肯定鼓励的语句  时间复杂度：双重循环 循环操作DB 常量：代码随意嵌入： 数字 中文常量 注释：难于理解或者少有人知道到code 应该加上注释，如果参考github地址 描述等 方法太长：一个方法最好只做一件事情， 方法太长应该拆分或者提取逻辑为新">
+<meta name="twitter:description" content="记录codeReview实践中关注的知识点 codeReview  每次review都必须留下评论，指出问题，建议，如果觉得写好不需要修改，也应该留下肯定鼓励的语句 about code 时间复杂度：双重循环 循环操作DB 常量：代码随意嵌入： 数字 中文常量 恰到好处到注释：注释不应该到处都是，给比较难懂到地方加上注释即可 方法太长：一个方法最好只做一件事情， 方法太长应该拆分或者提取逻辑为新方">
 
 
 
@@ -301,11 +301,18 @@
       
         <p>记录codeReview实践中关注的知识点</p>
 <p>codeReview  每次review都必须留下评论，指出问题，建议，如果觉得写好不需要修改，也应该留下肯定鼓励的语句</p>
-<ul>
+<h5 id="about-code"><a href="#about-code" class="headerlink" title="about code"></a>about code</h5><ul>
 <li>时间复杂度：双重循环 循环操作DB</li>
 <li>常量：代码随意嵌入： 数字 中文常量</li>
-<li>注释：难于理解或者少有人知道到code 应该加上注释，如果参考github地址 描述等</li>
+<li>恰到好处到注释：注释不应该到处都是，给比较难懂到地方加上注释即可</li>
 <li>方法太长：一个方法最好只做一件事情， 方法太长应该拆分或者提取逻辑为新方法</li>
+<li>性能问题：考虑业务数据量大，潜在性能瓶颈</li>
+<li>单一原则：一个方法只做一件事情</li>
+<li>命名规则：变量 方法命名规则</li>
+</ul>
+<h5 id="about-git"><a href="#about-git" class="headerlink" title="about git"></a>about git</h5><ul>
+<li>commit信息 : 精准的commit信息描述</li>
+<li></li>
 </ul>
 
       
@@ -391,8 +398,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -434,6 +450,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#about-code"><span class="nav-number">1.</span> <span class="nav-text">about code</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#about-git"><span class="nav-number">2.</span> <span class="nav-text">about git</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
