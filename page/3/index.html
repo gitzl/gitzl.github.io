@@ -125,7 +125,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/ansible/" data-id="ck80031q10000cb9anw8x5drh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/ansible/" data-id="ck81k31qj0000nd9axwlux3f5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -169,7 +169,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/auto/" data-id="ck80031q60001cb9avl2n5wsm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/auto/" data-id="ck81k31qq0001nd9afb7ytbjt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -209,7 +209,53 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/book/" data-id="ck80031q80002cb9aj15ld7zb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/book/" data-id="ck81k31qr0002nd9a991x56s5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-docker_wordpress" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/17/docker_wordpress/" class="article-date">
+  <time datetime="2019-02-17T08:20:34.927Z" itemprop="datePublished">2019-02-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/17/docker_wordpress/">docker入门-搭建wordpress</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>运行mysql<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql</span><br><span class="line">docker run --name mysql_wp -e MYSQL_ROOT_PASSWORD=king -d mysql 数据库名:mysql_wp 密码:king 端口:3306</span><br><span class="line">docker <span class="built_in">exec</span> -it [container_id] /bin/sh 进入容器</span><br><span class="line">mysql -uroot -p king  测试mysql 是否正常运行</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>运行wordpress</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull wordpress</span><br><span class="line">docker run --name some-wordpress --link mysql_wp:mysql -p 8080:80 -d wordpress 连接mysql ，暴露外部端口为8080</span><br><span class="line">http://localhost:8080 访问wordpress</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>docker-compse.yml</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">'3'</span></span><br><span class="line">services:</span><br><span class="line">   db:</span><br><span class="line">     image: mysql:5.7</span><br><span class="line">     volumes:</span><br><span class="line">       - db_data:/var/lib/mysql</span><br><span class="line">     restart: always</span><br><span class="line">     environment:</span><br><span class="line">       MYSQL_ROOT_PASSWORD: somewordpress</span><br><span class="line">       MYSQL_DATABASE: wordpress</span><br><span class="line">       MYSQL_USER: wordpress</span><br><span class="line">       MYSQL_PASSWORD: wordpress</span><br><span class="line"></span><br><span class="line">   wordpress:</span><br><span class="line">     depends_on:</span><br><span class="line">       - db</span><br><span class="line">     image: wordpress:latest</span><br><span class="line">     ports:</span><br><span class="line">       - <span class="string">"8080:80"</span></span><br><span class="line">     restart: always</span><br><span class="line">     environment:</span><br><span class="line">       WORDPRESS_DB_HOST: db:3306</span><br><span class="line">       WORDPRESS_DB_USER: wordpress</span><br><span class="line">       WORDPRESS_DB_PASSWORD: wordpress</span><br><span class="line">volumes:</span><br><span class="line">    db_data:</span><br><span class="line">运行: docker-compose up -d</span><br><span class="line">访问:http://localhost:8080</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/17/docker_wordpress/" data-id="ck81k31qt0004nd9atdytqklq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -258,53 +304,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/devcommunity/" data-id="ck80031q90003cb9a8kpsd0lk" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-docker_wordpress" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/17/docker_wordpress/" class="article-date">
-  <time datetime="2019-02-17T08:20:34.927Z" itemprop="datePublished">2019-02-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/docker_wordpress/">docker入门-搭建wordpress</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>运行mysql<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql</span><br><span class="line">docker run --name mysql_wp -e MYSQL_ROOT_PASSWORD=king -d mysql 数据库名:mysql_wp 密码:king 端口:3306</span><br><span class="line">docker <span class="built_in">exec</span> -it [container_id] /bin/sh 进入容器</span><br><span class="line">mysql -uroot -p king  测试mysql 是否正常运行</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>运行wordpress</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull wordpress</span><br><span class="line">docker run --name some-wordpress --link mysql_wp:mysql -p 8080:80 -d wordpress 连接mysql ，暴露外部端口为8080</span><br><span class="line">http://localhost:8080 访问wordpress</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>docker-compse.yml</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">'3'</span></span><br><span class="line">services:</span><br><span class="line">   db:</span><br><span class="line">     image: mysql:5.7</span><br><span class="line">     volumes:</span><br><span class="line">       - db_data:/var/lib/mysql</span><br><span class="line">     restart: always</span><br><span class="line">     environment:</span><br><span class="line">       MYSQL_ROOT_PASSWORD: somewordpress</span><br><span class="line">       MYSQL_DATABASE: wordpress</span><br><span class="line">       MYSQL_USER: wordpress</span><br><span class="line">       MYSQL_PASSWORD: wordpress</span><br><span class="line"></span><br><span class="line">   wordpress:</span><br><span class="line">     depends_on:</span><br><span class="line">       - db</span><br><span class="line">     image: wordpress:latest</span><br><span class="line">     ports:</span><br><span class="line">       - <span class="string">"8080:80"</span></span><br><span class="line">     restart: always</span><br><span class="line">     environment:</span><br><span class="line">       WORDPRESS_DB_HOST: db:3306</span><br><span class="line">       WORDPRESS_DB_USER: wordpress</span><br><span class="line">       WORDPRESS_DB_PASSWORD: wordpress</span><br><span class="line">volumes:</span><br><span class="line">    db_data:</span><br><span class="line">运行: docker-compose up -d</span><br><span class="line">访问:http://localhost:8080</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/docker_wordpress/" data-id="ck80031qb0005cb9a9bhv8lkh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/devcommunity/" data-id="ck81k31qu0005nd9aaxnn59s5" class="article-share-link">Share</a>
       
       
     </footer>
