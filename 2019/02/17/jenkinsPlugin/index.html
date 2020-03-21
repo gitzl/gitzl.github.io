@@ -12,14 +12,14 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="前言项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍. 主要内容包括1234- 创建jenkins插件项目- 项目源码分析- jelly界面开发- 插件运">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/.com//jp1.png">
-<meta property="og:image" content="http://yoursite.com/.com//jp2.png">
-<meta property="og:image" content="http://yoursite.com/.com//jp3.png">
-<meta property="og:updated_time" content="2020-03-21T14:47:00.477Z">
+<meta property="og:image" content="http://yoursite.com/2019/02/17/jenkinsPlugin/jp1.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/17/jenkinsPlugin/jp2.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/17/jenkinsPlugin/jp3.png">
+<meta property="og:updated_time" content="2020-03-21T14:56:36.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从0到1开启jenkins插件开发之路">
 <meta name="twitter:description" content="前言项目中有这样一个需求，CI部分用jenkins实现拉取代码、编译等，CD需要实现自动部署到公司的Pass平台中,需要CI和CD联动实现自动化，因此需定制开发部署到Pass平台的jenkins插件，本文用一个简单的Demo记录下jenkins插件开发流程，以扩展jenkins构建阶段为例进行介绍. 主要内容包括1234- 创建jenkins插件项目- 项目源码分析- jelly界面开发- 插件运">
-<meta name="twitter:image" content="http://yoursite.com/.com//jp1.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/17/jenkinsPlugin/jp1.png">
   
     <link rel="alternate" href="/atom.xml" title="MC.KJ" type="application/atom+xml">
   
@@ -116,11 +116,11 @@
 <p>jelly语法参考：<a href="http://commons.apache.org/proper/commons-jelly/tutorial.html" target="_blank" rel="noopener">http://commons.apache.org/proper/commons-jelly/tutorial.html</a></p>
 <h5 id="打包-amp-离线部署"><a href="#打包-amp-离线部署" class="headerlink" title="打包 &amp; 离线部署"></a>打包 &amp; 离线部署</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 运行  mvn hpi:run </span><br><span class="line">- 打包  mvn package or mvn clean package -Dmaven.test.skip=true #生成插件的路径在target/demo.hpi</span><br><span class="line">- 部署  jenkins-系统管理-插件管理-高级  上传demo.hpi插件，重启jenkins</span><br></pre></td></tr></table></figure>
 <h5 id="Demo效果展示"><a href="#Demo效果展示" class="headerlink" title="Demo效果展示"></a>Demo效果展示</h5><p>构建下拉框增加Demo选项</p>
-<p><img src="/.com//jp1.png" alt="image"></p>
+<p><img src="/2019/02/17/jenkinsPlugin/jp1.png" alt="image"></p>
 <p>设置名称为：demo</p>
-<p><img src="/.com//jp2.png" alt="image"></p>
+<p><img src="/2019/02/17/jenkinsPlugin/jp2.png" alt="image"></p>
 <p>执行日志</p>
-<p><img src="/.com//jp3.png" alt="image"></p>
+<p><img src="/2019/02/17/jenkinsPlugin/jp3.png" alt="image"></p>
 <h5 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h5><ul>
 <li>jenkins插件入门：<a href="https://jenkins.io/doc/developer/tutorial/" target="_blank" rel="noopener">https://jenkins.io/doc/developer/tutorial/</a></li>
 <li>jenkins开发文档：<a href="https://jenkins.io/doc/developer/book/" target="_blank" rel="noopener">https://jenkins.io/doc/developer/book/</a></li>
@@ -132,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/jenkinsPlugin/" data-id="ck81pzih7000goo9a5kqf8syo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/jenkinsPlugin/" data-id="ck81r056e000j7o9a1gbkw4cu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -141,19 +141,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/02/17/java/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/02/17/linux/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          java
+          Linux
         
       </div>
     </a>
   
   
-    <a href="/2019/02/17/linux/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/02/17/front/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Linux</div>
+      <div class="article-nav-title">web前端资源</div>
     </a>
   
 </nav>

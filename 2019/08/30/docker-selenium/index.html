@@ -12,13 +12,13 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="本文分享技术的关键词 Selenium Grid 容器化 Demo演示（容器环境下分布式自动化测试） 基础镜像  （python+selenium依赖容器化）  本文分享的目的：实现Selenium Grid容器化，大大提高部署分布式测试环境效率，减少环境依赖。内容将介绍在容器环境中一键部署Selenium Grid，动态伸缩node节点，制作测试脚本的基础镜像。 Selenium Grid">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/.com//selenium/s-1.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//selenium/s-2.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/08/30/docker-selenium/img/selenium/s-1.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/08/30/docker-selenium/img/selenium/s-2.jpg">
 <meta property="og:updated_time" content="2019-09-03T02:35:49.678Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Selenium Grid容器化-分布式测试">
 <meta name="twitter:description" content="本文分享技术的关键词 Selenium Grid 容器化 Demo演示（容器环境下分布式自动化测试） 基础镜像  （python+selenium依赖容器化）  本文分享的目的：实现Selenium Grid容器化，大大提高部署分布式测试环境效率，减少环境依赖。内容将介绍在容器环境中一键部署Selenium Grid，动态伸缩node节点，制作测试脚本的基础镜像。 Selenium Grid">
-<meta name="twitter:image" content="http://yoursite.com/.com//selenium/s-1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/30/docker-selenium/img/selenium/s-1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="MC.KJ" type="application/atom+xml">
   
@@ -97,7 +97,7 @@
 <p>本文分享的目的：实现Selenium Grid容器化，大大提高部署分布式测试环境效率，减少环境依赖。内容将介绍在容器环境中一键部署Selenium Grid，动态伸缩node节点，制作测试脚本的基础镜像。</p>
 <h4 id="Selenium-Grid"><a href="#Selenium-Grid" class="headerlink" title="Selenium Grid"></a>Selenium Grid</h4><p>   Selenium作为web应用程序自动化测试利器之一，它支持多种客户端脚本（如：Java,Python,JavaScript等），并且可运行在多种浏览器中（如：chrome,firefox等）。Selenium经常被用于测试web应用程序在不同浏览器的兼容性。在企业级自动化测试中，常常结合Selenium组件Selenium Grid实现多节点分布式自动化测试。</p>
 <p>   Selenium Grid由中心管理服务Hub和多个node节点组成，node节点需要注册到Hub服务中。使用传统方式部署分布式测试环境比较繁琐和费时，本文将介绍使用docker-compose的方式实现一键部署Selenium Grid分布式测试环境。</p>
-<p><img src="/.com//selenium/s-1.jpg" alt="image"></p>
+<p><img src="/2019/08/30/docker-selenium/./img/selenium/s-1.jpg" alt="image"></p>
 <p>如上图所示，要实现分布式测试，需要client测试脚本，HUB中心服务以及NODES执行节点。具体解释如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HUB: 中心节点服务，用于管理多个node节点，接受Client测试脚本的测试任务，将任务分配给多个node节点执行。</span><br><span class="line">NODES: 真正执行测试任务的节点服务，支持多种浏览器进行测试，如：chrome firefox, node服务需注册到Hub中心服务，由中心服务统一分发任务。</span><br><span class="line">Client: 这里是抽象概念，可理解为执行测试逻辑到客户端（代码），Client客户端需连接到Hub服务，执行测试脚本时由Hub中心服务统一分发给node节点进行执行。</span><br></pre></td></tr></table></figure>
 <h4 id="docker-selenium"><a href="#docker-selenium" class="headerlink" title="docker-selenium"></a>docker-selenium</h4><p>docker-selenium 实现了在容器环境中使用docker-compose方式快速部署Selenium Grid，伸缩node节点，下面通过详细步骤介绍部署方法。</p>
@@ -111,7 +111,7 @@
 <p>step-4: 动态扩缩容node节点</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker-compose scale chrome=3    #指定支持chrome节点的实例数量</span><br><span class="line">docker-compose scale firefox=3   #指定支持firefox节点的实例数量</span><br></pre></td></tr></table></figure>
 <p>step-5: 访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:4444/grid/console #访问Hub，能看到node节点都已注册上。</span><br></pre></td></tr></table></figure></p>
-<p><img src="/.com//selenium/s-2.jpg" alt="image"></p>
+<p><img src="/2019/08/30/docker-selenium/./img/selenium/s-2.jpg" alt="image"></p>
 <h4 id="Client-Demo演示"><a href="#Client-Demo演示" class="headerlink" title="Client Demo演示"></a>Client Demo演示</h4><p>上面通过docker-compose已成功部署了Selenium Grid，其中心HUB服务端口为4444，测试脚本需要指向该端口。下面通过一个简单的测试Demo进行演示。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver.common.desired_capabilities import DesiredCapabilities</span><br><span class="line"></span><br><span class="line">chrome = webdriver.Remote(</span><br><span class="line">          command_executor=&apos;http://localhost:4444/wd/hub&apos;,</span><br><span class="line">          desired_capabilities=DesiredCapabilities.CHROME)</span><br><span class="line">firefox = webdriver.Remote(</span><br><span class="line">          command_executor=&apos;http://localhost:4444/wd/hub&apos;,</span><br><span class="line">          desired_capabilities=DesiredCapabilities.FIREFOX)</span><br><span class="line"></span><br><span class="line">chrome.get(&apos;https://www.baidu.com&apos;)</span><br><span class="line">print(chrome.title)</span><br><span class="line"></span><br><span class="line">firefox.get(&apos;https://www.baidu.com&apos;)</span><br><span class="line">print(firefox.title)</span><br></pre></td></tr></table></figure>
 <ul>
@@ -133,7 +133,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/30/docker-selenium/" data-id="ck81pzigs0005oo9adqzc0pfr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/30/docker-selenium/" data-id="ck81r056100077o9ayp6ootui" class="article-share-link">Share</a>
       
       
     </footer>
