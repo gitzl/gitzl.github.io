@@ -104,7 +104,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/10/codeReview/" data-id="ck81k31qs0003nd9amr73g9dq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/02/10/codeReview/" data-id="ck81k3rx30003p99awxqhbl09" class="article-share-link">Share</a>
       
       
     </footer>
@@ -146,7 +146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/19/hAvailability/" data-id="ck81k31r3000cnd9anoxo2q9e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/19/hAvailability/" data-id="ck81k3rxc000ap99aqzj3zvf2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -209,7 +209,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/08/nginx/" data-id="ck81k31r9000lnd9athkcd4ot" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/08/nginx/" data-id="ck81k3rxl000jp99ayqjn6xm8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -285,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/30/docker-selenium/" data-id="ck81k31qv0006nd9ang8alb3u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/30/docker-selenium/" data-id="ck81k3rx60005p99a88uynvvw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -394,7 +394,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/18/zuul/" data-id="ck81k31rr000ond9amw9ih89g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/18/zuul/" data-id="ck81k3ry0000op99aptfs1w8i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -470,7 +470,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/mysql/" data-id="ck81k31r7000hnd9ax41pnmr8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/mysql/" data-id="ck81k3rxk000ip99ahahgqnzy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -512,7 +512,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/podSchedule/" data-id="ck81k31r8000ind9apgdotp2t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/podSchedule/" data-id="ck81k3rxl000kp99aa5xipjq8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -567,82 +567,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/project/" data-id="ck81k31r9000knd9awvzk7xed" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-sonarqube" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/17/sonarqube/" class="article-date">
-  <time datetime="2019-02-17T08:20:34.930Z" itemprop="datePublished">2019-02-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/sonarqube/">sonarQube+jenkins持续审查</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助"><a href="#SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助" class="headerlink" title="SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助"></a>SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助</h3><blockquote>
-<p>基于Docker部署sonarQube</p>
-</blockquote>
-<pre><code class="bash">//安装psql 创建数据库：sonar
-docker run --name postgresqldb -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres
-docker <span class="built_in">exec</span> -it <span class="variable">$containerid</span> /bin/sh
-psql -Uroot -droot
-\l
-create database sonar;
-
-//安装sonarqube
-docker run --name sonarqube \
-    --link postgresqldb \
-    -e SONARQUBE_JDBC_USERNAME=root \
-    -e SONARQUBE_JDBC_PASSWORD=root \
-    -e SONARQUBE_JDBC_URL=jdbc:postgresql://postgresqldb:5432/sonar \
-    -p 9000:9000 -d sonarqube
-
-
-* IP:8001 访问 默认sonarqube用户和密码：admin
-
-</code></pre>
-<blockquote>
-<p>汉化sonarqube</p>
-</blockquote>
-<ul>
-<li>下载sonar-l10n-zh-plugin-1.20.jar </li>
-<li>放在 extensions/plugins , 重启sonarqube</li>
-</ul>
-<blockquote>
-<p>jenkins集成sonarQube</p>
-</blockquote>
-<p>1、 安装sonarQubeScaner   系统管理-&gt;管理插件-&gt;可选插件</p>
-<p><img src="./img/sonar/1.png" alt><br>2、 获取sonarQube的token sonarQube-&gt;配置-&gt;用户-&gt;令牌<br><img src="./img/sonar/3.png" alt><br>3、 配置sonarQubeServer   系统管理-&gt;系统设置</p>
-<p><img src="./img/sonar/2.png" alt><br>4、 配置sonarQube scaner  系统管理-&gt;全局工具设置</p>
-<p><img src="./img/sonar/4.png" alt><br>5、 在构建中添加sonarqube，其中src表示源码的目录，build编译代码后的目录</p>
-<p><img src="./img/sonar/6.png" alt><br>6、成功后，可在sonarqube查看扫描代码的结果</p>
-<p><img src="./img/sonar/7.png" alt></p>
-<p>tips：通过分析结果中的bugs、漏洞、坏味道可提高代码规范和质量.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/sonarqube/" data-id="ck81k31ri000mnd9a8xmufzrd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/project/" data-id="ck81k3rxm000lp99an75h5y2z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -739,7 +664,82 @@ docker run --name sonarqube \
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/prometheus/" data-id="ck81k31rj000nnd9ak6kl1ha2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/prometheus/" data-id="ck81k3rxn000mp99agcnaxs1o" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sonarqube" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/17/sonarqube/" class="article-date">
+  <time datetime="2019-02-17T08:20:34.930Z" itemprop="datePublished">2019-02-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/17/sonarqube/">sonarQube+jenkins持续审查</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助"><a href="#SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助" class="headerlink" title="SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助"></a>SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，为提高代码质量提供帮助</h3><blockquote>
+<p>基于Docker部署sonarQube</p>
+</blockquote>
+<pre><code class="bash">//安装psql 创建数据库：sonar
+docker run --name postgresqldb -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres
+docker <span class="built_in">exec</span> -it <span class="variable">$containerid</span> /bin/sh
+psql -Uroot -droot
+\l
+create database sonar;
+
+//安装sonarqube
+docker run --name sonarqube \
+    --link postgresqldb \
+    -e SONARQUBE_JDBC_USERNAME=root \
+    -e SONARQUBE_JDBC_PASSWORD=root \
+    -e SONARQUBE_JDBC_URL=jdbc:postgresql://postgresqldb:5432/sonar \
+    -p 9000:9000 -d sonarqube
+
+
+* IP:8001 访问 默认sonarqube用户和密码：admin
+
+</code></pre>
+<blockquote>
+<p>汉化sonarqube</p>
+</blockquote>
+<ul>
+<li>下载sonar-l10n-zh-plugin-1.20.jar </li>
+<li>放在 extensions/plugins , 重启sonarqube</li>
+</ul>
+<blockquote>
+<p>jenkins集成sonarQube</p>
+</blockquote>
+<p>1、 安装sonarQubeScaner   系统管理-&gt;管理插件-&gt;可选插件</p>
+<p><img src="./img/sonar/1.png" alt><br>2、 获取sonarQube的token sonarQube-&gt;配置-&gt;用户-&gt;令牌<br><img src="./img/sonar/3.png" alt><br>3、 配置sonarQubeServer   系统管理-&gt;系统设置</p>
+<p><img src="./img/sonar/2.png" alt><br>4、 配置sonarQube scaner  系统管理-&gt;全局工具设置</p>
+<p><img src="./img/sonar/4.png" alt><br>5、 在构建中添加sonarqube，其中src表示源码的目录，build编译代码后的目录</p>
+<p><img src="./img/sonar/6.png" alt><br>6、成功后，可在sonarqube查看扫描代码的结果</p>
+<p><img src="./img/sonar/7.png" alt></p>
+<p>tips：通过分析结果中的bugs、漏洞、坏味道可提高代码规范和质量.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/17/sonarqube/" data-id="ck81k3rxn000np99av96bjvjj" class="article-share-link">Share</a>
       
       
     </footer>
