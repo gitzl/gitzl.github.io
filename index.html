@@ -104,7 +104,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/10/codeReview/" data-id="ck81k3rx30003p99awxqhbl09" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/02/10/codeReview/" data-id="ck81pxjbm0003mu9ab6q66mow" class="article-share-link">Share</a>
       
       
     </footer>
@@ -146,7 +146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/19/hAvailability/" data-id="ck81k3rxc000ap99aqzj3zvf2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/19/hAvailability/" data-id="ck81pxjbu000amu9abnrd4l3s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -209,7 +209,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/08/nginx/" data-id="ck81k3rxl000jp99ayqjn6xm8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/08/nginx/" data-id="ck81pxjc2000jmu9am57l6z06" class="article-share-link">Share</a>
       
       
     </footer>
@@ -249,7 +249,7 @@
 <p>本文分享的目的：实现Selenium Grid容器化，大大提高部署分布式测试环境效率，减少环境依赖。内容将介绍在容器环境中一键部署Selenium Grid，动态伸缩node节点，制作测试脚本的基础镜像。</p>
 <h4 id="Selenium-Grid"><a href="#Selenium-Grid" class="headerlink" title="Selenium Grid"></a>Selenium Grid</h4><p>   Selenium作为web应用程序自动化测试利器之一，它支持多种客户端脚本（如：Java,Python,JavaScript等），并且可运行在多种浏览器中（如：chrome,firefox等）。Selenium经常被用于测试web应用程序在不同浏览器的兼容性。在企业级自动化测试中，常常结合Selenium组件Selenium Grid实现多节点分布式自动化测试。</p>
 <p>   Selenium Grid由中心管理服务Hub和多个node节点组成，node节点需要注册到Hub服务中。使用传统方式部署分布式测试环境比较繁琐和费时，本文将介绍使用docker-compose的方式实现一键部署Selenium Grid分布式测试环境。</p>
-<p><img src="./img/selenium/s-1.jpg" alt="image"></p>
+<p><img src="/.com//selenium/s-1.jpg" alt="image"></p>
 <p>如上图所示，要实现分布式测试，需要client测试脚本，HUB中心服务以及NODES执行节点。具体解释如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HUB: 中心节点服务，用于管理多个node节点，接受Client测试脚本的测试任务，将任务分配给多个node节点执行。</span><br><span class="line">NODES: 真正执行测试任务的节点服务，支持多种浏览器进行测试，如：chrome firefox, node服务需注册到Hub中心服务，由中心服务统一分发任务。</span><br><span class="line">Client: 这里是抽象概念，可理解为执行测试逻辑到客户端（代码），Client客户端需连接到Hub服务，执行测试脚本时由Hub中心服务统一分发给node节点进行执行。</span><br></pre></td></tr></table></figure>
 <h4 id="docker-selenium"><a href="#docker-selenium" class="headerlink" title="docker-selenium"></a>docker-selenium</h4><p>docker-selenium 实现了在容器环境中使用docker-compose方式快速部署Selenium Grid，伸缩node节点，下面通过详细步骤介绍部署方法。</p>
@@ -263,7 +263,7 @@
 <p>step-4: 动态扩缩容node节点</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker-compose scale chrome=3    #指定支持chrome节点的实例数量</span><br><span class="line">docker-compose scale firefox=3   #指定支持firefox节点的实例数量</span><br></pre></td></tr></table></figure>
 <p>step-5: 访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:4444/grid/console #访问Hub，能看到node节点都已注册上。</span><br></pre></td></tr></table></figure></p>
-<p><img src="./img/selenium/s-2.jpg" alt="image"></p>
+<p><img src="/.com//selenium/s-2.jpg" alt="image"></p>
 <h4 id="Client-Demo演示"><a href="#Client-Demo演示" class="headerlink" title="Client Demo演示"></a>Client Demo演示</h4><p>上面通过docker-compose已成功部署了Selenium Grid，其中心HUB服务端口为4444，测试脚本需要指向该端口。下面通过一个简单的测试Demo进行演示。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver.common.desired_capabilities import DesiredCapabilities</span><br><span class="line"></span><br><span class="line">chrome = webdriver.Remote(</span><br><span class="line">          command_executor=&apos;http://localhost:4444/wd/hub&apos;,</span><br><span class="line">          desired_capabilities=DesiredCapabilities.CHROME)</span><br><span class="line">firefox = webdriver.Remote(</span><br><span class="line">          command_executor=&apos;http://localhost:4444/wd/hub&apos;,</span><br><span class="line">          desired_capabilities=DesiredCapabilities.FIREFOX)</span><br><span class="line"></span><br><span class="line">chrome.get(&apos;https://www.baidu.com&apos;)</span><br><span class="line">print(chrome.title)</span><br><span class="line"></span><br><span class="line">firefox.get(&apos;https://www.baidu.com&apos;)</span><br><span class="line">print(firefox.title)</span><br></pre></td></tr></table></figure>
 <ul>
@@ -285,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/30/docker-selenium/" data-id="ck81k3rx60005p99a88uynvvw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/30/docker-selenium/" data-id="ck81pxjbo0005mu9a0syivo2c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -361,13 +361,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">short-circuited and no fallback available</span><br><span class="line">#并发访问时，后端某些服务发生熔断</span><br></pre></td></tr></table></figure>
 <p>调优配置-3：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">hystrix:</span><br><span class="line">  command:</span><br><span class="line">    default:</span><br><span class="line">      execution:</span><br><span class="line">        isolation:</span><br><span class="line">          thread:</span><br><span class="line">            timeoutInMilliseconds: 60000  #发生熔断的超时时间</span><br><span class="line"></span><br><span class="line"># 调整熔断超时时间，熔断时间太短，些耗时的业务部不能work</span><br><span class="line"># 熔断时太长，Zuul服务器可能会被拖垮。所以根据具体业务找到一个合适值。</span><br><span class="line"></span><br><span class="line">ribbon:</span><br><span class="line">  OkToRetryOnAllOperations:true     #全部请求开启重试机制</span><br><span class="line">  ReadTimeout: 6000                 #请求处理超时时间</span><br><span class="line">  ConnectTimeout: 6000              #请求连接超时时间</span><br><span class="line">  MaxAutoRetries: 10                #最大重试次数</span><br><span class="line">#调整重试次数，实际项目中由于网络或者资源不够，偶尔会出现后端服务不能访问，一次访问失败不能代表后端服务就挂了。</span><br><span class="line">#因此开启重试机制，调整重试次数。在一定时间内，重试几次都失败，我们才认为后端服务挂了。</span><br></pre></td></tr></table></figure></p>
 <h5 id="Zuul高可用"><a href="#Zuul高可用" class="headerlink" title="Zuul高可用"></a>Zuul高可用</h5><p>我们知道无论在Linux或者windows下，一个进程支持的并发数是有限制的，在实际项目中，服务网关作为微服务架构的入口至关重要。Zuul结合服务发现、负载均衡等启动多个实例做到高可用。如下图:</p>
-<p><img src="./img/zuul/z1.png" alt></p>
+<p><img src="/.com//zuul/z1.png" alt></p>
 <p>如上图，启动多个Zuul实例，在Zuul前加一层负载（常用nginx做负载），每个实例承担一些请求，整体支持高并发能力也会提高很多。</p>
 <h5 id="Zuul版本-1-x-vs-2-x"><a href="#Zuul版本-1-x-vs-2-x" class="headerlink" title="Zuul版本 - 1.x vs 2.x"></a>Zuul版本 - 1.x vs 2.x</h5><p>截止目前Zuul发布了2个版本，在架构和实现方式以及支持并发的情况都有所不同。</p>
 <blockquote>
 <p>Zuul-1.x</p>
 </blockquote>
-<p><img src="./img/zuul/z2.png" alt><br>Filter是Zuul的核心，用来实现对外服务的控制。Filter的生命周期有4个，分别是“PRE”、“ROUTING”、“POST”、“ERROR“</p>
+<p><img src="/.com//zuul/z2.png" alt><br>Filter是Zuul的核心，用来实现对外服务的控制。Filter的生命周期有4个，分别是“PRE”、“ROUTING”、“POST”、“ERROR“</p>
 <ul>
 <li>PRE：过滤器在请求经过路由前被调用。利用这种过滤器可实现身份验证。</li>
 <li>ROUTING：过滤器将请求路由到微服务。这种过滤器用于构建发送给后端微服务的请求，使用Apache HttpClient或Netfilx Ribbon请求微服务。</li>
@@ -377,7 +377,7 @@
 <blockquote>
 <p>Zuul-2.x</p>
 </blockquote>
-<p><img src="./img/zuul/z3.png" alt><br>2.x的Zuul基于netty处理请求，netty（高性能、异步事件驱动的NIO框架，提供了对TCP、UDP和文件传输的支持，Netty的所有IO操作都是异步非阻塞的）。相对于1.x版本，很明显把同步改成了异步，把阻塞改成了非阻塞。据官方进行的并发测试，2.x相比1.x性能还是提升了不少。不过2.x相对1.x要复杂一些，如果需要支持很高的QPS、TPS，可以尝试下2.x。</p>
+<p><img src="/.com//zuul/z3.png" alt><br>2.x的Zuul基于netty处理请求，netty（高性能、异步事件驱动的NIO框架，提供了对TCP、UDP和文件传输的支持，Netty的所有IO操作都是异步非阻塞的）。相对于1.x版本，很明显把同步改成了异步，把阻塞改成了非阻塞。据官方进行的并发测试，2.x相比1.x性能还是提升了不少。不过2.x相对1.x要复杂一些，如果需要支持很高的QPS、TPS，可以尝试下2.x。</p>
 <p>总结：</p>
 <ul>
 <li>1.x 同步阻塞，编程模型简单，社区成熟，通过调整参数能满足生产性能需求</li>
@@ -394,7 +394,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/18/zuul/" data-id="ck81k3ry0000op99aptfs1w8i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/18/zuul/" data-id="ck81pxjcb000omu9ajnsxxbsb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -470,7 +470,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/mysql/" data-id="ck81k3rxk000ip99ahahgqnzy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/mysql/" data-id="ck81pxjc1000imu9arcwbsmrd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -512,7 +512,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/podSchedule/" data-id="ck81k3rxl000kp99aa5xipjq8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/podSchedule/" data-id="ck81pxjc3000kmu9a3dul1vk4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -567,7 +567,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/project/" data-id="ck81k3rxm000lp99an75h5y2z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/project/" data-id="ck81pxjc4000lmu9azlwwe14s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -615,7 +615,7 @@
 <li>prometheus定义告警规则</li>
 <li>alertmanager触发告警</li>
 </ul>
-<h5 id="prometheus整体架构"><a href="#prometheus整体架构" class="headerlink" title="prometheus整体架构"></a>prometheus整体架构</h5><p><img src="./img/prom/p1.png" alt><br>从prometheus官方给的架构图分析出，基于prometheus的监控方案常用组件：</p>
+<h5 id="prometheus整体架构"><a href="#prometheus整体架构" class="headerlink" title="prometheus整体架构"></a>prometheus整体架构</h5><p><img src="/.com//prom/p1.png" alt><br>从prometheus官方给的架构图分析出，基于prometheus的监控方案常用组件：</p>
 <ul>
 <li>Exporters ：暴露metrics,收集监控指标，并以一种规定的数据格式提供给Prometheus-采集监控对象数据</li>
 <li>Prometheus Server ：收集数据和存储数据到时间序列数据库中，收集的数据由Exporters提供-采集/存储数据</li>
@@ -627,15 +627,15 @@
 <h6 id="install-prometheus"><a href="#install-prometheus" class="headerlink" title="install prometheus"></a>install prometheus</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --name prometheus -d -p 9090:9090  quay.io/prometheus/prometheus</span><br><span class="line"># 暴露端口：9090</span><br><span class="line">docker run --name prometheus -d -p 9090:9090 -v  /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml quay.io/prometheus/prometheus</span><br><span class="line"># 挂载prometheus.yml文件，便于在主机上直接修改</span><br><span class="line">docker run --name prometheus -d -p 9090:9090 --link=alertmanger:alertmanger -v  /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml -v /etc/prometheus/rules:/etc/prometheus/rules  quay.io/prometheus/prometheus</span><br><span class="line"># 挂载挂载prometheus.yml文件，创建了rules目录，rules存放告警规则yaml文件，后续会提到</span><br></pre></td></tr></table></figure>
 <h6 id="install-grafana"><a href="#install-grafana" class="headerlink" title="install grafana"></a>install grafana</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 3000:3000 --name=grafana grafana/grafana</span><br></pre></td></tr></table></figure>
 <h6 id="install-alertmanger"><a href="#install-alertmanger" class="headerlink" title="install alertmanger"></a>install alertmanger</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --name alertmanger -d  -p 9093:9093  -v /etc/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml quay.io/prometheus/alertmanager</span><br><span class="line">#挂载告警文件：alertmanager.yml，便于在主机上直接修改文件</span><br></pre></td></tr></table></figure>
-<h5 id="grafana关联prometheus"><a href="#grafana关联prometheus" class="headerlink" title="grafana关联prometheus"></a>grafana关联prometheus</h5><p><img src="./img/prom/p2.png" alt><br>Prometheus界面，采集promhttp_metric_handler_requests_total为demo进行演示，这个metrics是prometheus自己监控自己的http请求数量<br><img src="./img/prom/p3.png" alt></p>
+<h5 id="grafana关联prometheus"><a href="#grafana关联prometheus" class="headerlink" title="grafana关联prometheus"></a>grafana关联prometheus</h5><p><img src="/.com//prom/p2.png" alt><br>Prometheus界面，采集promhttp_metric_handler_requests_total为demo进行演示，这个metrics是prometheus自己监控自己的http请求数量<br><img src="/.com//prom/p3.png" alt></p>
 <ul>
 <li>访问grafana，默认用户名和密码都是：admin</li>
-<li>设置-type选择Prometheus-填写Prometheus访问地址，点击Save&amp;Test 测试关联prometheus是否成功<br><img src="./img/prom/p4.png" alt></li>
+<li>设置-type选择Prometheus-填写Prometheus访问地址，点击Save&amp;Test 测试关联prometheus是否成功<br><img src="/.com//prom/p4.png" alt></li>
 <li>新建dashboard，设置Metrics，即可展示数据</li>
 </ul>
 <h5 id="prometheus关联alertmanager"><a href="#prometheus关联alertmanager" class="headerlink" title="prometheus关联alertmanager"></a>prometheus关联alertmanager</h5><p>prometheus配置文件路径：/etc/prometheus/prometheus.yaml，在如下配置设置告警地址</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  scrape_interval:     15s </span><br><span class="line">  evaluation_interval: 15s </span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets: [&apos;alertmanger:9093&apos;]</span><br><span class="line"># 关联告警服务器alertmanger    </span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: &apos;prometheus&apos;</span><br><span class="line">    # metrics_path defaults to &apos;/metrics&apos;</span><br><span class="line">    # scheme defaults to &apos;http&apos;.</span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [&apos;localhost:9090&apos;]</span><br><span class="line"># prometheus 服务监听的端口</span><br></pre></td></tr></table></figure>
-<p>  查看prometheus-Status-configuration，检测配置是否生效<br><img src="./img/prom/p5.png" alt></p>
+<p>  查看prometheus-Status-configuration，检测配置是否生效<br><img src="/.com//prom/p5.png" alt></p>
 <h5 id="prometheus定义告警规则-prom-rules-yml"><a href="#prometheus定义告警规则-prom-rules-yml" class="headerlink" title="prometheus定义告警规则-prom_rules.yml"></a>prometheus定义告警规则-prom_rules.yml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">groups:</span><br><span class="line">- name: test-rule</span><br><span class="line">  rules:</span><br><span class="line">  - alert: promReqCounts</span><br><span class="line">    expr: promhttp_metric_handler_requests_total &gt; 10</span><br><span class="line">    for: 0s</span><br><span class="line">    labels:</span><br><span class="line">      prom: http</span><br><span class="line">    annotations:</span><br><span class="line">      summary: High prometheus request total is above 1000</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>定义request请求总数大于10就发生告警，标签为：prom：http</p>
@@ -652,7 +652,7 @@
 <li>更多告警参考官网例子：<a href="https://prometheus.io/docs/alerting/configuration/" target="_blank" rel="noopener">https://prometheus.io/docs/alerting/configuration/</a></li>
 </ul>
 <p>如果发生了告警，alertmaneger界面会有记录</p>
-<p><img src="./img/prom/p6.png" alt></p>
+<p><img src="/.com//prom/p6.png" alt></p>
 <h5 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h5><ul>
 <li>prometheus : <a href="https://prometheus.io/docs/prometheus/latest/installation/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/installation/</a></li>
 <li>exporter : <a href="https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations" target="_blank" rel="noopener">https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations</a></li>
@@ -664,7 +664,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/prometheus/" data-id="ck81k3rxn000mp99agcnaxs1o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/prometheus/" data-id="ck81pxjc5000mmu9aixus3xit" class="article-share-link">Share</a>
       
       
     </footer>
@@ -729,17 +729,17 @@ docker run --name sonarqube \
 <p>jenkins集成sonarQube</p>
 </blockquote>
 <p>1、 安装sonarQubeScaner   系统管理-&gt;管理插件-&gt;可选插件</p>
-<p><img src="./img/sonar/1.png" alt><br>2、 获取sonarQube的token sonarQube-&gt;配置-&gt;用户-&gt;令牌<br><img src="./img/sonar/3.png" alt><br>3、 配置sonarQubeServer   系统管理-&gt;系统设置</p>
-<p><img src="./img/sonar/2.png" alt><br>4、 配置sonarQube scaner  系统管理-&gt;全局工具设置</p>
-<p><img src="./img/sonar/4.png" alt><br>5、 在构建中添加sonarqube，其中src表示源码的目录，build编译代码后的目录</p>
-<p><img src="./img/sonar/6.png" alt><br>6、成功后，可在sonarqube查看扫描代码的结果</p>
-<p><img src="./img/sonar/7.png" alt></p>
+<p><img src="/.com//sonar/1.png" alt><br>2、 获取sonarQube的token sonarQube-&gt;配置-&gt;用户-&gt;令牌<br><img src="/.com//sonar/3.png" alt><br>3、 配置sonarQubeServer   系统管理-&gt;系统设置</p>
+<p><img src="/.com//sonar/2.png" alt><br>4、 配置sonarQube scaner  系统管理-&gt;全局工具设置</p>
+<p><img src="/.com//sonar/4.png" alt><br>5、 在构建中添加sonarqube，其中src表示源码的目录，build编译代码后的目录</p>
+<p><img src="/.com//sonar/6.png" alt><br>6、成功后，可在sonarqube查看扫描代码的结果</p>
+<p><img src="/.com//sonar/7.png" alt></p>
 <p>tips：通过分析结果中的bugs、漏洞、坏味道可提高代码规范和质量.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/sonarqube/" data-id="ck81k3rxn000np99av96bjvjj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/sonarqube/" data-id="ck81pxjc6000nmu9ar5nvw1rd" class="article-share-link">Share</a>
       
       
     </footer>

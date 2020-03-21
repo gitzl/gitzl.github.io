@@ -12,14 +12,14 @@
 <meta property="og:site_name" content="MC.KJ">
 <meta property="og:description" content="What is Zuul?官方介绍: 1234567Zuul is the front door for all requests from devices and web sites to the backend of the Netflix streaming application.As an edge service application, Zuul is built to enable">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/02/18/zuul/img/zuul/z1.png">
-<meta property="og:image" content="http://yoursite.com/2019/02/18/zuul/img/zuul/z2.png">
-<meta property="og:image" content="http://yoursite.com/2019/02/18/zuul/img/zuul/z3.png">
+<meta property="og:image" content="http://yoursite.com/.com//zuul/z1.png">
+<meta property="og:image" content="http://yoursite.com/.com//zuul/z2.png">
+<meta property="og:image" content="http://yoursite.com/.com//zuul/z3.png">
 <meta property="og:updated_time" content="2019-12-18T11:37:36.240Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高并发下-Zuul参数调优">
 <meta name="twitter:description" content="What is Zuul?官方介绍: 1234567Zuul is the front door for all requests from devices and web sites to the backend of the Netflix streaming application.As an edge service application, Zuul is built to enable">
-<meta name="twitter:image" content="http://yoursite.com/2019/02/18/zuul/img/zuul/z1.png">
+<meta name="twitter:image" content="http://yoursite.com/.com//zuul/z1.png">
   
     <link rel="alternate" href="/atom.xml" title="MC.KJ" type="application/atom+xml">
   
@@ -134,13 +134,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">short-circuited and no fallback available</span><br><span class="line">#并发访问时，后端某些服务发生熔断</span><br></pre></td></tr></table></figure>
 <p>调优配置-3：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">hystrix:</span><br><span class="line">  command:</span><br><span class="line">    default:</span><br><span class="line">      execution:</span><br><span class="line">        isolation:</span><br><span class="line">          thread:</span><br><span class="line">            timeoutInMilliseconds: 60000  #发生熔断的超时时间</span><br><span class="line"></span><br><span class="line"># 调整熔断超时时间，熔断时间太短，些耗时的业务部不能work</span><br><span class="line"># 熔断时太长，Zuul服务器可能会被拖垮。所以根据具体业务找到一个合适值。</span><br><span class="line"></span><br><span class="line">ribbon:</span><br><span class="line">  OkToRetryOnAllOperations:true     #全部请求开启重试机制</span><br><span class="line">  ReadTimeout: 6000                 #请求处理超时时间</span><br><span class="line">  ConnectTimeout: 6000              #请求连接超时时间</span><br><span class="line">  MaxAutoRetries: 10                #最大重试次数</span><br><span class="line">#调整重试次数，实际项目中由于网络或者资源不够，偶尔会出现后端服务不能访问，一次访问失败不能代表后端服务就挂了。</span><br><span class="line">#因此开启重试机制，调整重试次数。在一定时间内，重试几次都失败，我们才认为后端服务挂了。</span><br></pre></td></tr></table></figure></p>
 <h5 id="Zuul高可用"><a href="#Zuul高可用" class="headerlink" title="Zuul高可用"></a>Zuul高可用</h5><p>我们知道无论在Linux或者windows下，一个进程支持的并发数是有限制的，在实际项目中，服务网关作为微服务架构的入口至关重要。Zuul结合服务发现、负载均衡等启动多个实例做到高可用。如下图:</p>
-<p><img src="./img/zuul/z1.png" alt></p>
+<p><img src="/.com//zuul/z1.png" alt></p>
 <p>如上图，启动多个Zuul实例，在Zuul前加一层负载（常用nginx做负载），每个实例承担一些请求，整体支持高并发能力也会提高很多。</p>
 <h5 id="Zuul版本-1-x-vs-2-x"><a href="#Zuul版本-1-x-vs-2-x" class="headerlink" title="Zuul版本 - 1.x vs 2.x"></a>Zuul版本 - 1.x vs 2.x</h5><p>截止目前Zuul发布了2个版本，在架构和实现方式以及支持并发的情况都有所不同。</p>
 <blockquote>
 <p>Zuul-1.x</p>
 </blockquote>
-<p><img src="./img/zuul/z2.png" alt><br>Filter是Zuul的核心，用来实现对外服务的控制。Filter的生命周期有4个，分别是“PRE”、“ROUTING”、“POST”、“ERROR“</p>
+<p><img src="/.com//zuul/z2.png" alt><br>Filter是Zuul的核心，用来实现对外服务的控制。Filter的生命周期有4个，分别是“PRE”、“ROUTING”、“POST”、“ERROR“</p>
 <ul>
 <li>PRE：过滤器在请求经过路由前被调用。利用这种过滤器可实现身份验证。</li>
 <li>ROUTING：过滤器将请求路由到微服务。这种过滤器用于构建发送给后端微服务的请求，使用Apache HttpClient或Netfilx Ribbon请求微服务。</li>
@@ -150,7 +150,7 @@
 <blockquote>
 <p>Zuul-2.x</p>
 </blockquote>
-<p><img src="./img/zuul/z3.png" alt><br>2.x的Zuul基于netty处理请求，netty（高性能、异步事件驱动的NIO框架，提供了对TCP、UDP和文件传输的支持，Netty的所有IO操作都是异步非阻塞的）。相对于1.x版本，很明显把同步改成了异步，把阻塞改成了非阻塞。据官方进行的并发测试，2.x相比1.x性能还是提升了不少。不过2.x相对1.x要复杂一些，如果需要支持很高的QPS、TPS，可以尝试下2.x。</p>
+<p><img src="/.com//zuul/z3.png" alt><br>2.x的Zuul基于netty处理请求，netty（高性能、异步事件驱动的NIO框架，提供了对TCP、UDP和文件传输的支持，Netty的所有IO操作都是异步非阻塞的）。相对于1.x版本，很明显把同步改成了异步，把阻塞改成了非阻塞。据官方进行的并发测试，2.x相比1.x性能还是提升了不少。不过2.x相对1.x要复杂一些，如果需要支持很高的QPS、TPS，可以尝试下2.x。</p>
 <p>总结：</p>
 <ul>
 <li>1.x 同步阻塞，编程模型简单，社区成熟，通过调整参数能满足生产性能需求</li>
@@ -167,7 +167,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/18/zuul/" data-id="ck81k3ry0000op99aptfs1w8i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/18/zuul/" data-id="ck81pxjcb000omu9ajnsxxbsb" class="article-share-link">Share</a>
       
       
     </footer>
