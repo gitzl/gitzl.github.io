@@ -62,6 +62,103 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-prometheus" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/17/prometheus/" class="article-date">
+  <time datetime="2019-02-17T08:20:34.930Z" itemprop="datePublished">2019-02-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/17/prometheus/">prometheus+grafana+alertmanger - 监控方案</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="监控方案涉及的关键问题"><a href="#监控方案涉及的关键问题" class="headerlink" title="监控方案涉及的关键问题"></a>监控方案涉及的关键问题</h5><ul>
+<li>采集数据</li>
+<li>存储数据</li>
+<li>告警、展示数据</li>
+</ul>
+<p>那么基于prometheus的监控方案是用什么技术实现？本文基于docker进行部署，目的以简单的demo快速了解prometheus监控方案的涉及的知识点以及流程。</p>
+<h5 id="本文介绍的内容"><a href="#本文介绍的内容" class="headerlink" title="本文介绍的内容"></a>本文介绍的内容</h5><ul>
+<li>prometheus整体架构介绍</li>
+<li>安装prometheus</li>
+<li>安装grafana</li>
+<li>安装alertmanager</li>
+<li>grafana关联prometheus</li>
+<li>prometheus关联alertmanager</li>
+<li>prometheus定义告警规则</li>
+<li>alertmanager触发告警</li>
+</ul>
+<h5 id="prometheus整体架构"><a href="#prometheus整体架构" class="headerlink" title="prometheus整体架构"></a>prometheus整体架构</h5><p><img src="/2019/02/17/prometheus/./img/prom/p1.png" alt><br>从prometheus官方给的架构图分析出，基于prometheus的监控方案常用组件：</p>
+<ul>
+<li>Exporters ：暴露metrics,收集监控指标，并以一种规定的数据格式提供给Prometheus-采集监控对象数据</li>
+<li>Prometheus Server ：收集数据和存储数据到时间序列数据库中，收集的数据由Exporters提供-采集/存储数据</li>
+<li>Alertmanager ：告警管理，接收Prometheus的告警，去重/分组/发出告警（邮件、webhook等）- 告警</li>
+<li>Grafana：监控Dashbord，UI展示，设置Prometheus Server地址即可自定义监控Dashbord- UI展示</li>
+<li>Push Gateway： 用于短期的jobs，jobs直接向Prometheus server端推送它们的 metrics.用于服务层面的 metrics</li>
+</ul>
+<h5 id="部署组件"><a href="#部署组件" class="headerlink" title="部署组件"></a>部署组件</h5><p>本文以docker方式部署：prometheus、grafana、alertmanager</p>
+<h6 id="install-prometheus"><a href="#install-prometheus" class="headerlink" title="install prometheus"></a>install prometheus</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --name prometheus -d -p 9090:9090  quay.io/prometheus/prometheus</span><br><span class="line"># 暴露端口：9090</span><br><span class="line">docker run --name prometheus -d -p 9090:9090 -v  /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml quay.io/prometheus/prometheus</span><br><span class="line"># 挂载prometheus.yml文件，便于在主机上直接修改</span><br><span class="line">docker run --name prometheus -d -p 9090:9090 --link=alertmanger:alertmanger -v  /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml -v /etc/prometheus/rules:/etc/prometheus/rules  quay.io/prometheus/prometheus</span><br><span class="line"># 挂载挂载prometheus.yml文件，创建了rules目录，rules存放告警规则yaml文件，后续会提到</span><br></pre></td></tr></table></figure>
+<h6 id="install-grafana"><a href="#install-grafana" class="headerlink" title="install grafana"></a>install grafana</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 3000:3000 --name=grafana grafana/grafana</span><br></pre></td></tr></table></figure>
+<h6 id="install-alertmanger"><a href="#install-alertmanger" class="headerlink" title="install alertmanger"></a>install alertmanger</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --name alertmanger -d  -p 9093:9093  -v /etc/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml quay.io/prometheus/alertmanager</span><br><span class="line">#挂载告警文件：alertmanager.yml，便于在主机上直接修改文件</span><br></pre></td></tr></table></figure>
+<h5 id="grafana关联prometheus"><a href="#grafana关联prometheus" class="headerlink" title="grafana关联prometheus"></a>grafana关联prometheus</h5><p><img src="/2019/02/17/prometheus/./img/prom/p2.png" alt><br>Prometheus界面，采集promhttp_metric_handler_requests_total为demo进行演示，这个metrics是prometheus自己监控自己的http请求数量<br><img src="/2019/02/17/prometheus/./img/prom/p3.png" alt></p>
+<ul>
+<li>访问grafana，默认用户名和密码都是：admin</li>
+<li>设置-type选择Prometheus-填写Prometheus访问地址，点击Save&amp;Test 测试关联prometheus是否成功<br><img src="/2019/02/17/prometheus/./img/prom/p4.png" alt></li>
+<li>新建dashboard，设置Metrics，即可展示数据</li>
+</ul>
+<h5 id="prometheus关联alertmanager"><a href="#prometheus关联alertmanager" class="headerlink" title="prometheus关联alertmanager"></a>prometheus关联alertmanager</h5><p>prometheus配置文件路径：/etc/prometheus/prometheus.yaml，在如下配置设置告警地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  scrape_interval:     15s </span><br><span class="line">  evaluation_interval: 15s </span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets: [&apos;alertmanger:9093&apos;]</span><br><span class="line"># 关联告警服务器alertmanger    </span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: &apos;prometheus&apos;</span><br><span class="line">    # metrics_path defaults to &apos;/metrics&apos;</span><br><span class="line">    # scheme defaults to &apos;http&apos;.</span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [&apos;localhost:9090&apos;]</span><br><span class="line"># prometheus 服务监听的端口</span><br></pre></td></tr></table></figure>
+<p>  查看prometheus-Status-configuration，检测配置是否生效<br><img src="/2019/02/17/prometheus/./img/prom/p5.png" alt></p>
+<h5 id="prometheus定义告警规则-prom-rules-yml"><a href="#prometheus定义告警规则-prom-rules-yml" class="headerlink" title="prometheus定义告警规则-prom_rules.yml"></a>prometheus定义告警规则-prom_rules.yml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">groups:</span><br><span class="line">- name: test-rule</span><br><span class="line">  rules:</span><br><span class="line">  - alert: promReqCounts</span><br><span class="line">    expr: promhttp_metric_handler_requests_total &gt; 10</span><br><span class="line">    for: 0s</span><br><span class="line">    labels:</span><br><span class="line">      prom: http</span><br><span class="line">    annotations:</span><br><span class="line">      summary: High prometheus request total is above 1000</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>定义request请求总数大于10就发生告警，标签为：prom：http</p>
+</li>
+<li><p>定义rules考官网例子：<a href="https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/</a></p>
+</li>
+</ul>
+<p>在prometheus中关联rule文件 - prom_rules.yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  scrape_interval:     15s </span><br><span class="line">  evaluation_interval: 15s </span><br><span class="line"></span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets: [&apos;alertmanger:9093&apos;]</span><br><span class="line"># 关联告警服务器alertmanger    </span><br><span class="line">rule_files:</span><br><span class="line">    - &quot;rules/prom_rules.yml&quot;</span><br><span class="line"># 定义告警规则：prom_rules.yml</span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: &apos;prometheus&apos;</span><br><span class="line">    # metrics_path defaults to &apos;/metrics&apos;</span><br><span class="line">    # scheme defaults to &apos;http&apos;.</span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [&apos;localhost:9090&apos;]</span><br><span class="line"># prometheus 服务监听的端口</span><br></pre></td></tr></table></figure>
+<h5 id="alertmanager触发告警"><a href="#alertmanager触发告警" class="headerlink" title="alertmanager触发告警"></a>alertmanager触发告警</h5><p>配置alertmanager.yml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  resolve_timeout: 5m</span><br><span class="line"></span><br><span class="line">route:</span><br><span class="line">  group_by: [&apos;alertname&apos;]</span><br><span class="line">  group_wait: 10s</span><br><span class="line">  group_interval: 10s</span><br><span class="line">  repeat_interval: 1h</span><br><span class="line">  receiver: &apos;web.test&apos;</span><br><span class="line">  routes:</span><br><span class="line">  - receiver: &apos;web.hook&apos;</span><br><span class="line">    match:</span><br><span class="line">      prom: http</span><br><span class="line">receivers:</span><br><span class="line">- name: &apos;web.hook&apos;</span><br><span class="line">  webhook_configs:</span><br><span class="line">  - url: &apos;http://127.0.0.1:8888&apos;</span><br><span class="line">- name: &apos;web.test&apos;</span><br><span class="line">  webhook_configs:</span><br><span class="line">  - url: &apos;http://127.0.0.1:88888&apos;</span><br><span class="line">inhibit_rules:</span><br><span class="line">  - source_match:</span><br><span class="line">      severity: &apos;critical&apos;</span><br><span class="line">    target_match:</span><br><span class="line">      severity: &apos;warning&apos;</span><br><span class="line">    equal: [&apos;alertname&apos;, &apos;dev&apos;, &apos;instance&apos;]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当alertmanger接收到标签为：prom:http的告警就触发 web.hook，当然也可以发邮件等操作</li>
+<li>更多告警参考官网例子：<a href="https://prometheus.io/docs/alerting/configuration/" target="_blank" rel="noopener">https://prometheus.io/docs/alerting/configuration/</a></li>
+</ul>
+<p>如果发生了告警，alertmaneger界面会有记录</p>
+<p><img src="/2019/02/17/prometheus/./img/prom/p6.png" alt></p>
+<h5 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h5><ul>
+<li>prometheus : <a href="https://prometheus.io/docs/prometheus/latest/installation/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/installation/</a></li>
+<li>exporter : <a href="https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations" target="_blank" rel="noopener">https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations</a></li>
+<li>alertmanger: <a href="https://prometheus.io/docs/alerting/alertmanager/" target="_blank" rel="noopener">https://prometheus.io/docs/alerting/alertmanager/</a></li>
+<li>prometheus rules : <a href="https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/</a></li>
+<li>grafana：<a href="http://docs.grafana.org/" target="_blank" rel="noopener">http://docs.grafana.org/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/17/prometheus/" data-id="ck85md9w4000n6n9akdtsf52i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-http_status" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/02/17/http_status/" class="article-date">
@@ -161,7 +258,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/http_status/" data-id="ck81r0568000c7o9agfpj71nv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/http_status/" data-id="ck85md9vb000b6n9a5pwkekol" class="article-share-link">Share</a>
       
       
     </footer>
@@ -205,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/java/" data-id="ck81r056b000e7o9ahrr9niw9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/java/" data-id="ck85md9vd000c6n9aooxnrua5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -321,7 +418,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/hexo/" data-id="ck81r056b000f7o9aj22ofafn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/hexo/" data-id="ck85md9vf000d6n9allruw49d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -411,7 +508,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/linux/" data-id="ck81r056c000h7o9ajwtw4ozd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/linux/" data-id="ck85md9vh000f6n9afgrq87ac" class="article-share-link">Share</a>
       
       
     </footer>
@@ -453,185 +550,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/jenkinsPlugin/" data-id="ck81r056e000j7o9a1gbkw4cu" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/17/front/" class="article-date">
-  <time datetime="2019-02-17T08:20:34.928Z" itemprop="datePublished">2019-02-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/front/">web前端资源</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>字体、图标 <a href="http://fontawesome.io/" target="_blank" rel="noopener">http://fontawesome.io/</a></li>
-<li>bootstrap <a href="http://www.bootcss.com/" target="_blank" rel="noopener">http://www.bootcss.com/</a></li>
-<li>vue组件框架 <a href="http://element.eleme.io/" target="_blank" rel="noopener">http://element.eleme.io/</a></li>
-<li>ES6  <a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">http://es6.ruanyifeng.com/</a></li>
-<li>NPM <a href="https://www.npmjs.com/" target="_blank" rel="noopener">https://www.npmjs.com/</a></li>
-<li><a href="http://runjs.cn/" target="_blank" rel="noopener">http://runjs.cn/</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/front/" data-id="ck81r055z00067o9ahssi347t" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-go" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/17/go/" class="article-date">
-  <time datetime="2019-02-17T08:20:34.928Z" itemprop="datePublished">2019-02-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/go/">golang</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>MVC框架-beego <a href="https://beego.me/" target="_blank" rel="noopener">https://beego.me/</a></li>
-<li>路由框架-gorilla <a href="http://www.gorillatoolkit.org/" target="_blank" rel="noopener">http://www.gorillatoolkit.org/</a></li>
-<li>操作数据库-xorm  <a href="https://godoc.org/github.com/go-xorm/xorm" target="_blank" rel="noopener">https://godoc.org/github.com/go-xorm/xorm</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/go/" data-id="ck81r056100087o9axn4rpe6p" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/17/hello-world/" class="article-date">
-  <time datetime="2019-02-17T08:20:34.928Z" itemprop="datePublished">2019-02-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/hello-world/" data-id="ck81r056300097o9a2t3vhsho" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-helm" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/17/helm/" class="article-date">
-  <time datetime="2019-02-17T08:20:34.928Z" itemprop="datePublished">2019-02-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/helm/">Kunbernetes利器-helm</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h6 id="helm是什么？"><a href="#helm是什么？" class="headerlink" title="helm是什么？"></a>helm是什么？</h6><p>引用helm官方的英文介绍:</p>
-<ul>
-<li>The package manager for Kubernetes</li>
-<li>Helm is the best way to find, share, and use software built for Kubernetes.</li>
-</ul>
-<p>意思就是helm是kubernetes生态中的一个包管理工具，可以快速发现、共享以及为Kubernetes构建应用.</p>
-<h6 id="为什么要拥抱helm"><a href="#为什么要拥抱helm" class="headerlink" title="为什么要拥抱helm?"></a>为什么要拥抱helm?</h6><p>在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment、svc等，步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂，helm通过打包的方式，支持发布的版本管理和控制，很大程度上简化了Kubernetes应用的部署和管理.</p>
-<h6 id="本文包含的主要内容"><a href="#本文包含的主要内容" class="headerlink" title="本文包含的主要内容"></a>本文包含的主要内容</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 安装helm</span><br><span class="line">- helm常用命令</span><br><span class="line">- 自定义Chart</span><br><span class="line">- Chart模板</span><br><span class="line">- 参考文档</span><br></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2019/02/17/helm/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/helm/" data-id="ck81r0565000a7o9au83691eq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/jenkinsPlugin/" data-id="ck85md9vi000g6n9ah1en04t1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -723,7 +642,137 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/17/git/" data-id="ck81r056a000d7o9akioibuz9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/17/git/" data-id="ck85md9v200056n9a11wm0y9i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/17/front/" class="article-date">
+  <time datetime="2019-02-17T08:20:34.928Z" itemprop="datePublished">2019-02-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/17/front/">web前端资源</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>字体、图标 <a href="http://fontawesome.io/" target="_blank" rel="noopener">http://fontawesome.io/</a></li>
+<li>bootstrap <a href="http://www.bootcss.com/" target="_blank" rel="noopener">http://www.bootcss.com/</a></li>
+<li>vue组件框架 <a href="http://element.eleme.io/" target="_blank" rel="noopener">http://element.eleme.io/</a></li>
+<li>ES6  <a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">http://es6.ruanyifeng.com/</a></li>
+<li>NPM <a href="https://www.npmjs.com/" target="_blank" rel="noopener">https://www.npmjs.com/</a></li>
+<li><a href="http://runjs.cn/" target="_blank" rel="noopener">http://runjs.cn/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/17/front/" data-id="ck85md9v300066n9afm5iqhyo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-go" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/17/go/" class="article-date">
+  <time datetime="2019-02-17T08:20:34.928Z" itemprop="datePublished">2019-02-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/17/go/">golang</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>MVC框架-beego <a href="https://beego.me/" target="_blank" rel="noopener">https://beego.me/</a></li>
+<li>路由框架-gorilla <a href="http://www.gorillatoolkit.org/" target="_blank" rel="noopener">http://www.gorillatoolkit.org/</a></li>
+<li>操作数据库-xorm  <a href="https://godoc.org/github.com/go-xorm/xorm" target="_blank" rel="noopener">https://godoc.org/github.com/go-xorm/xorm</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/17/go/" data-id="ck85md9v400076n9awg48dxcv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/17/hello-world/" class="article-date">
+  <time datetime="2019-02-17T08:20:34.928Z" itemprop="datePublished">2019-02-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/17/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/17/hello-world/" data-id="ck85md9v800096n9aqkf6ohfm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -754,7 +803,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
     </div>
   </div>
 
@@ -765,6 +814,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/03/24/markdownMermaid/">markdown方式绘图</a>
+          </li>
         
           <li>
             <a href="/2020/02/10/codeReview/">codeReview</a>
@@ -780,10 +833,6 @@
         
           <li>
             <a href="/2019/08/30/docker-selenium/">Selenium Grid容器化-分布式测试</a>
-          </li>
-        
-          <li>
-            <a href="/2019/02/18/zuul/">高并发下-Zuul参数调优</a>
           </li>
         
       </ul>
